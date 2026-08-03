@@ -1,0 +1,419 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\MegaEvoPkm\MegaEvoPkm.css */
+
+/* Contenedor general */
+.contenedor-mega {
+  padding: 10px;
+}
+
+/* Descripciones */
+.contenedor-descripciones-mega {
+  text-align: left;
+  margin-bottom: 15px;
+  display: grid;
+  gap: 8px;
+}
+
+/* fila (sprite + descripción) */
+.descripcion-mega-row {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  align-items: center;
+  gap: 10px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background-color: #2a2a2a;
+  border-radius: 10px;
+}
+
+/* SpriteModal */
+.descripcion-mega-sprite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.descripcion-mega-sprite .pokedexSpriteThumb{
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.descripcion-mega {
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #2a2a2a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.desc-titulo {
+  font-weight: 700;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1.15;
+}
+
+.desc-titulo-word {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  display: inline-block;
+}
+
+.desc-gender-icon {
+  margin-left: 5px;
+  font-size: 1em;
+  line-height: 1;
+  vertical-align: middle;
+  transform: translateY(0.08em);
+}
+
+.desc-gender-icon--male {
+  color: #3498db;
+}
+
+.desc-gender-icon--female {
+  color: #e74c3c;
+}
+
+.desc-colon {
+  margin-left: 2px;
+}
+
+.name-gender-icon {
+  margin-left: 5px;
+  font-size: 0.95em;
+  line-height: 1;
+  vertical-align: middle;
+  transform: none;
+}
+
+.name-gender-icon--male {
+  color: #3498db;
+}
+
+.name-gender-icon--female {
+  color: #e74c3c;
+}
+
+/* Tarjeta + stats en fila */
+.mega-contenedor {
+  background-color: #2a2a2a;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 10px;
+  border-radius: 25px;
+  flex-wrap: wrap;
+}
+
+/* Tarjeta del Pokémon*/
+.mega-card {
+  background: var(--panel, #1f2227);
+  border-radius: 12px;
+  padding: 15px;
+  color: #ffffff;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(300px, 30vw, 460px);
+}
+
+/* Imagen */
+.contenedor-ImgPkm-Forma {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Stack interno */
+.forma-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.slot {
+  display: flex;
+  justify-content: center;
+}
+
+/* Nombre */
+.nombre-forma {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.15;
+  width: fit-content;
+}
+
+.nombresitoForma {
+  padding-top: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Tipos */
+.contenedor-tipos-mega {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 100%;
+  max-width: 560px;
+  flex-wrap: nowrap;
+}
+
+.contenedor-tipos-mega.solo {
+  justify-content: center;
+}
+
+.tipo-bg-forma-inline {
+  flex: 0 0 auto;
+  width: min(var(--tipo-mega-item-width, 100%), 100%);
+  min-width: min(var(--tipo-mega-item-width, 100%), 100%);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+/* Color / Habilidad contenedores */
+.contenedorDatosFormaPkm,
+.contenedorColorFormaPkm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Columna de stats */
+.mega-stats-col,
+.mega-stats {
+  flex: 1 1 680px;
+  background-color: rgb(56, 56, 56);
+  border-radius: 12px;
+  padding: 15px;
+  display: grid;
+  place-items: center;
+}
+
+.stats-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+}
+
+.stats-inner {
+  min-width: 740px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Scrollbar */
+.stats-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;  /* thumb | track */
+}
+
+.stats-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+
+.stats-scroll::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 8px;
+}
+
+.stats-scroll::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+.stats-scroll::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+
+/* Debilidades y Resistencias (Mega) */
+.mega-dyr-wrap {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.contenedorTituloSeccionCMegaEvo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel, #1f2227);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-top: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+}
+
+.contenedorTituloSeccionCMegaEvo h2 {
+  text-align: left;
+  flex: 1;
+}
+
+.toggleDebilidadesYResistenciasCMegaEvo {
+  background: none;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+}
+
+.toggleDebilidadesYResistenciasCMegaEvo:hover{
+  opacity: 0.85;
+}
+
+.panel-dyr {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .45s ease, opacity .25s ease;
+  margin-top: 10px;
+}
+
+.panel-dyr.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.iconoNormalCMegaEvo {
+  display: inline-block;
+  transform: rotate(135deg);
+  transition: transform .25s ease;
+}
+
+.iconoRotadoCMegaEvo {
+  display: inline-block;
+  transform: rotate(-45deg);
+  transition: transform .25s ease;
+}
+
+.mega-dyr .dyr-table,
+.mega-dyr .dyr-table-wrap {
+  width:100%;
+  max-width:100%;
+}
+
+.altura-giga-eternatus { 
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.subrayadoGiga-eternatus {
+  text-decoration: underline;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+
+  .mega-contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mega-stats-col,
+  .mega-stats {
+    flex: 1 1 100%;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+}
+
+@media (max-width: 430px) {
+
+  .contenedor-tipos-mega.wrap-narrow {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .contenedor-tipos-mega.wrap-narrow .tipo-bg-forma-inline {
+    flex: 0 0 auto;
+    width: var(--tipo-mega-item-width, auto);
+    min-width: var(--tipo-mega-item-width, auto);
+  }
+
+  .descripcion-mega-row{
+    grid-template-columns: 56px minmax(0, 1fr);
+    justify-items: stretch;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .descripcion-mega-sprite .pokedexSpriteThumb{
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .mega-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 12px;
+  }
+
+  .tipo-bg-forma-inline {
+    height: 40px;
+  }
+
+  .descripcion-mega {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+}

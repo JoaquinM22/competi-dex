@@ -1,0 +1,63 @@
+/** src\CompetidexComponents\ConfiguracionComponents\Configuracion.css */
+
+.cfg-page {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+}
+
+/* Botón engranaje */
+.btnConfigHeader {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.12s ease, background 0.12s ease;
+}
+
+.btnConfigHeader:hover {
+  background: rgba(255,255,255,0.12);
+  filter: brightness(1.05);
+}
+
+.btnConfigHeader:active {
+  transform: scale(0.98);
+}
+
+.btnConfigHeader svg {
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+
+  .cfg-page {
+    max-height: calc(100vh - 20px);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .btnConfigHeader {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .btnConfigHeader svg {
+    font-size: 18px;
+  }
+  
+}

@@ -1,0 +1,159 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\TablaEstadisticasPkm\TablaEstadisticasPkm.css */
+
+.tabla-container {
+  margin-top: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.tabla-estadisticas {
+  width: auto;
+  max-width: 95%;
+  min-width: 600px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border: 2px solid #444;
+}
+
+.tabla-estadisticas th,
+.tabla-estadisticas td {
+  padding: 8px;
+  text-align: center;
+}
+
+.fondoOscuro,
+.tabla-estadisticas th {
+  background-color: #2a2a2a;
+  color: white;
+  text-align: center;
+}
+
+.textoNombreStat {
+  width: 15%;
+  text-align: center;
+}
+
+.barraGrafico {
+  width: 50%;
+  text-align: left;
+}
+
+.textoTabla {
+  width: 6%;
+}
+
+.barra-container {
+  height: 12px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.barra {
+  height: 12px;
+  border-radius: 5px;
+}
+
+.fila-adicional {
+  background-color: #2a2a2a;
+  font-weight: bold;
+  color: white;
+}
+
+.fila-adicional td {
+  padding: 10px;
+}
+
+.fila-nota td {
+  font-size: 14px;
+  padding: 12px;
+  color: #ffffff;
+  background-color: #2a2a2a;
+  border-top: 2px solid #ffffff;
+}
+
+.nota-centro {
+  text-align: center;
+  font-weight: normal;
+  display: table-cell;
+}
+
+.centrarTexto {
+  text-align: center;
+  display: grid;
+  justify-content: center;
+}
+
+.bordeColor {
+  border: 1px solid #ffffff;
+}
+
+.textoNegrita {
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .tabla-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+  }
+
+  .tabla-estadisticas {
+    font-size: 14px;
+    min-width: 700px;
+    width: max-content;
+  }
+
+  .tabla-estadisticas th,
+  .tabla-estadisticas td {
+    padding: 6px;
+  }
+
+  .barra-container {
+    height: 8px;
+  }
+
+  .barra {
+    height: 8px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .tabla-estadisticas {
+    font-size: 12px;
+    min-width: 600px;
+    width: max-content;
+  }
+
+  .tabla-estadisticas th,
+  .tabla-estadisticas td {
+    padding: 4px;
+  }
+
+  .barra-container {
+    height: 10px;
+  }
+
+  .fila-nota td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .barra-container {
+    height: 6px;
+  }
+
+  .barra {
+    height: 6px;
+  }
+
+}

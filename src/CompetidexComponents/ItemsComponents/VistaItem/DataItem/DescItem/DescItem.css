@@ -1,0 +1,72 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\DescItem\DescItem.css */
+
+.descitem-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contenedor con look "tarjetita" */
+.descitem-box {
+  width: 100%;
+  background: var(--panel, #1f2227);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Título */
+.descitem-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* subrayado */
+.descitem-underline {
+  text-decoration: underline;
+}
+
+/* Texto */
+.descitem-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  margin: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 14px;
+  background: var(--panel, #1f2227);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.descitem-marginArriba {
+  margin-top: 10px;
+}
+
+/* Tamaños */
+.descitem-container-small .descitem-title{ font-size: 16px; }
+.descitem-container-small .descitem-text{ font-size: 16px; }
+
+.descitem-container-normal .descitem-title{ font-size: 30px; }
+.descitem-container-normal .descitem-text{ font-size: 25px; }
+
+.descitem-container-large .descitem-title{ font-size: 20px; }
+.descitem-container-large .descitem-text{ font-size: 20px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .descitem-title {
+    font-size: 16px;
+  }
+
+  .descitem-text {
+    font-size: 16px;
+  }
+
+}

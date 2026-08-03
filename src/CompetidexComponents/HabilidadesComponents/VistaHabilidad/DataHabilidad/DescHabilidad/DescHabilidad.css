@@ -1,0 +1,74 @@
+/** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\DataHabilidad\DescHabilidad\DescHabilidad.css */
+
+.deschab-container{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contenedor con look "tarjetita" */
+.deschab-box{
+  width: 100%;
+  background: var(--panel, #1f2227);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Título "Descripción:" */
+.deschab-title{
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* subrayado SOLO en "Descripción" */
+.deschab-underline{
+  text-decoration: underline;
+}
+
+/* Texto */
+.deschab-text{
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  margin:10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 14px;
+  background: var(--panel, #1f2227);
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.marginArribaHab {
+  margin-top: 10px;
+}
+
+/* Tamaños */
+.deschab-container-small .deschab-title{ font-size: 16px; }
+.deschab-container-small .deschab-text{ font-size: 16px; }
+
+.deschab-container-normal .deschab-title{ font-size: 30px; }
+.deschab-container-normal .deschab-text{ font-size: 25px; }
+
+.deschab-container-large .deschab-title{ font-size: 20px; }
+.deschab-container-large .deschab-text{ font-size: 20px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .deschab-title{
+    font-size: 16px;
+  }
+
+  .deschab-text{
+    font-size: 20px !important;
+  }
+
+}

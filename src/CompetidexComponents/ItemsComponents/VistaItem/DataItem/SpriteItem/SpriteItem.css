@@ -1,0 +1,184 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\SpriteItem\SpriteItem.css */
+
+.itemSpriteModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 18px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.itemSpriteModalContent {
+  width: min(520px, 92vw);
+  background: rgba(25, 28, 33, 0.98);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+.itemSpriteModalTop {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 10px 10px 0 10px;
+}
+
+.itemSpriteBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(60, 64, 72, 0.55);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.itemSpriteBtn:hover {
+  background: rgba(85, 90, 102, 0.65);
+}
+
+.itemSpriteBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.itemSpriteModalBody {
+  padding: 14px 18px 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.itemSpriteModalImg {
+  width: 350px;
+  height: 350px;
+  image-rendering: pixelated;
+  border-radius: 14px;
+  padding: 14px;
+  object-fit: contain;
+}
+
+.itemSpriteFallback {
+  width: 100%;
+  padding: 18px;
+  text-align: center;
+}
+
+.itemSpriteFallbackTitle {
+  margin-top: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.itemSpriteFallbackText {
+  margin-top: 6px;
+  opacity: 0.75;
+  color: #d9dee7;
+}
+
+.itemSpriteThumb {
+  image-rendering: pixelated;
+  transform-origin: center center;
+  will-change: auto;
+  object-fit: contain;
+}
+
+
+/* Selector de tamaño de descarga */
+.itemSpriteDownloadWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.itemSpriteDlPopover {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 220px;
+  background: rgba(25, 28, 33, 0.98);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  padding: 10px;
+  z-index: 5;
+}
+
+.itemSpriteDlTitle {
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 13px;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+
+.itemSpriteDlOpt {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(60, 64, 72, 0.45);
+  color: #e9edf5;
+  padding: 9px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.itemSpriteDlOpt:hover {
+  background: rgba(85, 90, 102, 0.60);
+}
+
+.itemSpriteDlOpt:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.itemSpriteDlCancel {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  color: rgba(233,237,245,0.85);
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.itemSpriteDlCancel:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.itemSpriteThumbWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+  background-color: #2a2a2a;
+  border-radius: 18px;
+  padding: 14px;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  transition: background-color 0.14s ease, filter 0.14s ease;
+}
+
+.itemSpriteThumbWrap:hover {
+  background-color: #3a3a3a;
+}
+
+.itemSpriteThumbWrap:active {
+  background-color: #444444;
+}
+
+.itemSpriteThumbWrap:focus {
+  outline: 2px solid rgba(255,255,255,0.18);
+  outline-offset: 2px;
+}

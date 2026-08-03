@@ -1,0 +1,133 @@
+/** src\CompetidexComponents\SharedComponents\Tipo\Tipo.css */
+
+/* Contenedor de varios tipos */
+.contenedor-tiposGeneral {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 10px; 
+  width: 100%;
+}
+
+/* Cuando es un solo tipo */
+.contenedorTipos {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Botón tipo */
+.tipo-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 6px;
+  width: auto; 
+  max-width: 100%; 
+  box-sizing: border-box; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tipo-icono {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.tipo-nombre {
+  text-transform: capitalize;
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+
+  color: white;
+  text-shadow:
+    -0.5px -0.5px 1px rgba(0, 0, 0, 0.55),
+    0.5px -0.5px 1px rgba(0, 0, 0, 0.55),
+    -0.5px  0.5px 1px rgba(0, 0, 0, 0.55),
+    0.5px  0.5px 1px rgba(0, 0, 0, 0.55);
+}
+
+/* Tamaño Mini */
+.tipo-boton.tipo-boton-mini {
+  font-size: 11px;
+  padding: 1px 6px;
+  line-height: 1;
+  border-width: 1px;
+  border-radius: 12px;
+  gap: 3px;
+  height: auto;
+  min-height: 0;
+}
+
+.tipo-boton.tipo-boton-mini .tipo-icono {
+  width: 11px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+/* Tamaño Small */
+.tipo-boton-small {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-width: 1.5px;
+  gap: 4px;
+}
+
+.tipo-boton-small .tipo-icono {
+  width: 14px;
+  height: 14px;
+}
+
+/* Tamaño Medium */
+.tipo-boton-medium {
+  font-size: 16px;
+  padding: 8px 18px;
+  border-width: 2px;
+  gap: 5px;
+}
+
+.tipo-boton-medium .tipo-icono {
+  width: 18px; 
+  height: 18px;
+}
+
+/* Tamaño Normal */
+.tipo-boton-normal {
+  font-size: 22px;
+  padding: 12px 25px;
+}
+
+/* Tamaño Large */
+.tipo-boton-large {
+  font-size: 22px;
+  padding: 18px 35px;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+
+  .contenedor-tiposGeneral {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tipo-boton {
+    font-size: 14px;
+    padding: 6px 12px;
+    width: 90%;
+    justify-content: center;
+  }
+
+  .tipo-nombre {
+    font-size: 14px;
+  }
+
+}

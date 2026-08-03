@@ -1,0 +1,109 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\PpMovimiento\PpMovimiento.css */
+
+.ppmov-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* fila estilo "tarjetita" */
+.ppmov-row {
+  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* título PP subrayado SOLO en PP */
+.ppmov-underline {
+  text-decoration: underline;
+}
+
+.ppmov-label {
+  font-size: 25px;
+}
+
+.ppmov-value {
+  font-size: 40px;
+  line-height: 1;
+  min-width: 44px;
+  text-align: right;
+}
+
+.ppmov-max {
+  opacity: 0.9;
+}
+
+/* Tamaños */
+.ppmov-container-small .ppmov-label{ font-size: 16px; }
+.ppmov-container-small .ppmov-value{ font-size: 34px; }
+
+.ppmov-container-normal .ppmov-label{ font-size: 25px; }
+.ppmov-container-normal .ppmov-value{ font-size: 30px; }
+
+.ppmov-container-large .ppmov-label{ font-size: 20px; }
+.ppmov-container-large .ppmov-value{ font-size: 44px; }
+
+/* ---------- TOOLTIP ---------- */
+.ppmov-row.has-tooltip .ppmov-tooltip {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 8px);
+  max-width: min(420px, 92vw);
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 9999;
+  white-space: normal;
+  text-align: center;
+}
+
+.ppmov-row.has-tooltip .ppmov-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: #0f1116;
+}
+
+.ppmov-row.has-tooltip:hover .ppmov-tooltip,
+.ppmov-row.has-tooltip:focus .ppmov-tooltip,
+.ppmov-row.has-tooltip:focus-within .ppmov-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 6px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .ppmov-row {
+    padding: 10px 12px;
+  }
+
+  .ppmov-label{
+    font-size: 14px;
+    flex-basis: 84px;
+  }
+
+  .ppmov-value{
+    font-size: 20px;
+  }
+
+}

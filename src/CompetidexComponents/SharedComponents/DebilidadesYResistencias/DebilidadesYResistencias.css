@@ -1,0 +1,467 @@
+/** src\CompetidexComponents\SharedComponents\DebilidadesYResistencias\DebilidadesYResistencias.css */
+
+.dyr-wrapper {
+  background: #2a2a2a;
+  border: 1px solid #4c4c4c;
+  border-radius: 12px;
+  padding: 14px;
+  color: #e8ecf1;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+:root {
+  --grid-line: rgba(255, 255, 255, 0.08);
+  --dyr-badge: 55px;
+  --dyr-badge-font: 18px;
+}
+
+/* Tabs */
+.dyr-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid #4c4c4c;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.dyr-tab {
+  background: transparent;
+  color: #b7c3d7;
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+}
+
+.dyr-tab:hover {
+  color: #ffffff;
+  background: #181c24;
+}
+
+.dyr-tab.active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+  background: #161b22;
+}
+
+/* Tabla Wrap */
+.dyr-table-wrap {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #1b2026;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.dyr-table-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.10);
+  pointer-events: none;
+}
+
+/* Tabla */
+.dyr-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+/* Cabecera */
+.dyr-thead th {
+  background: #36383b;
+  color: #e3e7ee;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.dyr-head-left {
+  width: 240px;
+  border-right: 1px solid #1f2730;
+}
+
+/* Celdas */
+.dyr-th-badge,
+.dyr-td {
+  padding: 10px 12px;
+  vertical-align: middle;
+  background: #1f2329;
+  transition: background 120ms ease;
+}
+
+/* Hover por fila */
+.dyr-tr:hover .dyr-th-badge,
+.dyr-tr:hover .dyr-td {
+  background: #2b3139;
+}
+
+/* 1ª columna: círculo + etiqueta */
+.dyr-th-badge {
+  width: 240px;
+  border-right: 1px solid #1f2730;
+  text-align: center;
+}
+
+.dyr-badge-grid {
+  display: grid;
+  grid-template-columns: var(--dyr-badge) 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.dyr-badge-left {
+  display: flex;
+  justify-content: center;
+}
+
+.dyr-badge-right {
+  color: #ffffff;
+}
+
+/* Líneas entre filas */
+.dyr-tr:not(:last-child) .dyr-th-badge,
+.dyr-tr:not(:last-child) .dyr-td {
+  border-bottom: 1px solid #1f2730;
+}
+
+/* Tipos centrados */
+.dyr-td-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  min-height: 36px;
+}
+
+.dyr-wrapper .dyr-td-types .tipo-boton {
+  display: inline-flex !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  max-width: 100%;
+}
+
+.dyr-wrapper .dyr-td-types .tipo-boton-tiny.tipo-boton,
+.dyr-wrapper .dyr-td-types .tipo-boton-small.tipo-boton,
+.dyr-wrapper .dyr-td-types .tipo-boton-medium.tipo-boton,
+.dyr-wrapper .dyr-td-types .tipo-boton-large.tipo-boton {
+  width: auto !important;
+  flex: 0 0 auto !important;
+  max-width: 100%;
+}
+
+.dyr-empty {
+  opacity: 0.7;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+}
+
+.ri-badge {
+  position: relative;
+  display: inline-flex;
+  width: var(--dyr-badge);
+  height: var(--dyr-badge);
+  align-items: center;
+  justify-content: center;
+}
+
+.ri-badge .ri-badge-circle {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ri-badge-text {
+  position: relative;
+  font-size: clamp(12px, calc(var(--dyr-badge) * 0.33), var(--dyr-badge-font));
+  letter-spacing: 0.2px;
+  color: #ffffff;
+}
+
+/* Diferencias */
+.dyr-diff {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px dashed #2a3340;
+}
+
+.dyr-diff h4 {
+  margin: 0 0 8px 0;
+  color: #dfe8ff;
+  font-size: 1rem;
+}
+
+.dyr-diff-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.dyr-diff-grupo {
+  color: #cfd7e6;
+  font-weight: 600;
+}
+
+.dyr-diff-changes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Chips (+/-) */
+.dyr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.dyr-badge.add {
+  background: rgba(46,160,67,0.12);
+  color: #50d173;
+  border-color: #2ea043;
+}
+
+.dyr-badge.rem {
+  background: rgba(248,81,73,0.12);
+  color: #ff7b72;
+  border-color: #f85149;
+}
+
+/* Tipo en chips de diferencias */
+.tipo-boton-tiny.tipo-boton {
+  font-size: 11px;
+  padding: 2px 6px;
+}
+
+.tipo-boton-tiny .tipo-icono {
+  width: 14px;
+  height: 14px;
+}
+
+.tipo-boton-tiny .tipo-nombre {
+  margin-left: 4px;
+}
+
+/* Separadores internos (grid) */
+.dyr-tr .dyr-th-badge,
+.dyr-tr .dyr-td {
+  border-bottom: 1px solid var(--grid-line) !important;
+}
+
+.dyr-th-badge {
+  border-right: 1px solid var(--grid-line) !important;
+}
+
+.dyr-responsive {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+
+  border-radius: 0;
+  background: transparent;
+
+  margin-left: clamp(8px, 1.2vw, 16px);
+  margin-right: clamp(8px, 1.2vw, 16px);
+
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+}
+
+.dyr-responsive::-webkit-scrollbar {
+  height: 10px;
+}
+
+.dyr-responsive::-webkit-scrollbar-track {
+  background: #1f2329;
+  border-radius: 8px;
+  box-shadow: inset 0 0 3px rgba(0,0,0,.35);
+}
+
+.dyr-responsive::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #1f2329;
+}
+
+.dyr-responsive::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.dyr-responsive::-webkit-scrollbar-corner {
+  background: #1f2329;
+}
+
+.dyr-responsive .dyr-table-wrap {
+  min-width: 640px;
+}
+
+.dyr-responsive .dyr-table-wrap,
+.dyr-responsive .dyr-notes {
+  min-width: 640px;
+}
+
+.dyr-notes {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-sizing: border-box;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .dyr-wrapper {
+    padding: 10px;
+  }
+
+  .dyr-head-left, .dyr-th-badge {
+    width: 200px;
+  }
+
+  .dyr-th-badge, .dyr-td {
+    padding: 8px 10px;
+  }
+
+  :root {
+    --dyr-badge: 48px;
+    --dyr-badge-font: 16px;
+  }
+
+  .dyr-badge-grid {
+    grid-template-columns: var(--dyr-badge) 1fr;
+    gap: 8px;
+  }
+
+  .dyr-thead th {
+    padding: 8px 10px;
+  }
+
+  .dyr-diff {
+    margin-top: 14px;
+  }
+
+  .dyr-diff-row {
+    grid-template-columns: 80px 1fr;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .dyr-responsive .dyr-table-wrap {
+    min-width: 560px;
+  }
+
+  .dyr-responsive .dyr-notes {
+    min-width: 560px;
+  }
+
+  .dyr-head-left, .dyr-th-badge {
+    width: 170px;
+  }
+
+  .dyr-th-badge, .dyr-td {
+    padding: 6px 8px;
+  }
+
+  :root {
+    --dyr-badge: 42px;
+    --dyr-badge-font: 14px;
+  }
+
+  .dyr-badge-grid {
+    grid-template-columns: var(--dyr-badge) 1fr;
+    gap: 6px;
+  }
+
+  .dyr-thead th {
+    padding: 6px 8px;
+    font-size: 0.95rem;
+  }
+
+  .dyr-diff h4 {
+    font-size: 0.95rem;
+  }
+
+  .dyr-diff-row {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .dyr-badge {
+    gap: 4px;
+    padding: 3px 5px;
+    font-size: 12px;
+  }
+
+  .tipo-boton-tiny.tipo-boton {
+    font-size: 10px;
+    padding: 2px 5px;
+  }
+
+  .tipo-boton-tiny .tipo-icono {
+    width: 12px;
+    height: 12px;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  .dyr-responsive .dyr-table-wrap {
+    min-width: 520px;
+  }
+
+  .dyr-responsive .dyr-notes {
+    min-width: 520px;
+  }
+
+  :root {
+    --dyr-badge: 38px;
+    --dyr-badge-font: 13px;
+  }
+
+  .dyr-head-left, .dyr-th-badge {
+    width: 155px;
+  }
+
+}
+
+/* Zebra */
+.dyr-wrapper {
+  --dyr-row-a: #1f2329;  
+  --dyr-row-b: #1b2026;
+  --dyr-row-hover: #2a313a;
+}
+
+.dyr-table tbody .dyr-tr .dyr-th-badge,
+.dyr-table tbody .dyr-tr .dyr-td {
+  background: var(--dyr-row-a);
+}
+
+.dyr-table tbody .dyr-tr:nth-child(even) .dyr-th-badge,
+.dyr-table tbody .dyr-tr:nth-child(even) .dyr-td {
+  background: var(--dyr-row-b);
+}
+
+.dyr-table tbody .dyr-tr:hover .dyr-th-badge,
+.dyr-table tbody .dyr-tr:hover .dyr-td {
+  background: var(--dyr-row-hover) !important;
+}

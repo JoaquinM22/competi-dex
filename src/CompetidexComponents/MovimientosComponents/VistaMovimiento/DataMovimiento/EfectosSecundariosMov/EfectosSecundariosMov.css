@@ -1,0 +1,128 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\EfectosSecundariosMov\EfectosSecundariosMov.css */
+
+.efectosmov-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.efectosmov-titulo {
+  font-size: 25px;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+/* subrayado SOLO en las palabras */
+.efectosmov-titulo .titulo-subrayado {
+  text-decoration: underline;
+}
+
+/* separador (no subrayado) */
+.efectosmov-titulo .titulo-sep {
+  text-decoration: none;
+}
+
+.efectosmov-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.efectomov-item {
+  background-color: #414345;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Tamaños */
+.efectosmov-container-small { font-size: 14px; padding: 6px 12px; width: 100%; }
+.efectosmov-container-medium { font-size: 16px; padding: 10px 18px; width: 100%; }
+.efectosmov-container-normal { font-size: 20px; padding: 12px 22px; width: 100%; }
+.efectosmov-container-large { font-size: 22px; padding: 18px 35px; width: 100%; }
+
+/* Tooltip */
+
+.efectomov-item.has-tooltip {
+  position: relative;
+  outline: none;
+}
+
+/* Tooltip (por defecto arriba) */
+.efectomov-item.has-tooltip .efectomov-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, -10px);
+  max-width: min(360px, 92vw);
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+/* Flechita */
+.efectomov-item.has-tooltip .efectomov-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #0f1116;
+}
+
+/* Mostrar tooltip */
+.efectomov-item.has-tooltip:hover .efectomov-tooltip,
+.efectomov-item.has-tooltip:focus .efectomov-tooltip,
+.efectomov-item.has-tooltip:focus-within .efectomov-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -14px);
+}
+
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .efectosmov-container {
+    padding: 8px 12px;
+  }
+
+  .efectosmov-titulo {
+    font-size: 20px;
+  }
+
+  .efectomov-item {
+    font-size: 15px;
+    padding: 8px 10px;
+  }
+
+  .efectomov-item.has-tooltip .efectomov-tooltip {
+    max-width: 94vw;
+    white-space: normal;
+  }
+
+}

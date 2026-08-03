@@ -1,0 +1,37 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\VistaItem.css */
+
+/* Wrapper general */
+.vista-wrapper-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Recuadro contenedor */
+.componenteVistaItem {
+  background-color: #282c34;
+  border-radius: 25px;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  
+  .componenteVistaItem {
+    margin: 0 10px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .componenteVistaItem {
+    margin: 0 5px;
+    padding: 10px;
+  }
+
+}

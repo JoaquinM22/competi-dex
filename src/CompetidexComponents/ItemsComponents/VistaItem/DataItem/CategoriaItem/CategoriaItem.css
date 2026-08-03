@@ -1,0 +1,105 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\CategoriaItem\CategoriaItem.css */
+
+.categoriaitem-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.categoriaitem-row {
+  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  position: relative;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.categoriaitem-underline {
+  text-decoration: underline;
+}
+
+.categoriaitem-label {
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.categoriaitem-value {
+  font-size: 22px;
+  line-height: 1.2;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Tamaños */
+.categoriaitem-container-small .categoriaitem-label { font-size: 16px; }
+.categoriaitem-container-small .categoriaitem-value { font-size: 16px; }
+
+.categoriaitem-container-normal .categoriaitem-label { font-size: 25px; }
+.categoriaitem-container-normal .categoriaitem-value { font-size: 22px; }
+
+.categoriaitem-container-large .categoriaitem-label { font-size: 20px; }
+.categoriaitem-container-large .categoriaitem-value { font-size: 28px; }
+
+/* ---------- TOOLTIP ---------- */
+.categoriaitem-row.categoriaitem-has-tooltip .categoriaitem-tooltip {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 8px);
+
+  max-width: min(420px, 92vw);
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 9999;
+  white-space: normal;
+  text-align: center;
+}
+
+.categoriaitem-row.categoriaitem-has-tooltip .categoriaitem-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: #0f1116;
+}
+
+.categoriaitem-row.categoriaitem-has-tooltip:hover .categoriaitem-tooltip,
+.categoriaitem-row.categoriaitem-has-tooltip:focus .categoriaitem-tooltip,
+.categoriaitem-row.categoriaitem-has-tooltip:focus-within .categoriaitem-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 6px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .categoriaitem-label{
+    font-size: 16px;
+  }
+
+  .categoriaitem-value{
+    font-size: 16px;
+  }
+
+}

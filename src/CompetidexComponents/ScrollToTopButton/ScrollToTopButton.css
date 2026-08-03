@@ -1,0 +1,120 @@
+/** src\CompetidexComponents\ScrollToTopButton\ScrollToTopButton.css */
+
+.scrollTopWrap {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.scrollTopWrap.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* BOTÓN PRINCIPAL */
+.scrollTopBtn {
+  width: 74px;
+  height: 74px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.35);
+  cursor: pointer;
+  transition: filter .18s ease, transform .18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scrollTopBtnIcon {
+  width: 54px;
+  height: 54px;
+  color: #282c34;
+  display: block;
+}
+
+.scrollTopBtn:hover {
+  filter: brightness(0.96);
+}
+
+.scrollTopBtn:active {
+  transform: translateY(1px);
+}
+
+/* HANDLE (En celulares) */
+.scrollTopHandle {
+  display: none;
+  width: 40px;
+  height: 64px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.28);
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollTopHandleIcon {
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+}
+
+/* Responsive: handle pegado a la derecha que hace aparecer el boton */
+@media (max-width: 520px) {
+
+  /* Pegado a la derecha */
+  .scrollTopWrap {
+    right: 0px;
+    bottom: calc(env(safe-area-inset-bottom) + 8px);
+    gap: 8px;
+    flex-direction: row-reverse;
+  }
+
+  .scrollTopHandle {
+    display: flex;
+    margin-right: 10px;
+  }
+
+  /* Botón grande*/
+  .scrollTopBtn {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+    transform: translateX(90px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease, filter .18s ease;
+  }
+
+  .scrollTopBtnIcon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .scrollTopBtn.mobileOpen {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+}
+

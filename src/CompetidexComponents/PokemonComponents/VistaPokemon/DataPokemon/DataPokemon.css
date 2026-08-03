@@ -1,0 +1,591 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\DataPokemon.css */
+
+.componenteVistaPokemonJs {
+  background: #383b3f;
+  border-radius: 25px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  display: block;
+  overflow-anchor: none;
+}
+
+.loading-containerPokemon,
+.error-containerPokemon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.paddingCelu {
+  margin-bottom: 10px;
+}
+
+.parteArriba {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+#arribaIzq {
+  flex:1 1 640px;
+  min-width:320px;
+}
+
+#arribaDer {
+  flex:0 1 400px;
+  min-width:280px;
+}
+
+.nombreID-desktop {
+  display: block;
+}
+
+.nombreID-mobile {
+  display: none;
+}
+
+
+.contenedorTituloSeccion,
+.subContenedorTituloSeccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2a2a2a;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.contenedorTituloSeccion {
+  padding: 10px 15px;
+  margin-top: 10px;
+}
+
+.subContenedorTituloSeccion {
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: small;
+  height: auto;
+  margin-left: 50px;
+  max-width: 90%;
+}
+
+.tarjetaFormaPkmMargin {
+  margin-top: 0px; 
+}
+
+.toggleEvolucion,
+.toggleStats,
+.toggleFormas,
+.toggleMegas,
+.toggleAreaLocalizacion,
+.toggleDebilidadesYResistencias,
+.toggleMovimientosPcipal,
+.toggleMovsNivel,
+.toggleMovsMT,
+.toggleMovsTutor,
+.toggleMovsHuevo,
+.toggleGiga {
+  background: none;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toggleEvolucion:hover,
+.toggleStats:hover,
+.toggleFormas:hover,
+.toggleMegas:hover,
+.toggleAreaLocalizacion:hover,
+.toggleDebilidadesYResistencias:hover,
+.toggleMovimientosPcipal:hover,
+.toggleMovsNivel:hover,
+.toggleMovsMT:hover,
+.toggleMovsTutor:hover,
+.toggleMovsHuevo:hover,
+.toggleGiga:hover {
+  transform: scale(1.2);
+}
+
+.iconoNormal {
+  display: inline-block;
+  transform: rotate(135deg);
+  transition: transform .3s ease;
+}
+
+.iconoRotado {
+  display: inline-block;
+  transform: rotate(-45deg);
+  transition: transform .3s ease;
+}
+
+#idStats,
+#formasPkm,
+#idMegasPkm,
+#idAreasLocalizacionPkm,
+#idDebilidadesYResistencias,
+#idMovsPcipal,
+#idMovsNivel,
+#idMovsMT,
+#idMovsTutor,
+#idMovsHuevo,
+#idGigaPkm {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+#idStats.visible,
+#formasPkm.visible,
+#idMegasPkm.visible,
+#idAreasLocalizacionPkm.visible,
+#idDebilidadesYResistencias.visible,
+#idMovsPcipal.visible,
+#idMovsNivel.visible,
+#idMovsMT.visible,
+#idMovsTutor.visible,
+#idMovsHuevo.visible,
+#idGigaPkm.visible {
+  opacity: 1;
+}
+
+#idStats.oculto,
+#formasPkm.oculto,
+#idMegasPkm.oculto,
+#idAreasLocalizacionPkm.oculto,
+#idDebilidadesYResistencias.oculto,
+#idMovsPcipal.oculto,
+#idMovsNivel.oculto,
+#idMovsMT.oculto,
+#idMovsTutor.oculto,
+#idMovsHuevo.oculto,
+#idGigaPkm.oculto {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+
+
+#idMovsNivel,
+#idMovsTutor,
+#idMovsHuevo,
+#idMovsMT{
+  margin-top: 10px;
+}
+
+#contenedorStats {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;
+}
+
+#contenedorStats::-webkit-scrollbar {
+  height: 10px;
+}
+
+#contenedorStats::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 8px;
+}
+
+#contenedorStats::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+#contenedorStats::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+#contenedorStats table {
+  margin: 0 auto;
+  min-width: 600px;
+  width: auto;
+  border-collapse: collapse;
+}
+
+/* CADENA EVOLUTIVA */
+#cadenaEvo {
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#cadenaEvo.visible {
+  opacity: 1;
+}
+
+#cadenaEvo.oculto {
+  overflow-y: hidden;
+  max-height: 0;
+  opacity: 0;
+}
+
+.evo-viewport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+}
+
+#cadenaEvo,
+.evo-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;
+}
+
+#cadenaEvo::-webkit-scrollbar,
+.evo-viewport::-webkit-scrollbar {
+  height: 10px;
+}
+
+#cadenaEvo::-webkit-scrollbar-track,
+.evo-viewport::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 8px;
+}
+
+#cadenaEvo::-webkit-scrollbar-thumb,
+.evo-viewport::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+#cadenaEvo::-webkit-scrollbar-thumb:hover,
+.evo-viewport::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.evo-track{
+  display: inline-flex;
+  width: max-content;
+  min-width: max-content;
+}
+
+.unMargen {
+  margin-bottom: 10px;
+}
+
+.unMargenSuperior {
+  margin-top: 10px;
+}
+
+
+.tarjetaInicialWrapper {
+  background: var(--panel, #1f2227);
+  border-radius: 25px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  overflow: hidden;
+  height: clamp(560px, 75vh, 760px);
+  max-height: clamp(560px, 75vh, 760px);
+}
+
+.tarjetaInicial {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.tarjetaInicial::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tarjetaInicial::-webkit-scrollbar-track {
+  background: #1f2227;
+}
+
+.tarjetaInicial::-webkit-scrollbar-thumb {
+  background: #444444;
+  border-radius: 10px;
+}
+
+.tarjetaInicial::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+}
+
+.margenAbajo {
+  margin-bottom: 10px;
+}
+
+
+.tipos-stack-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-inline: 10px;
+  box-sizing: border-box;
+}
+
+.contenedor-tipos-vertical {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding-inline: 6px;
+  box-sizing: border-box;
+}
+
+.tipo-wrap-pkm-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  width: fit-content !important;
+  min-width: fit-content !important;
+  margin-bottom: 10px;
+  height: 56px;
+  border-radius: 16px;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.tipo-wrap-pkm-vertical-UnoSolo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tipo-pkm-width, 100%);
+  min-width: var(--tipo-pkm-width, 100%);
+  gap: 10px;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  height: 56px;
+  border-radius: 18px;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.tiposFila {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.formas-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;
+}
+
+.formas-viewport::-webkit-scrollbar {
+  height: 10px;
+}
+
+.formas-viewport::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius:8px;
+}
+
+.formas-viewport::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+.formas-viewport::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+#idGigaPkm > div {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.cargandoContMovs {
+  background: var(--panel, #1f2227);
+  border-radius: 25px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.loading-textMovs {
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 5px rgba(0,0,0,.6);
+}
+
+.pikachu-spinnerMovs {
+  width: 60px;
+  height: auto;
+}
+
+.noCriaContenedor {
+  background: var(--panel, #1f2227);
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  text-align: center;
+  color: #d9dee7;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+@media (max-width:1402px) {
+
+  #arribaDer {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  #arribaIzq {
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .nombreID-desktop {
+    display: none;
+  }
+
+  .nombreID-mobile {
+    display: block;
+  }
+
+  #arribaDer, #arribaIzq {
+    max-width: 100%;
+    align-self: stretch;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .evo-viewport {
+    justify-content: flex-start;
+    touch-action: pan-x;
+  }
+
+  .evo-viewport.solo-una-evo {
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .evo-viewport:not(.solo-una-evo) {
+    overscroll-behavior-x: contain;
+  }
+
+}
+
+@media (max-width:430px) {
+
+  .contenedor-tipos-vertical {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    padding-inline: 0;
+  }
+
+  .tipo-wrap-pkm-vertical {
+    width: fit-content !important;
+    min-width: fit-content !important;
+    height: 56px;
+  }
+
+}
+
+@media (max-width:640px) {
+
+  .subContenedorTituloSeccion {
+    margin-left: 0;
+    max-width: 90%;
+    width: 90%;
+    box-sizing: border-box;
+  }
+
+  #idGigaPkm {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.18) #1f1f1f;
+  }
+
+  #idGigaPkm > div {
+    min-width: 430px;
+    display: inline-block;
+  }
+
+  #idGigaPkm::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  #idGigaPkm::-webkit-scrollbar-track {
+    background: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: inset 0 0 3px rgba(0,0,0,.35);
+  }
+
+  #idGigaPkm::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.18);
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,.35);
+  }
+
+  #idGigaPkm::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,.32);
+  }
+
+  #idGigaPkm::-webkit-scrollbar-corner {
+    background: #1f1f1f;
+  }
+
+}
+
+@media (max-width:420px) {
+
+  #idGigaPkm > div {
+    min-width: 360px;
+  }
+
+}

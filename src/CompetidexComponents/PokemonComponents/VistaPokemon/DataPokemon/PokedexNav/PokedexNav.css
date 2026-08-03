@@ -1,0 +1,262 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\PokedexNav\PokedexNav.css */
+
+.dexnav {
+  background: #2b2b2b;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 12px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dexnav-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 10px;
+  width: 100%;
+}
+
+.dexnav-titulo {
+  color: #ffd700;
+  font-weight: 800;
+  margin: 0;
+  font-size: 20px;
+  text-align: center;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.25;
+}
+
+.dexnav-toggle {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+
+.dexnav-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dexnav-badge {
+  background: #454545;
+  color: #ffd700;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.dexnav-text {
+  font-size: 14px;
+}
+
+.dn-oculto {
+  display: none;
+}
+
+.dn-visible {
+  display: grid;
+}
+
+.dexnav-body.dn-oculto {
+  display: none !important;
+}
+
+.dexnav-body.dn-visible {
+  display: grid;
+}
+
+.dexnav-body {
+  margin-top: 10px;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dexnav-card {
+  background: #3a3a3a;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  border: 1px solid transparent;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  cursor: pointer;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.dexnav-card:hover {
+  background: #454545;
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
+
+.dexnav-card img {
+  width: 96px;
+  height: 96px;
+  image-rendering: pixelated;
+}
+
+.dexnav-sub {
+  font-size: 12px;
+  color: #cfcfcf;
+}
+
+.dexnav-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dexnav-center-id {
+  background: linear-gradient(180deg, #4b4b4b, #3a3a3a);
+  color: #ffd700;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.vacio {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.invisibleDexNav {
+  visibility: hidden;
+}
+
+
+/* Responsive */
+@media (max-width: 1240px) {
+  
+  .dexnav-body {
+    gap: 10px;
+  }
+
+  .dexnav-titulo {
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 640px) {
+  
+  .dexnav-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .dexnav-card:first-child,
+  .dexnav-card:last-child {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .dexnav-center {
+    order: 2;
+    flex: 0 0 auto;
+    margin: 0 2px;
+    align-self: center;
+  }
+
+  .dexnav-card:first-child {
+    order: 1;
+  }
+
+  .dexnav-card:last-child {
+    order: 3;
+  }
+
+  .dexnav-card {
+    width: auto;
+    margin: 0;
+    padding: 8px 8px;
+    border-radius: 12px;
+    gap: 4px;
+  }
+
+  .dexnav-card img {
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+  }
+
+  .dexnav-sub {
+    font-size: 11px;
+  }
+
+  .dexnav-badge {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+
+  .dexnav-text {
+    font-size: 13px;
+  }
+
+  .dexnav-center-id {
+    font-size: 15px;
+    padding: 4px 7px;
+  }
+
+  .dexnav {
+    padding: 8px;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  .dexnav-titulo {
+    font-size: 15px;
+  }
+
+  .dexnav-toggle {
+    font-size: 16px;
+  }
+
+}
+
+.dexnav-textGender {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dexnavGenderIcon {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.dexnavGenderIcon.male {
+  color: #4aa3ff;
+}
+
+.dexnavGenderIcon.female {
+  color: #ff4aa3;
+}

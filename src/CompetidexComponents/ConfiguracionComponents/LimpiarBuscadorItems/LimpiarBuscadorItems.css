@@ -1,0 +1,169 @@
+/** src\CompetidexComponents\ConfiguracionComponents\LimpiarBuscadorItems\LimpiarBuscadorItems.css */
+
+.lbi-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: #282828;
+  border: 1px solid rgba(31, 30, 30, 0.6);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+}
+
+.lbi-row,
+.lbi-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lbi-left {
+  min-width: 240px;
+}
+
+.lbi-label {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.55), 0 0 6px rgba(0,0,0,0.25);
+}
+
+.lbi-label-highlight {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.35);
+}
+
+.lbi-btn {
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: bold;
+  transition: transform 0.08s ease, filter 0.12s ease, opacity 0.12s ease;
+  user-select: none;
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.75);
+}
+
+.lbi-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.lbi-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.lbi-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.lbi-btn-danger {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(103, 107, 115, 0.26);
+  color: #ffffff;
+}
+
+.lbi-btn-danger:hover {
+  background: rgba(122, 128, 138, 0.34);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.lbi-btn-ghost {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+}
+
+.lbi-btn-primary {
+  background: #f5b942;
+  color: #ffffff;
+}
+
+.lbi-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6000;
+  padding: 16px;
+  box-sizing: border-box;
+  backdrop-filter: blur(6px);
+}
+
+.lbi-modal {
+  width: 100%;
+  max-width: 560px;
+  background: #1f2329;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+  overflow: hidden;
+}
+
+.lbi-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #2a2e35;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.lbi-modal-title {
+  color: #ffd700;
+  font-weight: 900;
+  font-size: 18px;
+  text-shadow: 0 0 10px rgba(255,215,0,0.12);
+}
+
+.lbi-modal-body {
+  position: relative;
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+.lbi-modal-message {
+  white-space: pre-line;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 40px;
+}
+
+.lbi-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.12);
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+
+  .lbi-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .lbi-modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lbi-btn {
+    width: 100%;
+  }
+  
+}

@@ -1,0 +1,35 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\VistaPokemon.css */
+
+.vista-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.componenteVistaPokemon {
+  background-color: #282c34;
+  border-radius: 25px;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+  .componenteVistaPokemon {
+    margin: 0 10px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .componenteVistaPokemon {
+    margin: 0 5px;
+    padding: 10px;
+  }
+  
+}

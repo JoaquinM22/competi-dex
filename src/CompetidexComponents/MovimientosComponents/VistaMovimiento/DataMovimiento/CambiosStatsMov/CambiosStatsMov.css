@@ -1,0 +1,120 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\CambiosStatsMov\CambiosStatsMov.css */
+
+.cstats-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cstats-titulo {
+  font-size: 25px;
+  margin-bottom: 6px;
+  word-wrap: break-word;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  outline: none;
+}
+
+/* Subrayado SOLO en palabras */
+.cstats-titulo .titulo-subrayado{
+  text-decoration: underline;
+}
+
+/* El ":" NO se subraya */
+.cstats-titulo .titulo-colon{
+  text-decoration: none;
+}
+
+.cstats-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.cstats-item {
+  background-color:#414345;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.cstats-item.is-empty {
+  justify-content: center;
+}
+
+.cstats-stat {
+  font-size: 25px;
+  text-align: left;
+}
+
+.cstats-val {
+  font-weight: 900;
+  font-size: 40px;
+  min-width: 44px;
+  text-align: right;
+}
+
+/* Colores por tipo */
+.cstats-val.up {
+  color: #ff5a5a; /* rojo */
+}
+
+.cstats-val.down {
+  color: #4aa3ff; /* azul */
+}
+
+/* Tamaños */
+.cstats-container-small { font-size: 14px; padding: 6px 12px; width: 100%; }
+.cstats-container-medium { font-size: 16px; padding: 10px 18px; width: 100%; }
+.cstats-container-normal { font-size: 20px; padding: 12px 22px; width: 100%; }
+.cstats-container-large { font-size: 22px; padding: 18px 35px; width: 100%; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  
+  .cstats-container {
+    padding: 8px 12px;
+  }
+
+  .cstats-titulo {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .cstats-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .cstats-stat {
+    font-size: 20px;
+  }
+
+  .cstats-val {
+    font-size: 24px;
+    min-width: 34px;
+  }
+
+}

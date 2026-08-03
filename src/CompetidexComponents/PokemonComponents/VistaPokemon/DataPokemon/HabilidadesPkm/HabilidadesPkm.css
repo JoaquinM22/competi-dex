@@ -1,0 +1,210 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\HabilidadesPkm\HabilidadesPkm.css */
+
+/* Contenedor de habilidades */
+.habilidades-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Título */
+.habilidades-titulo {
+  font-size: 22px;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.habilidades-titulo .titulo-texto {
+  text-decoration: underline;
+}
+
+/* Contenedor de la lista */
+.habilidades-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Cada habilidad */
+.habilidad-item {
+  background-color: #414345;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  position: relative;
+}
+
+/* Tamaños */
+.habilidades-container-small {
+  font-size: 14px;
+  padding: 6px 12px;
+  width: 100%;
+}
+
+.habilidades-container-normal {
+  font-size: 18px;
+  padding: 12px 22px;
+  width: 100%;
+}
+
+.habilidades-container-medium {
+  font-size: 16px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.habilidades-container-large {
+  font-size: 22px;
+  padding: 18px 35px;
+  width: 100%;
+}
+
+/* Tooltip */
+.habilidad-item.has-tooltip .habilidad-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, -10px);
+
+  width: calc(100% - 16px);
+  max-width: 100%;
+  padding: 14px 16px;
+  font-size: 1.05em;
+  line-height: 1.35;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 20;
+  white-space: normal;
+}
+
+/* flechita del tooltip */
+.habilidad-item.has-tooltip .habilidad-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #0f1116;
+}
+
+/* mostrar en hover/focus */
+.habilidad-item.has-tooltip:hover .habilidad-tooltip,
+.habilidad-item.has-tooltip:focus .habilidad-tooltip,
+.habilidad-item.has-tooltip:focus-within .habilidad-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -14px);
+}
+
+.habilidades-container-medium .habilidades-titulo {
+  margin-bottom: 10px;
+}
+
+.habilidades-container-medium .habilidades-lista {
+  margin-top: 2px;
+}
+
+/* Link */
+.habilidad-link {
+  cursor: pointer;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.55);
+
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  font-weight: 800;
+  font-size: inherit;
+  line-height: 1.2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+}
+
+.habilidad-link:hover {
+  color: #ffe58a;
+}
+
+.habilidad-link:focus {
+  outline: none;
+}
+
+.habilidad-link:focus-visible {
+  outline: 2px solid rgba(255, 215, 92, 0.55);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .habilidad-item.has-tooltip .habilidad-tooltip {
+    transform: translate(-50%, -8px);
+    font-size: 1em;
+    padding: 12px 14px;
+    max-width: 94vw;
+  }
+
+  .habilidad-item.has-tooltip:hover .habilidad-tooltip,
+  .habilidad-item.has-tooltip:focus .habilidad-tooltip,
+  .habilidad-item.has-tooltip:focus-within .habilidad-tooltip {
+    transform: translate(-50%, -12px);
+  }
+
+  .habilidades-container {
+    padding: 8px 12px;
+  }
+
+  .habilidades-titulo {
+    font-size: 18px;
+  }
+
+  .habilidades-lista {
+    font-size: 16px;
+  }
+
+  .habilidad-item {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .habilidad-item.has-tooltip .habilidad-tooltip {
+    width: calc(100% - 16px);
+    max-width: 100%;
+  }
+
+}

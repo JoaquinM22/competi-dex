@@ -1,0 +1,71 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\DescMovimiento\DescMovimiento.css */
+
+.descmov-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.descmov-box {
+  width: 100%;
+  background: var(--panel, #1f2227);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Título "Descripción:" */
+.descmov-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* subrayado SOLO en "Descripción" */
+.descmov-underline {
+  text-decoration: underline;
+}
+
+/* Texto*/
+.descmov-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  margin:10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 14px;
+  background: var(--panel, #1f2227);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.marginArriba {
+  margin-top: 10px;
+}
+
+/* Tamaños */
+.descmov-container-small .descmov-title{ font-size: 16px; }
+.descmov-container-small .descmov-text{ font-size: 16px; }
+
+.descmov-container-normal .descmov-title{ font-size: 30px; }
+.descmov-container-normal .descmov-text{ font-size: 25px; }
+
+.descmov-container-large .descmov-title{ font-size: 20px; }
+.descmov-container-large .descmov-text{ font-size: 20px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .descmov-title {
+    font-size: 16px;
+  }
+
+  .descmov-text {
+    font-size: 20px !important;
+  }
+
+}

@@ -1,0 +1,115 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\GeneroPkm\GeneroPkm.css */
+
+/* Contenedor general */
+.genero-pkm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 15px;
+}
+
+/* Bloque compacto (texto + tarjeta) */
+.genero-pkm-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.genero-label-word {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+/* Tamaños */
+.genero-pkm-small {
+  font-size: 14px;
+}
+
+.genero-pkm-normal {
+  font-size: 18px;
+  padding: 12px 22px;
+}
+
+.genero-pkm-large {
+  font-size: 22px;
+  padding: 18px 35px;
+}
+
+.genero-pkm-small span {
+  font-size: 16px;
+}
+
+.genero-pkm-normal span {
+  font-size: 20px;
+}
+
+.genero-pkm-large span {
+  font-size: 24px;
+}
+
+/* Tarjeta visual del género */
+.tarjeta-genero {
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: white;
+  gap: 6px;
+}
+
+/* Texto principal */
+.texto-genero {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Texto para Pokémon sin género */
+.texto-sin-genero {
+  color: #bbb;
+  font-style: italic;
+}
+
+.genderForma {
+  margin-left: 4px;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+.genderForma.maleForma {
+  color: #3498db; /* azul */
+}
+
+.genderForma.femaleForma {
+  color: #e74c3c; /* rosa */
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .genero-pkm {
+    justify-content: center;
+  }
+
+  .genero-pkm-info {
+    font-size: 16px;
+    gap: 5px;
+  }
+
+  .tarjeta-genero {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+  
+}

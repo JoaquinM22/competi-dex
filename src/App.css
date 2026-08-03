@@ -1,0 +1,48 @@
+/** src\App.css */
+
+.App {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #323741; 
+  background-image: var(--app-bg-image);
+  background-repeat: repeat;
+  background-size: 75px; 
+  background-position: center;
+  color: white;
+  overflow-x: clip;
+  --app-footer-height: 56px;
+}
+
+.headerWrapper {
+  width: 100%;
+  background-color: #282c34;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.contenidoApp {
+  width: 90%;
+  max-width: none;
+  margin: 0 auto;
+  flex: 1 0 auto;
+}
+
+.competidexArrowIcon {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 1em;
+  flex: none;
+  color: #ffffff;
+  fill: #ffffff;
+}
+
+@media (max-width: 600px) {
+
+  .contenidoApp {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,166 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\StatsMovimiento\StatsMovimiento.css */
+
+.statsmov-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: transparent;
+  border-radius: 20px;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* BLOQUE ICONO */
+.statsmov-top {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #2a2a2a;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Wrapper del icono */
+.statsmov-iconwrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statsmov-icon {
+  display: block;
+  width: 100%;
+  height: auto;      
+  max-width: 100%;
+  max-height: 100%;   
+  object-fit: contain;
+}
+
+/* Placeholder si no hay icono */
+.statsmov-icon-placeholder {
+  width: 100%;
+  height: 220px;
+  background: #2a2a2a;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GRID STATS */
+.statsmov-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.statsmov-row {
+  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.statsmov-label {
+  font-size: 25px;
+}
+
+/* Subrayado SOLO en los labels Potencia/Precisión */
+.statsmov-label--underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.statsmov-value {
+  font-size: 40px;
+  line-height: 1;
+  min-width: 44px;
+  text-align: right;
+}
+
+/* Bloque del tipo entre icono y stats */
+.statsmov-typeRow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0 10px 0;
+}
+
+.statsmov-typeRow .tipo-boton {
+  width: auto;
+  max-width: max-content;
+  flex: 0 0 auto;
+}
+
+.statsmov-typeRow .tipo-contenido {
+  width: auto;
+}
+
+.statsmov-typeRow .tipo-nombre {
+  text-align: left;
+}
+
+/* TAMAÑOS */
+.statsmov-container-small  { font-size: 14px; }
+.statsmov-container-normal { font-size: 18px; }
+.statsmov-container-large  { font-size: 22px; }
+
+.statsmov-container-small .statsmov-top  { height: 150px; }
+.statsmov-container-normal .statsmov-top { height: 240px; }
+.statsmov-container-large .statsmov-top  { height: 300px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .statsmov-container {
+    margin-bottom: 8px;
+  }
+
+  .statsmov-top {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .statsmov-label {
+    font-size: 22px;
+  }
+
+  .statsmov-value {
+    font-size: 24px;
+  }
+
+  .statsmov-row {
+    padding: 10px 12px;
+  }
+ 
+  .statsmov-container-normal .statsmov-top {
+    height: 140px;
+  }
+
+  .statsmov-typeRow .tipo-boton-large {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+}

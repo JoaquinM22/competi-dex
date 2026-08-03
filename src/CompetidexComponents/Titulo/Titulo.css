@@ -1,0 +1,17 @@
+/** src\CompetidexComponents\Titulo\Titulo.css */
+
+/* Logo */
+.logo {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 600px) {
+  
+  .logo {
+    max-width: 200px;
+  }
+
+}

@@ -1,0 +1,138 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\IndiceCapturaPkm\IndiceCapturaPkm.css */
+
+/* Contenedor principal */
+.captura-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fila interna: label a la izquierda, valor a la derecha */
+.captura-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.captura-label {
+  white-space: nowrap;
+}
+
+.captura-label-word {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+/* Bloque derecho: número + chip de dificultad */
+.captura-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.captura-valor-num {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.captura-valor {
+  font-weight: 600;
+}
+
+/* Colores por dificultad */
+.captura-tag.tier-very-easy { background: #2e7d32; }
+.captura-tag.tier-easy { background: #66bb6a; }
+.captura-tag.tier-normal { background: #ffa000; }
+.captura-tag.tier-bit-hard { background: #ff7043; }
+.captura-tag.tier-hard { background: #f4511e; }
+.captura-tag.tier-very-hard { background: #c62828; }
+
+.captura-desconocido {
+  opacity: 0.8;
+}
+
+/* Tamaños */
+.captura-contenedor-small {
+  font-size: 15px;
+  padding: 7px 14px;
+}
+
+.captura-contenedor-small .captura-tag {
+  font-size: 13px;
+}
+
+.captura-contenedor-medium {
+  font-size: 17px;
+  padding: 11px 20px;
+}
+
+.captura-contenedor-medium .captura-tag {
+  font-size: 14px;
+}
+
+.captura-contenedor-normal {
+  font-size: 19px;
+  padding: 13px 24px;
+}
+
+.captura-contenedor-normal .captura-tag {
+  font-size: 15px;
+}
+
+.captura-contenedor-large {
+  font-size: 23px;
+  padding: 19px 38px;
+}
+
+.captura-contenedor-large .captura-tag {
+  font-size: 17px;
+}
+
+/* Chip de dificultad (base) */
+.captura-tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #ffffff;
+  background: #555;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+
+  .captura-contenedor {
+    padding: 10px 16px;
+  }
+
+  .captura-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .captura-label {
+    white-space: normal;
+  }
+
+  .captura-right {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+}

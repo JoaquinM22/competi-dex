@@ -1,0 +1,713 @@
+/** src\CompetidexComponents\AreaLocalizacionComponents\AreaLocalizacion\AreaLocalizacion.css */
+
+.al-wrapper {
+    margin: 0 clamp(8px, 1.2vw, 16px);
+}
+
+.al-card {
+    background: var(--panel, #1f2227);
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    padding: 12px;
+    color: #e7ecf4;
+}
+
+.al-stateBox,
+.al-emptyState {
+    text-align: center;
+    margin: 8px 0 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: #1f2329;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #d9dee7;
+}
+
+.al-stateBox.al-error {
+    border-color: rgba(255, 90, 90, 0.35);
+    color: #ffb3b3;
+}
+
+.cargandoContAreaLocalizacion {
+    background:var(--panel, #1f2227);
+    border-radius:25px;
+    box-shadow:0 6px 24px rgba(0,0,0,.25);
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:20px;
+    margin:8px 0 0;
+}
+
+.loading-textAreaLocalizacion {
+    font-size:20px;
+    font-weight:bold;
+    color:#FFD700;
+    text-shadow:2px 2px 5px rgba(0,0,0,.6);
+    margin:0;
+}
+
+.pikachu-spinnerAreaLocalizacion {
+    width:60px;
+    height:auto;
+}
+
+/* Tabs de generaciones */
+.al-tabsShell {
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 12px;
+}
+
+.al-tabArrow {
+    height: 36px;
+    width: 32px;
+    border: 0;
+    border-radius: 10px;
+    background: #23272f;
+    color: #cfd6e4;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.al-tabArrow:hover {
+    background: #2b3139;
+}
+
+.al-tabArrow.disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.al-tabArrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.al-tabArrow:disabled:hover {
+    background: #23272f;
+}
+
+.al-tabsRail {
+    display: flex;
+    gap: 8px;
+    overflow: hidden;
+    padding: 2px;
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 16px,
+        #000 calc(100% - 16px),
+        transparent 100%
+    );
+  
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 16px,
+        #000 calc(100% - 16px),
+        transparent 100%
+    );
+}
+
+.al-generationTab {
+    flex: 0 0 auto;
+    width: max-content;
+    min-width: max-content;
+    height: 54px;
+    padding: 0 12px;
+    border: 1px solid #2b2f3a;
+    border-radius: 14px;
+    background: linear-gradient(#2a2e35, #23262b);
+    color: #cfd6e0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: transform 0.12s, background 0.12s, border-color 0.12s, box-shadow 0.12s;
+    position: relative;
+    gap: 0;
+    overflow: visible;
+    white-space: nowrap;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04);
+}
+
+.al-generationTab:hover {
+    transform: translateY(-1px);
+    background: #2b3139;
+    border-color: #3a4254;
+    color: #ffffff;
+}
+
+.al-generationTab.active {
+    background: linear-gradient(180deg, rgba(255, 214, 92, 0.16), rgba(255, 214, 92, 0.06) 60%, rgba(255, 255, 255, 0.02));
+    color: #ffd75c;
+    border-color: rgba(255, 215, 92, 0.45);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 0 1px rgba(255, 215, 92, 0.10),
+        0 0 14px rgba(255, 215, 92, 0.22);
+    text-shadow: 0 0 8px rgba(255, 215, 92, 0.18);
+}
+
+.al-generationTab.active:hover {
+    color: #ffe28a;
+    border-color: rgba(255, 215, 92, 0.62);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(255, 215, 92, 0.14),
+        0 0 18px rgba(255, 215, 92, 0.28);
+}
+
+.al-generationTab.noData {
+    opacity: 0.58;
+    filter: grayscale(0.35) brightness(0.92);
+    box-shadow: none;
+    border-color: #303643;
+}
+
+.al-generationTab.noData .al-generationIcon {
+    opacity: 0.72;
+    filter: grayscale(0.55) brightness(0.95);
+}
+
+.al-generationTab.noData:hover {
+    transform: none;
+    background: linear-gradient(#2a2e35, #23262b);
+    border-color: #303643;
+}
+
+.al-generationContent {
+    width: max-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.al-generationIcon {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.08));
+}
+
+.al-generationFallback {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.al-generationLabel {
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.al-generationTab.active .al-generationLabel {
+    color: inherit;
+}
+
+.al-srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Juegos */
+.al-gamesPanel {
+    display: grid;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.al-gamesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 2px 2px;
+}
+
+.al-gameButton {
+    border: 1px solid #2b2f3a;
+    background: linear-gradient(#2a2e35, #23262b);
+    color: #cfd6e0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.12s, background 0.12s, color 0.12s, border-color 0.12s;
+    font-weight: 700;
+}
+
+.al-gameButton:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+    background: #2b3139;
+}
+
+.al-gameButton.active {
+    background: linear-gradient(#333842, #2a2f38);
+    color: #ffd75c;
+    border-color: #4f5b73;
+    box-shadow: inset 0 0 0 1px rgba(255, 215, 92, 0.08);
+}
+
+.al-gamesEmpty {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+/* Buscador */
+.al-findBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 10px 12px;
+    margin: 4px 0 8px;
+
+    background: #1f2329;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 14px;
+}
+
+.al-findLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.al-findLabel {
+    font-weight: 800;
+    color: #ffd75c;
+    white-space: nowrap;
+}
+
+.al-findInput {
+    flex: 1;
+    min-width: 180px;
+    background: #161b22;
+    color: #e8ecf1;
+    border: 1px solid #2a3340;
+    border-radius: 10px;
+    padding: 10px 10px;
+    outline: none;
+}
+
+.al-findInput:focus {
+    border-color: rgba(255,215,92,0.65);
+    box-shadow: 0 0 0 3px rgba(255,215,92,0.12);
+}
+
+.al-findRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.al-findCount {
+    font-weight: 800;
+    color: rgba(255,255,255,0.7);
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(0,0,0,0.18);
+}
+
+.al-findCount.has {
+    color: #ffffff;
+    border-color: rgba(255,215,92,0.25);
+}
+
+.al-findBtn {
+    background: #161b22;
+    border: 1px solid #2a3340;
+    color: #cfd7e6;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.al-findBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.al-findBtn:hover {
+    color: #ffffff;
+    border-color: rgba(255,215,92,0.35);
+}
+
+.al-findBtn.clear:hover {
+    border-color: rgba(255,90,90,0.45);
+}
+
+/* Orden */
+.al-ordenInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #ddd;
+    flex-wrap: wrap;
+}
+
+.al-ordenItem {
+    color: #ffd700 !important;
+    font-weight: 500;
+}
+
+.al-ordenHint {
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+}
+
+.al-ordenActions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.al-clearSortBtn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #eee;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.al-clearSortBtn:hover {
+    background: rgba(255,255,255,0.15);
+    transform: scale(1.05);
+}
+
+.al-clearSortBtn:active {
+    transform: scale(0.98);
+}
+
+.al-clearSortBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Tabla */
+.al-tableScroll {
+    max-height: min(62vh, 620px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 10px;
+    padding: 0 14px 0 0;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    scrollbar-color: #6b6b6b #1f2329;
+}
+
+.al-tableScroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.al-tableScroll::-webkit-scrollbar-track {
+    background: #1f2329;
+    border-radius: 8px;
+}
+
+.al-tableScroll::-webkit-scrollbar-thumb {
+    background: #6b6b6b;
+    border-radius: 8px;
+    border: 2px solid #1f2329;
+}
+
+.al-tableScroll::-webkit-scrollbar-thumb:hover {
+    background: #8a8a8a;
+}
+
+.al-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    background: #1f2329;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.al-table th + th,
+.al-table td + td {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.al-table thead th {
+    text-align: center;
+    font-weight: 800;
+    color: #ffd75c;
+    background: #2a2e35;
+    padding: 10px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.al-table thead th:first-child {
+    border-top-left-radius: 18px;
+}
+
+.al-table thead th:last-child {
+    border-top-right-radius: 18px;
+}
+
+.al-table tbody tr {
+    background-color: #1f2329;
+}
+
+.al-table tbody tr:nth-child(even) {
+    background-color: #242a32;
+}
+
+.al-table tbody td {
+    padding: 10px 12px;
+    color: #d9dee7;
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: inherit;
+    background-clip: padding-box;
+}
+
+.al-table tbody tr:hover {
+    background-color: #343f4b;
+}
+
+.al-locationNameCell {
+    text-align: left;
+    font-weight: 700;
+    color: #ffd75c;
+}
+
+.al-chanceCell {
+    text-align: center;
+    font-weight: 700;
+}
+
+.al-sortIcon {
+  font-size: 0.7rem;
+  margin-left: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  color: #ccc;
+  transform: rotate(45deg);
+}
+
+.al-sortIcon .competidexArrowIcon {
+  color: inherit;
+  fill: currentColor;
+  transition: transform 0.2s ease, color 0.2s ease, fill 0.2s ease;
+  transform-origin: center;
+}
+
+.al-sortIcon.up .competidexArrowIcon {
+  transform: rotate(-90deg);
+  color: #ffd700 !important;
+  fill: #ffd700 !important;
+}
+
+.al-sortIcon.down .competidexArrowIcon {
+  transform: rotate(90deg);
+  color: #ffd700 !important;
+  fill: #ffd700 !important;
+}
+
+.al-findHit td {
+    background-color: rgba(255, 215, 92, 0.08) !important;
+}
+
+.al-findHit:last-child td:first-child,
+.al-findActive:last-child td:first-child {
+    border-bottom-left-radius: 18px;
+}
+
+.al-findHit:last-child td:last-child,
+.al-findActive:last-child td:last-child {
+    border-bottom-right-radius: 18px;
+}
+
+.al-findActive {
+    outline: 2px solid rgba(255, 215, 92, 0.55);
+    outline-offset: -2px;
+    border-radius: 18px;
+}
+
+.al-findActive td:first-child {
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.al-findActive td:last-child {
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.al-emptyRow {
+    padding: 18px 14px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    
+    .al-table {
+        min-width: 620px;
+    }
+
+    .al-tableScroll {
+        max-height: min(58vh, 520px);
+        padding-right: 12px;
+    }
+
+    .al-generationTab {
+        height: 50px;
+        padding: 0 10px;
+    }
+
+    .al-generationIcon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .al-generationFallback {
+        width: 30px;
+        height: 30px;
+    }
+
+    .al-generationLabel {
+        font-size: 0.8rem;
+    }
+
+    .al-gamesHeader,
+    .al-findBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .al-findRight {
+        width: 100%;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 720px) {
+
+    .al-gamesList {
+        gap: 6px;
+    }
+
+    .al-gameButton {
+        padding: 9px 12px;
+    }
+
+    .al-ordenInfo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .al-ordenActions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 4px;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .al-tabsShell {
+        grid-template-columns: 28px 1fr 28px;
+        gap: 6px;
+    }
+
+    .al-generationTab {
+        padding: 0 9px;
+    }
+
+    .al-generationLabel {
+        font-size: 0.75rem;
+    }
+
+    .al-tabArrow {
+        width: 28px;
+        height: 32px;
+    }
+
+    .al-tableScroll {
+        max-height: min(54vh, 460px);
+        padding-right: 10px;
+    }
+
+    .al-findBar {
+        padding: 10px;
+    }
+
+    .al-findLeft {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .al-findInput {
+        min-width: 0;
+        width: 100%;
+    }
+
+}

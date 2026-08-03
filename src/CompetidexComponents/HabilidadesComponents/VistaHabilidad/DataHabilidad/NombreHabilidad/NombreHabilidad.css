@@ -1,0 +1,130 @@
+/** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\DataHabilidad\NombreHabilidad\NombreHabilidad.css */
+
+/* Contenedor principal */
+.contenedorID-NombreHab {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  color: white;
+  border-radius: 20px;
+  background: var(--panel, #202327);
+  padding: 6px 12px;
+  gap: 8px;
+  min-height: 60px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ID Habilidad */
+.idHab {
+  flex-shrink: 0;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #2a2a2a;
+  padding: 0 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+/* Nombre Habilidad */
+.nombreHabCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #2a2a2a;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+
+  color: white;
+  text-shadow:
+    -1px -1px 2px #000,
+     1px -1px 2px #000,
+    -1px  1px 2px #000,
+     1px  1px 2px #000;
+}
+
+/* Generacion Habilidad */
+.idGen_HabPkm {
+  flex-shrink: 0;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #2a2a2a;
+  
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+.idGen_HabPkm .gen-container {
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+  .contenedorID-NombreHab {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 4px;
+    padding: 5px 6px;
+  }
+
+  .idHab {
+    font-size: 14px;
+    padding: 0 6px;
+    margin: 0;
+  }
+
+  .idGen_HabPkm {
+    order: 3;
+    flex: 0 0 auto;
+    font-size: 14px;
+    padding: 2px 4px;
+    margin: 0;
+    align-items: center;
+  }
+
+  .nombreHabCard {
+    order: 2;
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 16px;
+    text-align: center;
+    padding: 0 6px;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+}

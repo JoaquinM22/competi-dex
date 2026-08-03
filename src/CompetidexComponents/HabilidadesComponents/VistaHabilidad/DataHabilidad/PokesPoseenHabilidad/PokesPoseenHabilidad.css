@@ -1,0 +1,1099 @@
+/** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\DataHabilidad\PokesPoseenHabilidad\PokesPoseenHabilidad.css */
+
+.pph-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.pph-panel {
+  background: var(--panel, #1f2227);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  padding: 14px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.pph-titleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pph-titleActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.pph-titleGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.pph-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.35);
+}
+
+.pph-totalCount {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.28);
+  white-space: nowrap;
+}
+
+.pph-modalTopMeta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 10px;
+}
+
+.pph-loadingMini {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Panel "Orden actual" */
+.pph-orden-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin: 10px 0 10px;
+  background: #1f2329;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: #d9dee7;
+}
+
+.pph-orden-item {
+  font-weight: 800;
+  color: #ffd75c;
+}
+
+.pph-orden-hint {
+  opacity: 0.85;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.pph-orden-actions {
+  display: flex;
+  align-items: center;
+}
+
+.pph-btn-clear-sort {
+  background: #161b22;
+  border: 1px solid #2a3340;
+  color: #cfd7e6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.pph-btn-clear-sort:hover {
+  color: #ffffff;
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+.pph-btn-open-table {
+  background: #161b22;
+  border: 1px solid rgba(255, 215, 92, 0.32);
+  color: #ffd75c;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform 0.14s ease, border-color 0.14s ease, color 0.14s ease, background-color 0.14s ease;
+}
+
+.pph-btn-open-table:hover {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.55);
+  transform: scale(1.15);
+}
+
+.pph-btn-open-table-icon {
+  color: #ffffff;
+  font-size: 1.25em;
+  vertical-align: middle;
+}
+
+/* Filtro */
+.pph-filterBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #1f2329;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+}
+
+.pph-filterLabel {
+  font-weight: 800;
+  color: #ffd75c;
+  white-space: nowrap;
+}
+
+.pph-filterBtn {
+  background: #161b22;
+  border: 1px solid #2a3340;
+  color: #cfd7e6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.pph-filterBtn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.35);
+}
+
+.pph-filterBtn.active {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 215, 92, 0.10);
+}
+
+.pph-filterDropdown {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pph-filterPick {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background-color: #1f2227;
+  color: #ffffff;
+
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.pph-filterPick:hover {
+  background-color: #3a3f49;
+}
+
+.pph-filterPick:focus {
+  border-color: rgba(255, 215, 92, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 215, 92, 0.12);
+}
+
+.pph-filterPick.isOpen {
+  border-color: rgba(255, 215, 92, 0.55);
+}
+
+.pph-filterPickText {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+.pph-filterMiniCaret {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  transform: rotate(135deg);
+  transition: transform .16s ease;
+  opacity: 0.95;
+}
+
+.pph-filterMiniCaret.isOpen {
+  transform: rotate(-45deg);
+}
+
+.pph-filterList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.pph-filterListInner {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px;
+  overscroll-behavior: contain;
+}
+
+.pph-filterListInner::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pph-filterListInner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pph-filterListInner::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+.pph-filterListInner::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+.pph-filterOpt {
+  width: 100%;
+  text-align: left;
+  max-width: 100%;
+  min-width: 0;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease;
+  box-sizing: border-box;
+  margin: 4px 0;
+  font-weight: 800;
+}
+
+.pph-filterOpt:hover {
+  background-color: #444;
+}
+
+.pph-filterOpt.selected {
+  background-color: rgba(255,215,92,0.12);
+  border: 1px solid rgba(255,215,92,0.25);
+}
+
+.pph-filterCount {
+  margin-left: auto;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Find bar */
+.pph-findBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #1f2329;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+}
+
+.pph-findLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.pph-findLabel {
+  font-weight: 800;
+  color: #ffd75c;
+  white-space: nowrap;
+}
+
+.pph-findInput {
+  flex: 1;
+  min-width: 180px;
+  background: #161b22;
+  color: #e8ecf1;
+  border: 1px solid #2a3340;
+  border-radius: 10px;
+  padding: 10px 10px;
+  outline: none;
+}
+
+.pph-findInput:focus {
+  border-color: rgba(255, 215, 92, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 215, 92, 0.12);
+}
+
+.pph-findRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pph-findCount {
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.pph-findCount.has {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.25);
+}
+
+.pph-findBtn {
+  background: #161b22;
+  border: 1px solid #2a3340;
+  color: #cfd7e6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.pph-findBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pph-findBtn:hover {
+  color: #ffffff;
+  border-color: #623a3a;
+}
+
+.pph-findBtn.clear:hover {
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+/* Table wrap */
+.pph-tableWrap {
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #1f2329;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+  text-align: center;
+}
+
+.pph-tableScrollWrap {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.pph-tableScrollWrap--modal {
+  max-height: min(58vh, 680px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+}
+
+.pph-tableScrollWrap--modal::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.pph-tableScrollWrap--modal::-webkit-scrollbar-track {
+  background: #1f2329;
+  border-radius: 999px;
+}
+
+.pph-tableScrollWrap--modal::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 999px;
+  border: 2px solid #1f2329;
+}
+
+.pph-tableScrollWrap--modal::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.pph-tableWrap-Contenedor {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #1f2329;
+  padding-top: 15px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-bottom: 15px !important;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+  text-align: center;
+}
+
+.pph-tableWrap--modal {
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.pph-modalContent {
+  padding: 0 12px 10px 12px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.pph-orden-info--compact {
+  flex-wrap: wrap;
+}
+
+.pph-orden-hint--compact {
+  white-space: normal;
+  line-height: 1.35;
+  flex: 1 1 280px;
+  text-align: center;
+}
+
+.pph-filterBar--compact {
+  flex-wrap: wrap;
+}
+
+.pph-filterCount--compact {
+  margin-left: 0;
+}
+
+.pph-tableWrap--modal .pph-orden-info,
+.pph-tableWrap--modal .pph-findBar {
+  margin: 0 0 10px;
+}
+
+.pph-tableWrap--modal .pph-table {
+  min-width: 100%;
+}
+
+.pph-tableWrap--modal .pph-table thead th {
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+
+.pph-tableWrap--modal .pph-table tbody td {
+  padding: 8px 10px;
+}
+
+.pph-tableWrap--modal .pph-spriteCell {
+  width: 140px;
+  min-width: 140px;
+}
+
+.pph-tableWrap--modal .pph-spriteCell .pokedexSpriteThumb {
+  width: 84px !important;
+  height: 84px !important;
+}
+
+.pph-tableWrap--modal .pph-nameBtn {
+  font-size: 16px;
+}
+
+.pph-tableWrap--modal .pph-types {
+  gap: 8px;
+}
+
+.pph-tableWrap--modal .pph-types .tipo-boton {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+.pph-tableWrap--modal .pph-types .tipo-icono {
+  width: 16px;
+  height: 16px;
+}
+
+.pph-tableWrap--modal .pph-findBar {
+  padding: 8px 10px;
+}
+
+.pph-tableWrap--modal .pph-findInput {
+  padding: 8px 9px;
+}
+
+.pph-table {
+  width: max-content;
+  min-width: 100%;
+  min-width: 1050px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+  background: #1f2329;
+  display: inline-table;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 215, 92, 0.22);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35) inset;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.pph-table th + th,
+.pph-table td + td {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.pph-table thead th {
+  text-align: center;
+  font-weight: 800;
+  background: #2a2e35;
+  color: #e9edf5;
+  padding: 10px 12px;
+  user-select: none;
+}
+
+.pph-table thead th:first-child {
+  border-top-left-radius: 14px;
+}
+
+.pph-table thead th:last-child {
+  border-top-right-radius: 14px;
+}
+
+/* Headers ordenables */
+.pphThSortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, transform 0.12s, color 0.12s;
+}
+
+.pphThSortable:hover {
+  background: #303640;
+  color: #ffffff;
+}
+
+.pphThSortable.sorted {
+  background: linear-gradient(#333842, #2a2f38);
+  color: #ffffff;
+  box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.pphThSortable.sorted.asc,
+.pphThSortable.sorted.desc {
+  outline: 1px solid rgba(255, 215, 0, 0.35);
+}
+
+.pph-table thead .pph-sort-icon {
+  font-size: 0.75rem;
+  margin-left: 6px;
+  display: inline-block;
+  transition: transform 0.2s;
+  color: #cfcfcf;
+  opacity: 0.9;
+  transform: rotate(45deg);
+}
+
+.pph-table thead .pph-sort-icon.up .competidexArrowIcon {
+  transform: rotate(-90deg);
+  color: #ffd700;
+  fill: #ffd700;
+}
+
+.pph-table thead .pph-sort-icon.down .competidexArrowIcon {
+  transform: rotate(90deg);
+  color: #ffd700;
+  fill: #ffd700;
+}
+
+/* zebra */
+.pph-table tbody tr {
+  background-color: #1f2329;
+}
+
+.pph-table tbody tr:nth-child(even) {
+  background-color: #242a32;
+}
+
+.pph-table tbody td {
+  padding: 10px 12px;
+  color: #d9dee7;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  vertical-align: middle;
+  background-clip: padding-box;
+  background-color: inherit;
+}
+
+.pph-table tbody tr:hover {
+  background-color: #343f4b;
+}
+
+.pph-table tbody tr:hover td {
+  background-color: inherit !important;
+}
+
+.pph-thSprite {
+  width: 180px;
+  min-width: 180px;
+}
+
+.pph-spriteCell {
+  width: 180px;
+  min-width: 180px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pph-spriteEmpty {
+  opacity: 0.55;
+}
+
+.pph-nameCell {
+  text-align: left;
+}
+
+.pph-nameBtn {
+  cursor: pointer;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.45);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.2;
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pph-nameBtn:hover {
+  color: #ffe58a;
+}
+
+.pph-typesCell {
+  text-align: center;
+}
+
+.pph-types {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.pph-typesEmpty {
+  opacity: 0.6;
+}
+
+/* habilidad */
+.pph-habCell {
+  text-align: center;
+}
+
+.pph-habTag {
+  display: inline-block;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.18);
+  color: #e8ecf1;
+}
+
+.pph-habTag.principal {
+  border-color: rgba(80, 200, 120, 0.35);
+}
+
+.pph-habTag.secundaria {
+  border-color: rgba(255, 215, 92, 0.35);
+}
+
+.pph-habTag.oculta {
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+.pph-empty {
+  padding: 18px 10px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/* highlight hits */
+.pph-table tbody tr.pphFindHit td {
+  background-color: rgba(255, 215, 92, 0.08) !important;
+}
+
+.pph-table tbody tr.pphFindActive td {
+  background-color: rgba(255, 215, 92, 0.14) !important;
+}
+
+.pph-table tbody tr.pphFindActive {
+  outline: 2px solid rgba(255, 215, 92, 0.55);
+  outline-offset: -2px;
+}
+
+/* última fila redondeada */
+.pph-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+
+.pph-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+
+/* Wrapper: texto + ícono */
+.pphNameWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pphNameText {
+  line-height: 1.2;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* Íconos género */
+.pphGenderIcon {
+  font-size: 1.15em;
+  vertical-align: middle;
+}
+
+.pphGenderIcon.male {
+  color: #3498db;
+}
+
+.pphGenderIcon.female {
+  color: #e74c3c;
+}
+
+/* responsive */
+@media (max-width: 860px) {
+
+  .pph-panel {
+    padding: 12px;
+  }
+
+  .pph-tableWrap {
+    padding: 8px;
+  }
+
+  .pph-table th,
+  .pph-table td {
+    white-space: nowrap;
+  }
+
+  .pph-table {
+    min-width: 980px;
+  }
+
+  .pph-orden-info {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .pph-orden-hint {
+    white-space: normal;
+    flex: 1 1 100%;
+    opacity: 0.8;
+  }
+
+  .pph-btn-open-table {
+    padding: 9px 12px;
+  }
+
+  .pph-btn-open-table-icon {
+    font-size: 1.15em;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .pph-findBar {
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .pph-findLeft {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .pph-findInput {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .pph-findRight {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pph-filterBar {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pph-filterLabel {
+    flex: 0 0 auto;
+  }
+
+  .pph-findBtn.clear {
+    margin-left: auto;
+  }
+
+  .pph-orden-hint {
+    display: none;
+  }
+
+  .pph-table {
+    min-width: 560px;
+  }
+
+  .pph-thSprite {
+    width: 96px;
+    min-width: 96px;
+  }
+
+  .pph-thName {
+    width: 170px;
+    min-width: 170px;
+  }
+
+  .pph-thTypes {
+    width: 170px;
+    min-width: 170px;
+  }
+
+  .pph-thHab {
+    width: 120px;
+    min-width: 120px;
+  }
+
+  .pph-spriteCell {
+    width: 96px;
+    min-width: 96px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .pph-spriteCell .pokedexSpriteThumb {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .pph-table thead th,
+  .pph-table tbody td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .pph-nameBtn {
+    font-size: 13px;
+    max-width: 100%;
+  }
+
+  .pph-types {
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pph-types::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pph-types .tipo-boton {
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+  }
+
+  .pph-types .tipo-boton-small {
+    font-size: 11px;
+    padding: 3px 7px;
+    gap: 4px;
+    border-width: 1px;
+    border-radius: 12px;
+  }
+
+  .pph-types .tipo-boton-small .tipo-icono {
+    width: 14px;
+    height: 14px;
+  }
+
+  .pph-tableWrap--modal .pph-orden-hint {
+    display: block;
+  }
+
+  .pph-tableWrap--modal .pph-filterBar {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pph-tableWrap--modal {
+    padding: 6px;
+  }
+
+  .pph-tableWrap--modal .pph-table {
+    min-width: 680px;
+  }
+
+  .pph-tableWrap--modal .pph-thSprite {
+    width: 96px;
+    min-width: 96px;
+  }
+
+  .pph-tableWrap--modal .pph-spriteCell {
+    width: 96px;
+    min-width: 96px;
+  }
+
+  .pph-tableWrap--modal .pph-spriteCell .pokedexSpriteThumb {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .pph-tableWrap--modal .pph-table thead th,
+  .pph-tableWrap--modal .pph-table tbody td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .pph-tableWrap--modal .pph-nameBtn {
+    font-size: 13px;
+  }
+
+  .pph-tableWrap--modal .pph-types {
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pph-tableWrap--modal .pph-types::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pph-tableWrap--modal .pph-types .tipo-boton {
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+  }
+
+  .pph-tableWrap--modal .pph-types .tipo-boton-small {
+    font-size: 11px;
+    padding: 3px 7px;
+    gap: 4px;
+    border-width: 1px;
+    border-radius: 12px;
+  }
+
+  .pph-tableWrap--modal .pph-types .tipo-boton-small .tipo-icono {
+    width: 14px;
+    height: 14px;
+  }
+
+}
+
+@media (max-width: 380px) {
+
+  .pph-findBtn {
+    padding: 8px 9px;
+  }
+
+  .pph-findCount {
+    padding: 6px 8px;
+  }
+
+  .pph-table {
+    min-width: 520px;
+  }
+
+  .pph-thSprite {
+    width: 84px;
+    min-width: 84px;
+  }
+
+  .pph-thName,
+  .pph-thTypes {
+    width: 160px;
+    min-width: 160px;
+  }
+
+  .pph-spriteCell {
+    width: 84px;
+    min-width: 84px;
+  }
+
+  .pph-spriteCell .pokedexSpriteThumb {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .pph-nameBtn {
+    font-size: 12px;
+  }
+
+  .pph-types .tipo-boton-small {
+    font-size: 11px;
+    padding: 3px 7px;
+    width: auto !important;
+  }
+
+  .pph-tableWrap--modal .pph-table {
+    min-width: 720px;
+  }
+
+}

@@ -1,0 +1,874 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\PokesAprendenMovimiento\PokesAprendenMovimiento.css */
+
+.pam-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.pam-panel {
+  background: var(--panel, #1f2227);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  padding: 14px;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+}
+
+.pam-titleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pam-titleActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.pikachu-spinnerMovsAprendenMov {
+  width: 13px;
+  height: auto;
+}
+
+.pam-titleGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.pam-totalCount {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.28);
+  white-space: nowrap;
+}
+
+.pam-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.35);
+}
+
+.pam-loadingMini {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Panel "Orden actual" */
+.pam-orden-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin: 10px 0 10px;
+  background: #1f2329;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: #d9dee7;
+}
+
+.pam-orden-item {
+  font-weight: 800;
+  color: #ffd75c;
+}
+
+.pam-orden-hint {
+  opacity: 0.85;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.pam-orden-actions {
+  display: flex;
+  align-items: center;
+}
+
+.pam-btn-clear-sort {
+  background: #161b22;
+  border: 1px solid #2a3340;
+  color: #cfd7e6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.pam-btn-clear-sort:hover {
+  color: #ffffff;
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+.pam-btn-open-table {
+  background: #161b22;
+  border: 1px solid rgba(255, 215, 92, 0.32);
+  color: #ffd75c;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.pam-btn-open-table:hover {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.55);
+  transform: scale(1.15);
+}
+
+.pam-btn-open-table-icon {
+  color: #ffffff;
+  font-size: 1.25em;
+  vertical-align: middle;
+}
+
+/* Find bar  */
+.pam-findBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #1f2329;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+}
+
+.pam-findLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.pam-findLabel {
+  font-weight: 800;
+  color: #ffd75c;
+  white-space: nowrap;
+}
+
+.pam-findInput {
+  flex: 1;
+  min-width: 180px;
+  background: #161b22;
+  color: #e8ecf1;
+  border: 1px solid #2a3340;
+  border-radius: 10px;
+  padding: 10px 10px;
+  outline: none;
+}
+
+.pam-findInput:focus {
+  border-color: rgba(255, 215, 92, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 215, 92, 0.12);
+}
+
+.pam-findRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pam-findCount {
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.pam-findCount.has {
+  color: #ffffff;
+  border-color: rgba(255, 215, 92, 0.25);
+}
+
+.pam-findBtn {
+  background: #161b22;
+  border: 1px solid #2a3340;
+  color: #cfd7e6;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.pam-findBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pam-findBtn:hover {
+  color: #ffffff;
+  border-color: #623a3a;
+}
+
+.pam-findBtn.clear:hover {
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+/* Table wrap */
+.pam-tableWrap {
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #1f2329;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+  text-align: center;
+}
+
+.pam-tableWrap-contenedor {
+  border-radius: 16px;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #1f2329;
+  padding-top: 15px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-bottom: 15px !important;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+  text-align: center;
+}
+
+.pam-tableWrap-contenedor-bordeColor {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+}
+
+.pam-tableWrap--modal {
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.pam-modalContent {
+  padding: 0 12px 10px 12px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.pam-tableWrap--modal .pam-table {
+  min-width: 100%;
+}
+
+.pam-tableWrap--modal .pam-table thead th {
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+
+.pam-tableWrap--modal .pam-table tbody td {
+  padding: 8px 10px;
+}
+
+.pam-tableWrap--modal .pam-spriteCell {
+  width: 140px;
+  min-width: 140px;
+}
+
+.pam-tableWrap--modal .pam-spriteCell .pokedexSpriteThumb {
+  width: 84px !important;
+  height: 84px !important;
+}
+
+.pam-tableWrap--modal .pam-nameBtn {
+  font-size: 16px;
+}
+
+.pam-tableWrap--modal .pam-types {
+  gap: 8px;
+}
+
+.pam-tableWrap--modal .pam-types .tipo-boton {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+.pam-tableWrap--modal .pam-types .tipo-icono {
+  width: 16px;
+  height: 16px;
+}
+
+.pam-modalTopMeta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 10px;
+}
+
+.pam-tableWrap--modal .pam-orden-info,
+.pam-tableWrap--modal .pam-findBar {
+  margin: 0 0 10px;
+}
+
+.pam-tableWrap--modal .pam-findBar--compact {
+  background: #1f2329;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.pam-tableScrollWrap {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.pam-tableScrollWrap--modal {
+  max-height: min(58vh, 680px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #1f2329;
+}
+
+.pam-tableScrollWrap--modal::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.pam-tableScrollWrap--modal::-webkit-scrollbar-track {
+  background: #1f2329;
+  border-radius: 8px;
+}
+
+.pam-tableScrollWrap--modal::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #1f2329;
+}
+
+.pam-tableScrollWrap--modal::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.pam-orden-info--compact {
+  flex-wrap: wrap;
+}
+
+.pam-orden-hint--compact {
+  white-space: normal;
+  line-height: 1.35;
+  flex: 1 1 280px;
+  text-align: center;
+}
+
+.pam-tableWrap--modal .pam-findBar {
+  padding: 8px 10px;
+}
+
+.pam-tableWrap--modal .pam-findInput {
+  padding: 8px 9px;
+}
+
+.pam-table {
+  width: max-content;
+  min-width: 100%;
+  min-width: 900px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+  background: #1f2329;
+  display: inline-table;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 215, 92, 0.22);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35) inset;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* separadores verticales */
+.pam-table th + th,
+.pam-table td + td {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* header */
+.pam-table thead th {
+  text-align: center;
+  font-weight: 800;
+  background: #2a2e35;
+  color: #e9edf5;
+  padding: 10px 12px;
+  user-select: none;
+}
+
+.pam-table thead th:first-child {
+  border-top-left-radius: 14px;
+}
+
+.pam-table thead th:last-child {
+  border-top-right-radius: 14px;
+}
+
+/* Headers ordenables */
+.pamThSortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, transform 0.12s, color 0.12s;
+}
+
+.pamThSortable:hover {
+  background: #303640;
+  color: #ffffff;
+}
+
+.pamThSortable.sorted {
+  background: linear-gradient(#333842, #2a2f38);
+  color: #ffffff;
+  box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.pamThSortable.sorted.asc,
+.pamThSortable.sorted.desc {
+  outline: 1px solid rgba(255, 215, 0, 0.35);
+}
+
+.pam-table thead .pam-sort-icon {
+  font-size: 0.75rem;
+  margin-left: 6px;
+  display: inline-block;
+  transition: transform 0.2s;
+  color: #cfcfcf;
+  opacity: 0.9;
+  transform: rotate(45deg);
+}
+
+.pam-table thead .pam-sort-icon.up .competidexArrowIcon {
+  transform: rotate(-90deg);
+  color: #ffd700;
+  fill: #ffd700;
+}
+
+.pam-table thead .pam-sort-icon.down .competidexArrowIcon {
+  transform: rotate(90deg);
+  color: #ffd700;
+  fill: #ffd700;
+}
+
+/* zebra */
+.pam-table tbody tr {
+  background-color: #1f2329;
+}
+
+.pam-table tbody tr:nth-child(even) {
+  background-color: #242a32;
+}
+
+/* celdas */
+.pam-table tbody td {
+  padding: 10px 12px;
+  color: #d9dee7;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  vertical-align: middle;
+  background-clip: padding-box;
+  background-color: inherit;
+}
+
+/* hover */
+.pam-table tbody tr:hover {
+  background-color: #343f4b;
+}
+
+.pam-table tbody tr:hover td {
+  background-color: inherit !important;
+}
+
+/* Columnas*/
+.pam-thSprite {
+  width: 180px;
+  min-width: 180px;
+}
+
+.pam-thName {
+  width: 360px;
+  min-width: 360px;
+}
+
+.pam-thTypes {
+  width: 360px;
+  min-width: 360px;
+}
+
+/* Sprite cell */
+.pam-spriteCell {
+  width: 180px;
+  min-width: 180px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pam-spriteEmpty {
+  opacity: 0.55;
+}
+
+/* Name cell */
+.pam-nameCell {
+  text-align: left;
+}
+
+/* botón nombre (amarillo, clickeable) */
+.pam-nameBtn {
+  cursor: pointer;
+  color: #ffd75c;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.45);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.2;
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pam-nameBtn:hover {
+  color: #ffe58a;
+}
+
+/* Types cell */
+.pam-typesCell {
+  text-align: center;
+}
+
+.pam-types {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.pam-typesEmpty {
+  opacity: 0.6;
+}
+
+/* Empty row */
+.pam-empty {
+  padding: 18px 10px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/* Highlight hits + active match */
+.pam-table tbody tr.pamFindHit td {
+  background-color: rgba(255, 215, 92, 0.08) !important;
+}
+
+.pam-table tbody tr.pamFindActive td {
+  background-color: rgba(255, 215, 92, 0.14) !important;
+}
+
+.pam-table tbody tr.pamFindActive {
+  outline: 2px solid rgba(255, 215, 92, 0.55);
+  outline-offset: -2px;
+}
+
+.pam-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+
+.pam-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
+}
+
+/* Wrapper: texto + ícono */
+.pamNameWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pamNameText {
+  line-height: 1.2;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* Íconos género */
+.pamGenderIcon {
+  font-size: 1.15em;
+  vertical-align: middle;
+}
+
+.pamGenderIcon.male {
+  color: #3498db;
+}
+
+.pamGenderIcon.female {
+  color: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+
+  .pam-panel {
+    padding: 12px;
+  }
+
+  .pam-table th,
+  .pam-table td {
+    white-space: nowrap;
+  }
+
+  .pam-table {
+    min-width: 780px;
+  }
+
+  .pam-orden-info {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .pam-orden-hint {
+    white-space: normal;
+    flex: 1 1 100%;
+    opacity: 0.8;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .pam-panel {
+    padding: 10px;
+  }
+
+  .pam-titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .pam-titleGroup {
+    gap: 8px;
+  }
+
+  .pam-title {
+    font-size: 17px;
+  }
+
+  .pam-totalCount {
+    font-size: 13px;
+  }
+
+  .pam-loadingMini {
+    font-size: 12px;
+  }
+
+  .pam-titleActions {
+    display: none;
+  }
+
+  .pam-findBar {
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .pam-findLeft {
+    flex: 1 1 100%;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .pam-findInput {
+    min-width: 0; 
+    width: 100%;
+    padding: 8px 9px;
+    font-size: 13px;
+  }
+
+  .pam-findRight {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap; 
+    gap: 8px;
+  }
+
+  .pam-findCount {
+    order: 1;
+  }
+
+  .pam-findBtn {
+    order: 2;
+  }
+
+  .pam-findBtn.clear {
+    margin-left: auto;
+  }
+
+  .pam-orden-info {
+    padding: 8px 10px;
+    margin: 8px 0;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .pam-orden-hint {
+    display: none;
+  }
+
+  .pam-btn-clear-sort {
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+
+  .pam-table {
+    min-width: 560px;
+  }
+
+  .pam-thSprite {
+    width: 96px;
+    min-width: 96px;
+  }
+
+  .pam-thName {
+    width: 170px;
+    min-width: 170px;
+  }
+
+  .pam-thTypes {
+    width: 170px;
+    min-width: 170px;
+  }
+
+  .pam-spriteCell {
+    width: 96px;
+    min-width: 96px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .pam-spriteCell .pokedexSpriteThumb {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .pam-table thead th,
+  .pam-table tbody td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .pam-nameBtn {
+    font-size: 13px;
+    max-width: 100%;
+  }
+
+  .pam-types {
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pam-types::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pam-types .tipo-boton {
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+  }
+
+  .pam-types .tipo-boton-small {
+    font-size: 11px;
+    padding: 3px 7px;
+    gap: 4px;
+    border-width: 1px;
+    border-radius: 12px;
+  }
+
+  .pam-types .tipo-boton-small .tipo-icono {
+    width: 14px;
+    height: 14px;
+  }
+
+  .pam-tableWrap--modal .pam-table {
+    min-width: 680px;
+  }
+
+  .pam-modalContent {
+    padding: 0 8px 8px 8px;
+  }
+
+}
+
+@media (max-width: 380px) {
+
+  .pam-findBtn {
+    padding: 8px 9px;
+  }
+
+  .pam-findCount {
+    padding: 6px 8px;
+  }
+
+  .pam-table {
+    min-width: 520px;
+  }
+
+  .pam-thSprite {
+    width: 84px;
+    min-width: 84px;
+  }
+
+  .pam-thName,
+  .pam-thTypes {
+    width: 160px;
+    min-width: 160px;
+  }
+
+  .pam-spriteCell {
+    width: 84px;
+    min-width: 84px;
+  }
+
+  .pam-spriteCell .pokedexSpriteThumb {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .pam-nameBtn {
+    font-size: 12px;
+  }
+
+  .pam-types .tipo-boton-small {
+    font-size: 11px;
+    padding: 3px 7px;
+    width: auto !important;
+  }
+
+}

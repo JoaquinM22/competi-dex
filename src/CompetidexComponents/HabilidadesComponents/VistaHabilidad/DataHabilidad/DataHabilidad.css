@@ -1,0 +1,108 @@
+/** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\DataHabilidad\DataHabilidad.css */
+
+.componente-VistaHabilidadJs {
+  background: #383b3f;
+  border-radius: 25px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  display: block;
+  overflow-anchor: none;
+}
+
+.loading-containerHabilidad,
+.error-containerHabilidad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.parteArriba-Habilidad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.contenidoPpal-Habilidad {
+  flex: 1 1 640px;
+  min-width: 320px;
+}
+
+.nombreID-desktop-Habilidad{
+  display: block;
+}
+
+.contenedorTituloSeccion-Habilidad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2a2a2a;
+  color: #ffffff;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.toggleDesc-Habilidad,
+.togglePokesPoseen-Habilidad {
+  background: none;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toggleDesc-Habilidad:hover,
+.togglePokesPoseen-Habilidad:hover {
+  transform: scale(1.2);
+}
+
+#descHabilidadId,
+#pokesPoseenHabilidadId {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;    
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+#descHabilidadId.visible,
+#pokesPoseenHabilidadId.visible {
+  opacity: 1;
+}
+
+#descHabilidadId.oculto,
+#pokesPoseenHabilidadId.oculto {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.iconoNormal-Habilidad {
+  display: inline-block;
+  transform: rotate(135deg);
+  transition: transform .3s ease;
+}
+
+.iconoRotado-Habilidad {
+  display: inline-block;
+  transform: rotate(-45deg);
+  transition: transform .3s ease; 
+  padding-right: 10px;
+}
+
+.tituloSeccion-Habilidad {
+  padding-left: 10px;
+}
+
+/* Responsive */
+@media (max-width:1402px) {
+
+  .contenidoPpal-Habilidad {
+    max-width: 100%;
+    align-self: stretch;
+  }
+ 
+}

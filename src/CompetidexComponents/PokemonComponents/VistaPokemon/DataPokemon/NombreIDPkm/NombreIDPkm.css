@@ -1,0 +1,123 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\NombreIDPkm\NombreIDPkm.css */
+
+/* Contenedor principal */
+.contenedorID-Nombre {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  color: white;
+  border-radius: 20px;
+  background-color: #2a2a2a;
+  padding: 6px 12px;
+  gap: 8px;
+  min-height: 60px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* ID Pokémon */
+.idPkm {
+  flex-shrink: 0;
+  font-size: 22px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #3a3a3a;
+  padding: 0 12px;
+}
+
+
+/* Nombre Pokémon */
+.nombrePkm {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;   
+  text-align: center;
+  border-radius: 10px;
+  background-color: #6a6969;
+  white-space: normal;    
+  word-break: break-word;
+  padding: 0 12px;
+  color: white;
+  text-shadow: 
+    -1px -1px 2px #000,
+      1px -1px 2px #000,
+    -1px  1px 2px #000,
+      1px  1px 2px #000;
+}
+
+
+/* Genero Pokémon (Si aplica) */
+.genderNId {
+  margin-left: 6px;
+  font-size: 1.2em;
+  vertical-align: middle;
+  stroke: black;
+  stroke-width: 30px;
+  paint-order: stroke;
+}
+
+.genderNId.maleNId {
+  color: #3498db;
+}
+
+.genderNId.femaleNId {
+  color: #e74c3c;
+}
+
+
+/* Sprite Pokémon */
+.spritePkmBox {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #3a3a3a;
+  padding: 0 10px;
+}
+
+.spritePkmBox .pokedexSpriteThumb{
+  width: 90px !important;
+  height: 90px !important;
+  margin: 0 !important;
+  display: block;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+
+  .contenedorID-Nombre {
+    flex-direction: row;   
+    align-items: stretch;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .idPkm {
+    font-size: 16px;   
+    padding: 0 8px;
+  }
+
+  .nombrePkm {
+    font-size: 18px;   
+    text-align: left;  
+    padding: 0 8px;
+  }
+
+  .spritePkmBox {
+    padding: 0 8px;
+  }
+
+  .spritePkmBox .pokedexSpriteThumb {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+}

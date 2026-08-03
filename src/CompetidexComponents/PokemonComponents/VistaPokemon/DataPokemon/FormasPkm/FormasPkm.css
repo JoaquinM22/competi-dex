@@ -1,0 +1,490 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\FormasPkm\FormasPkm.css */
+
+/* Contenedor general de la sección */
+.contenedor-formas {
+  padding: 10px;
+  display: grid;
+}
+
+/* Grilla de tarjetas */
+.contenedor-formas-filas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+/* Tarjeta */
+.forma-card {
+  background: var(--panel, #1f2227);
+  border-radius: 12px;
+  padding: 15px;
+  width: 360px;
+  color: #ffffff;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Imagen cuadrada */
+.contenedor-ImgPkm-Forma {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: transparent;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.forma-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Cada bloque del stack */
+.slot {
+  display: flex;
+  justify-content: center;
+}
+
+/* Título/nombre */
+.nombre-forma {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* Tipos (si hay 2+) */
+.contenedor-tiposForma {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Alineación de Color/Habilidades */
+.contenedorDatosFormaPkm,
+.contenedorColorFormaPkm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+/* Descripción */
+.descripcion-forma {
+  text-align: center;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #2a2a2a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+/* Iconos de género en el nombre */
+.genderForma {
+  margin-left: 6px;
+  font-size: 1.15em;
+  vertical-align: middle;
+}
+
+.genderForma.maleForma {
+  color: #3498db;
+}
+
+.genderForma.femaleForma {
+  color: #e74c3c;
+}
+
+/* Solo para el bloque del nombre de la forma */
+.nombresitoForma {
+  padding-top: 15px;
+}
+
+/* Aumenta el tamaño SOLO dentro de ese bloque */
+.nombresitoForma .nombre-forma {
+  font-size: 25px;
+  line-height: 1.15;
+}
+
+.forma-card > * {
+  margin: 0;
+}
+
+.forma-card .contenedor-tiposForma,
+.forma-card .contenedorColorFormaPkm,
+.forma-card .contenedorDatosFormaPkm {
+  margin: 0 !important;
+}
+
+.forma-card *:where(h1,h2,h3,p,div,section) {
+  margin-block: 0;
+}
+
+/* Contenedor de tipos en formas (cuando hay dos, en columna) */
+.contenedor-tiposForma.tipos-dobles {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.contenedor-tiposForma:not(.tipos-dobles) {
+  flex-direction: row;
+}
+
+/* Contenedor de descripciones fuera de las tarjetas */
+.contenedor-descripciones {
+  text-align: left;
+  margin: 10px 6px 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.descripcion-externa {
+  text-align: left;
+}
+
+/* fila sprite + descripción */
+.descripcion-row {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  align-items: center;
+  gap: 10px;
+  background-color: #2a2a2a;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 10px;
+}
+
+/* contenedor del sprite */
+.descripcion-sprite{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.descripcion-sprite .pokedexSpriteThumb {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+/* Título subrayado palabra por palabra (y ":" sin subrayado) */
+.desc-titulo {
+  font-weight: 700;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1.15;
+}
+
+.desc-titulo-word {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  display: inline-block;
+}
+
+.desc-gender-icon {
+  margin-left: 5px;
+  font-size: 1em;
+  line-height: 1;
+  vertical-align: middle;
+  transform: translateY(0.08em);
+}
+
+.desc-gender-icon--male {
+  color: #3498db;
+}
+
+.desc-gender-icon--female {
+  color: #e74c3c;
+}
+
+.desc-colon {
+  text-decoration: none;
+  margin-left: 2px;
+}
+
+.tipo-bg-forma {
+  width: var(--tipo-forma-item-width, 100%);
+  min-width: var(--tipo-forma-item-width, 100%);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+}
+
+.contenedor-tiposForma.tipos-dobles .tipo-bg-forma {
+  width: var(--tipo-forma-item-width, 100%);
+  min-width: var(--tipo-forma-item-width, 100%);
+  flex: 0 0 auto;
+}
+
+/* Nombre clickeable que navega a la forma/Pokémon correspondiente */
+.nombre-forma-clickable {
+  cursor: pointer;
+  color: #ffd75c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  text-shadow: 0 0 6px rgba(255, 215, 92, 0.55);
+}
+
+.nombre-forma-clickable:hover {
+  color: #ffe58a;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  
+  .descripcion-row {
+    grid-template-columns: 56px minmax(0, 1fr);
+    justify-items: stretch;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .descripcion-sprite .pokedexSpriteThumb{
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .descripcion-externa{
+    text-align: left;
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .contenedor-formas-filas {
+    gap: 12px;
+  }
+
+  .forma-card {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px;
+  }
+
+  .descripcion-forma {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .nombresitoForma .nombre-forma {
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .forma-card {
+    width: 45%;
+  }
+
+  .contenedor-tiposForma.tipos-dobles {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contenedor-tiposForma.tipos-dobles .tipo-bg-forma {
+    width: var(--tipo-forma-item-width, 100%);
+    min-width: var(--tipo-forma-item-width, 100%);
+    flex: 0 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .contenedor-formas-filas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .forma-card {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 auto;
+    height: auto;
+  }
+
+}
+
+/* Alcremie matrix */
+.alcremie-matrix-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.alcremie-matrix {
+  display: grid;
+  grid-template-columns: 220px repeat(7, minmax(150px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  min-width: 1280px;
+}
+
+.alcremie-corner {
+  min-height: 48px;
+}
+
+.alcremie-col-header,
+.alcremie-row-header {
+  background: var(--panel, #1f2227);
+  border-radius: 12px;
+  color: #ffffff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.alcremie-col-header {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.alcremie-row-header {
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.alcremie-row-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  width: 100%;
+}
+
+.alcremie-row-header-color {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alcremie-cell {
+  min-height: 210px;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.alcremie-empty-cell {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+  background: var(--panel, #1f2227);
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.forma-card--mini {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  padding: 12px 12px 14px;
+  gap: 8px;
+}
+
+.forma-card--mini .contenedor-ImgPkm-Forma {
+  width: 100%;
+  max-width: 150px;
+  margin: 0 auto;
+}
+
+.forma-card--mini .nombresitoForma {
+  padding-top: 4px;
+}
+
+.forma-card--mini .nombre-forma {
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.forma-card--mini .alcremie-mini-name {
+  font-size: 13px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.alcremie-mini-sprite {
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 900px) {
+  .alcremie-matrix {
+    min-width: 1180px;
+    grid-template-columns: 200px repeat(7, minmax(140px, 1fr));
+  }
+
+  .alcremie-row-header {
+    min-height: 190px;
+  }
+
+  .alcremie-cell {
+    min-height: 190px;
+  }
+}
+
+@media (max-width: 640px) {
+  .alcremie-matrix {
+    min-width: 1100px;
+    gap: 8px;
+  }
+
+  .alcremie-col-header {
+    font-size: 13px;
+  }
+
+  .alcremie-row-header-title {
+    font-size: 14px;
+  }
+}

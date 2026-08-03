@@ -1,0 +1,117 @@
+/** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\CriticoMovimiento\CriticoMovimiento.css */
+
+.critmov-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.critmov-row {
+  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  position: relative;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* título subrayado SOLO en la palabra */
+.critmov-underline {
+  text-decoration: underline;
+}
+
+.critmov-label {
+  font-size: 25px;
+  text-align: left;
+}
+
+.critmov-value {
+  font-size: 30px;
+  line-height: 1;
+  min-width: 44px;
+  text-align: right;
+}
+
+.critmov-pct {
+  font-weight: 900;
+}
+
+.critmov-indice {
+  opacity: 0.9;
+}
+
+/* Tamaños */
+.critmov-container-small .critmov-label{ font-size: 16px; }
+.critmov-container-small .critmov-value{ font-size: 22px; }
+
+.critmov-container-normal .critmov-label{ font-size: 25px; }
+.critmov-container-normal .critmov-value{ font-size: 30px; }
+
+.critmov-container-large .critmov-label{ font-size: 20px; }
+.critmov-container-large .critmov-value{ font-size: 44px; }
+
+/* ---------- TOOLTIP ---------- */
+.critmov-row.has-tooltip .critmov-tooltip{
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 8px);
+
+  max-width: min(420px, 92vw);
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 9999;
+  white-space: normal;
+  text-align: center;
+}
+
+.critmov-row.has-tooltip .critmov-tooltip::after{
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: #0f1116;
+}
+
+.critmov-row.has-tooltip:hover .critmov-tooltip,
+.critmov-row.has-tooltip:focus .critmov-tooltip,
+.critmov-row.has-tooltip:focus-within .critmov-tooltip{
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 6px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .critmov-row {
+    padding: 10px 12px;
+  }
+
+  .critmov-label{
+    font-size: 14px;
+  }
+
+  .critmov-value{
+    font-size: 18px;
+  }
+
+}

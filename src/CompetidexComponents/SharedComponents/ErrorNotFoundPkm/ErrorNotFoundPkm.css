@@ -1,0 +1,81 @@
+/** src\CompetidexComponents\SharedComponents\ErrorNotFoundPkm\ErrorNotFoundPkm.css */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  min-height: 60vh;
+}
+
+.error-titulo {
+  font-size: 110px;
+  font-weight: bold;
+  color: #FFD700;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.error-subtitulo {
+  font-size: 45px;
+  font-weight: bold;
+  color: #FFD700;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.error-imagen {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.error-texto {
+  font-size: 20px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+  .error-titulo {
+    font-size: 80px;
+  }
+
+  .error-subtitulo {
+    font-size: 35px;
+  }
+
+  .error-imagen {
+    max-width: 300px;
+  }
+  .error-texto {
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .error-titulo {
+    font-size: 55px;
+  }
+
+  .error-subtitulo {
+    font-size: 28px;
+  }
+
+  .error-imagen {
+    max-width: 220px;
+  }
+
+  .error-texto {
+    font-size: 16px;
+  }
+  
+}

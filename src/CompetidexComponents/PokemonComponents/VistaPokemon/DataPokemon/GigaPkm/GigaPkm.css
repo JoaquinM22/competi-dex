@@ -1,0 +1,175 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\GigaPkm\GigaPkm.css */
+
+/* Contenedor principal */
+.contenedor-gigaPrincipal {
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* fila (sprite + descripción) */
+.descripcion-giga-row {
+  display: grid;
+  grid-template-columns: 76px 1fr; /* sprite | texto */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  background-color: #2a2a2a;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 10px;
+}
+
+/* SpriteModal */
+.descripcion-giga-sprite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.descripcion-giga-sprite .pokedexSpriteThumb {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+/* Descripción del movimiento */
+.descripcion-mov-giga {
+  text-align: left;
+  background-color: #2a2a2a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: white;
+  max-width: 100%;
+  font-size: 16px;
+  margin: 0;
+}
+
+.subrayadoGiga {
+  text-decoration: underline;
+}
+
+/* Card centrada */
+.contenedor-gigaCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.giga-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Título */
+.nombre-giga {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Texto inferior */
+.altura-giga { font-size: 18px; margin-bottom: 0; }
+.movimiento-giga { margin-top: 5px; font-size: 18px; }
+
+.giga-titulo { font-weight: 700; }
+.giga-titulo-word { text-decoration: underline; }
+.giga-colon { text-decoration: none; margin-left: 2px; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+
+  .giga-card {
+    padding: 15px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .nombre-giga {
+    font-size: 20px;
+  }
+
+  .altura-giga, .movimiento-giga {
+    font-size: 16px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .giga-card .fotoWrapper--custom {
+    width: 94vw !important;
+    height: 65vw !important;
+    aspect-ratio: 1 / 1 !important;
+    max-width: none !important;
+  }
+
+  .giga-card .fotoPkm {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .descripcion-giga-row {
+    grid-template-columns: 56px minmax(0, 1fr);
+    justify-items: stretch;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .descripcion-giga-sprite .pokedexSpriteThumb {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .contenedor-gigaPrincipal {
+    padding: 10px;
+  }
+
+  .giga-card {
+    padding: 10px;
+  }
+
+  .nombre-giga {
+    font-size: 18px;
+  }
+
+  .descripcion-mov-giga {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .altura-giga, .movimiento-giga {
+    font-size: 14px;
+  }
+
+}

@@ -1,0 +1,58 @@
+/** src\CompetidexComponents\SharedComponents\LoadingPkm\LoadingPkm.css */
+
+.loading-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+}
+
+.loading-container.inline {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 320px;
+  background: #1f2329;
+  border-radius: 18px;
+  z-index: auto;
+}
+
+.loading-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+.pikachu-spinner {
+  width: 80px;
+  height: auto;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  
+  .loading-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .loading-text {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .pikachu-spinner {
+    width: 60px;
+  }
+  
+}

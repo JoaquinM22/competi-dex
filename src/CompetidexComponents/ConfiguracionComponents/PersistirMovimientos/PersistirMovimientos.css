@@ -1,0 +1,216 @@
+/** src\CompetidexComponents\ConfiguracionComponents\PersistirMovimientos\PersistirMovimientos.css */
+
+.pmcfg-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: #282828;
+  border: 1px solid rgba(31, 30, 30, 0.6);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+}
+
+.pmcfg-row,
+.pmcfg-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pmcfg-left {
+  min-width: 240px;
+}
+
+.pmcfg-label {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.55), 0 0 6px rgba(0,0,0,0.25);
+}
+
+.pmcfg-label-highlight {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.35);
+}
+
+.pmcfg-status {
+  margin-top: 8px;
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.pmcfg-status.is-on {
+  background: rgba(57,217,138,0.18);
+  color: #39d98a;
+  border: 1px solid rgba(57,217,138,0.35);
+}
+
+.pmcfg-status.is-off {
+  background: rgba(255,107,107,0.16);
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.35);
+}
+
+.pmcfg-hint {
+  margin-top: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre-line;
+  max-width: 720px;
+}
+
+.pmcfg-btn {
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: transform 0.08s ease, filter 0.12s ease, opacity 0.12s ease;
+  user-select: none;
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.75);
+}
+
+.pmcfg-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.pmcfg-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.pmcfg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pmcfg-btn-on {
+  background: #39d98a;
+  color: #ffffff;
+}
+
+.pmcfg-btn-warn {
+  background: #ff2a00;
+  color: #ffffff;
+}
+
+.pmcfg-btn-warn:hover {
+  background: #a92e16;
+}
+
+.pmcfg-btn-danger {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(103, 107, 115, 0.26);
+  color: #ffffff;
+}
+
+.pmcfg-btn-danger:hover {
+  background: rgba(122, 128, 138, 0.34);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.pmcfg-btn-danger:active {
+  background: rgba(92, 97, 105, 0.32);
+}
+
+.pmcfg-btn-ghost {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+}
+
+.pmcfg-btn-primary {
+  background: #39d98a;
+  color: #ffffff;
+}
+
+.pmcfg-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6000;
+  padding: 16px;
+  box-sizing: border-box;
+  backdrop-filter: blur(6px);
+}
+
+.pmcfg-modal {
+  width: 100%;
+  max-width: 560px;
+  background: #1f2329;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+  overflow: hidden;
+}
+
+.pmcfg-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #2a2e35;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.pmcfg-modal-title {
+  color: #ffd700;
+  font-weight: 900;
+  font-size: 18px;
+  text-shadow: 0 0 10px rgba(255,215,0,0.12);
+}
+
+.pmcfg-modal-body {
+  position: relative;
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+.pmcfg-modal-message {
+  white-space: pre-line;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 40px;
+}
+
+.pmcfg-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.12);
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .pmcfg-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .pmcfg-modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pmcfg-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,74 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\NombreItem\NombreItem.css */
+
+/* Contenedor principal */
+.contenedorID-NombreItem {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  color: white;
+  border-radius: 20px;
+  background: var(--panel, #1f2227);
+  padding: 6px 12px;
+  gap: 8px;
+  min-height: 60px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ID Objeto */
+.idItem {
+  flex-shrink: 0;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #2a2a2a;
+  padding: 0 12px;
+}
+
+/* Nombre Objeto */
+.nombreItemCard {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  text-align: center;
+  border-radius: 10px;
+  background: #2a2a2a;
+  white-space: normal;
+  word-break: break-word;
+  padding: 0 12px;
+
+  color: white;
+  text-shadow:
+    -1px -1px 2px #000,
+     1px -1px 2px #000,
+    -1px  1px 2px #000,
+     1px  1px 2px #000;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+  .contenedorID-NombreItem {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .idItem {
+    font-size: 16px;
+    padding: 0 8px;
+  }
+
+  .nombreItemCard {
+    font-size: 18px;
+    text-align: left;
+    padding: 0 8px;
+  }
+  
+}

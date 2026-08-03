@@ -1,0 +1,173 @@
+/** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\DataItem.css */
+
+.componente-VistaItemJs {
+  background: #383b3f;
+  border-radius: 25px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  display: block;
+  overflow-anchor: none;
+}
+
+.loading-containerItem,
+.error-containerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.parteArriba-Item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+#arribaIzq-Item {
+  flex: 1 1 640px;
+  min-width: 320px;
+}
+
+#arribaDer-Item {
+  flex: 0 1 400px;
+  min-width: 280px;
+}
+
+.nombreID-mobile-Item {
+  display: none;
+}
+
+.paddingCelu-Item {
+  margin-bottom: 10px;
+}
+
+.nombreID-desktop-Item {
+  display: block;
+}
+
+.tarjetaInicialWrapper-Item {
+  background: var(--panel, #1f2227);
+  border-radius: 25px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  overflow: hidden;
+  min-height: 420px;
+}
+
+.tarjetaInicial-Item {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.tarjetaInicial-Item > * + * {
+  margin-top: 12px;
+}
+
+.tarjetaInicial-Item::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tarjetaInicial-Item::-webkit-scrollbar-track {
+  background: #1f2227;
+}
+
+.tarjetaInicial-Item::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+.tarjetaInicial-Item::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+.contenedorTituloSeccion-Item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2a2a2a;
+  color: #ffffff;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.toggleDesc-Item {
+  background: none;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toggleDesc-Item:hover {
+  transform: scale(1.2);
+}
+
+#descItemId {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+#descItemId.visible {
+  opacity: 1;
+}
+
+#descItemId.oculto {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.iconoNormal-Item {
+  display: inline-block;
+  transform: rotate(135deg);
+  transition: transform .3s ease;
+}
+
+.iconoRotado-Item {
+  display: inline-block;
+  transform: rotate(-45deg);
+  transition: transform .3s ease;
+  padding-right: 10px;
+}
+
+.tituloSeccion-Item {
+  padding-left: 10px;
+}
+
+@media (max-width: 1402px) {
+
+  .nombreID-desktop-Item {
+    display: none;
+  }
+
+  .nombreID-mobile-Item {
+    display: block;
+  }
+
+  #arribaDer-Item {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  #arribaIzq-Item {
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  #arribaDer-Item,
+  #arribaIzq-Item {
+    max-width: 100%;
+    align-self: stretch;
+  }
+
+}

@@ -1,0 +1,88 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\PesoYAlturaPkm\PesoYAlturaPkm.css */
+
+.info-contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 20px;
+    background-color: #2a2a2a;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-label-word {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+.info-icon {
+    color: white;
+    font-size: 28px;
+}
+
+/* Tamaños */
+.info-contenedor-small {
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+.info-contenedor-small .info-icon {
+    font-size: 20px;
+}
+
+
+.info-contenedor-medium {
+    font-size: 16px;
+    padding: 10px 18px;
+}
+
+.info-contenedor-medium .info-icon {
+    font-size: 24px;
+}
+
+
+.info-contenedor-normal {
+    font-size: 18px;
+    padding: 12px 22px;
+}
+
+.info-contenedor-normal .info-icon {
+    font-size: 28px;
+}
+
+
+.info-contenedor-large {
+    font-size: 22px;
+    padding: 18px 35px;
+}
+
+.info-contenedor-large .info-icon {
+    font-size: 35px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+  .info-contenedor {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-item {
+    justify-content: center;
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,291 @@
+/** src\CompetidexComponents\PokedexComponents\PokedexSelector\PokedexSelector.css */
+
+.pokedexSelBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1500;
+}
+
+.pokedexSelWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  height: 100%;
+  z-index: 2000;
+}
+
+.pokedexSelWrap.mobileFlyout {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  overflow: visible;
+}
+
+.pokedexSelBtn {
+  border-top: 0;
+  border-bottom: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  height: 100%;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pokedexSelText {
+  display: inline-flex;
+  align-items: center;
+  font-size: 17px;
+}
+
+.pokedexSelCaret {
+  display: inline-block;
+  font-size: 18px;
+  transform: rotate(135deg);
+  transition: transform .16s ease;
+  margin-top: 1px;
+}
+
+.pokedexSelCaret.isOpen {
+  transform: rotate(-45deg);
+}
+
+.pokedexSelMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 12px;
+  background-color: #2a2a2a;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.14);
+  z-index: 2000;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(100vw - 20px);
+  min-width: 400px;
+}
+
+.pokedexSelMenu.mobileFlyout {
+  position: static;
+  z-index: 6000;
+  width: calc(100% - 8px);
+  max-width: none;
+  min-width: 0;
+  overflow: visible;
+  box-sizing: border-box;
+  margin: 8px 4px 0;
+}
+
+.pokedexSelGrid {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pokedexSelField {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+.pokedexSelFieldLabel {
+  color: rgba(255,255,255,0.9);
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.pokedexSelPick {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+
+  background-color: #1f2227;
+  color: #ffffff;
+
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.pokedexSelPick:hover {
+  background-color: #3a3f49;
+}
+
+.pokedexSelPick:focus {
+  border-color: rgba(255,215,92,0.65);
+  box-shadow: 0 0 0 3px rgba(255,215,92,0.12);
+}
+
+.pokedexSelPick.isOpen {
+  border-color: rgba(255,215,92,0.55);
+}
+
+.pokedexSelPickText {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pokedexSelMiniCaret {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-block;
+  font-size: 16px;
+  transform: rotate(135deg);
+  transition: transform .16s ease;
+}
+
+.pokedexSelMiniCaret.isOpen {
+  transform: rotate(-45deg);
+}
+
+/* scrollbar */
+.pokedexSelList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background-color: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.pokedexSelListInner {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px;
+  overscroll-behavior: contain;
+  min-width: 0;
+}
+
+.pokedexSelListInner::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pokedexSelListInner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pokedexSelListInner::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+.pokedexSelListInner::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* Opción */
+.pokedexSelOpt {
+  width: 100%;
+  text-align: left;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 10px 10px;
+  border-radius: 10px;
+
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+
+  cursor: pointer;
+  transition: background-color .16s ease;
+
+  box-sizing: border-box;
+
+  margin: 4px 0;
+}
+
+.pokedexSelOpt:hover {
+  background-color: #444;
+}
+
+.pokedexSelOpt.selected {
+  background-color: rgba(255,215,92,0.12);
+  border: 1px solid rgba(255,215,92,0.25);
+}
+
+/* Botón Ver Pokédex */
+.pokedexSelGo {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: background-color .16s ease, transform .12s ease, border-color .16s ease, color .16s ease;
+}
+
+.pokedexSelGo:hover {
+  background-color: #3a3f49;
+  color: #ffe58a;
+  border-color: rgba(255,215,92,0.35);
+  transform: scale(1.02);
+}
+
+@media (max-width: 220px) {
+
+  .pokedexSelMenu.mobileFlyout {
+    width: calc(100% - 10px);
+    margin: 8px 5px 0;
+    padding: 10px;
+    overflow-x: hidden;
+  }
+
+  .pokedexSelPick {
+    padding: 10px 10px;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .pokedexSelFieldLabel {
+    font-size: 12px;
+  }
+
+  .pokedexSelGo {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+}

@@ -1,0 +1,105 @@
+
+/** src\CompetidexComponents\SharedComponents\GeneracionPkm\GeneracionPkm.css */
+
+.gen-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #2a2a2a;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.gen-container--icon-only {
+    gap: 0;
+    padding: 6px 8px;
+    line-height: 0;
+    margin-bottom: 0;
+}
+
+.gen-container--icon-only .gen-icon {
+    display: block;
+    margin: 0;
+}
+
+/* Texto */
+.gen-text {
+    text-transform: capitalize;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* Tamaños */
+.gen-container-small {
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+.gen-icon-small {
+    width: 30px;
+    height: 30px;
+}
+
+
+.gen-container-normal {
+    font-size: 18px;
+    padding: 12px 22px;
+}
+
+.gen-icon-normal {
+    width: 50px;
+    height: 50px;
+}
+
+
+.gen-container-large {
+    font-size: 22px;
+    padding: 18px 35px;
+}
+
+.gen-icon-large {
+    width: 70px;
+    height: 70px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+    .gen-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: 8px;
+        padding: 6px 10px;
+    }
+
+    .gen-container--icon-only {
+        gap: 0;
+        padding: 6px 8px;
+        margin-bottom: 0;
+    }
+
+    .gen-text {
+        font-size: 14px;
+        flex: unset;
+        min-width: auto;
+        text-align: center;
+    }
+
+    .gen-icon-small,
+    .gen-icon-normal,
+    .gen-icon-large {
+        width: 30px;
+        height: 30px;
+    }
+    
+}

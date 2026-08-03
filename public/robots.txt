@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Dominio de Competidex
+Sitemap: https://competidex.pages.dev/sitemap.xml
