@@ -581,13 +581,14 @@ export default function AreaLocalizacion({ areasLocalizacion = [] })
                                     <span className="al-findLabel">Buscar localización</span>
 
                                     <input
-                                        inputMode="text"
+                                        inputMode="search"
                                         enterKeyHint="search"
-                                        autoComplete="new-password"
+                                        type="search"
+                                        autoComplete="off"
                                         autoCorrect="off"
                                         autoCapitalize="none"
                                         spellCheck={false}
-                                        name="competidex-buscar-localizacion"
+                                        name="location-search"
                                         ref={findInputRef}
                                         className="al-findInput"
                                         value={findText}

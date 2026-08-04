@@ -312,13 +312,14 @@ function TypeSelect({
       <div className="cd-ability-box">
         <label className="cd-label">Buscar</label>
         <input
-          inputMode="text"
+          inputMode="search"
           enterKeyHint="search"
-          autoComplete="new-password"
+          type="search"
+          autoComplete="off"
           autoCorrect="off"
           autoCapitalize="none"
           spellCheck={false}
-          name="competidex-buscar-dyr"
+          name="dyr-ability-search-mobile"
           className="cd-input"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -681,13 +682,14 @@ export default function CalculadoraDebilidades()
                                 <div className="cd-ability-box">
                                     <label className="cd-label">Buscar</label>
                                     <input
-                                        inputMode="text"
+                                        inputMode="search"
                                         enterKeyHint="search"
-                                        autoComplete="new-password"
+                                        type="search"
+                                        autoComplete="off"
                                         autoCorrect="off"
                                         autoCapitalize="none"
                                         spellCheck={false}
-                                        name="competidex-buscar-dyr-hab"
+                                        name="dyr-ability-search"
                                         className="cd-input"
                                         value={abilitySearch}
                                         onChange={(e) => setAbilitySearch(e.target.value)}

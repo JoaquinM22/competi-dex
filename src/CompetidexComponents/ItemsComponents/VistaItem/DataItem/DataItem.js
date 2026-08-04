@@ -23,7 +23,7 @@ export default function DataItem({ item, loading, error })
     id,
     nombreApi,
     nombreItem,
-    precioItem,
+    preciosItem,
     categoriaItem,
     descItem,
     atributosItem
@@ -130,7 +130,7 @@ export default function DataItem({ item, loading, error })
                     />
 
                     <PrecioItem
-                      precioItem={precioItem}
+                      preciosItem={preciosItem}
                       size="normal"
                     />
 

@@ -655,13 +655,14 @@ export default function ListaMovimientosPkm({
           <span className="movsFindLabel">Buscar movimiento</span>
 
           <input
-            inputMode="text"
+            inputMode="search"
             enterKeyHint="search"
-            autoComplete="new-password"
+            type="search"
+            autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             spellCheck={false}
-            name="competidex-buscar-lista-movs"
+            name="pokemon-moves-search"
             ref={findInputRef}
             className="movsFindInput"
             value={findText}

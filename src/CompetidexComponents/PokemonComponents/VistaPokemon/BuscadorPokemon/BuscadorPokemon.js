@@ -240,15 +240,15 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
       <form onSubmit={handleSubmit} className="buscador-form" autoComplete="off">
         <div className="buscador-autocomplete">
           <input
-            inputMode="text"
+            inputMode="search"
             enterKeyHint="search"
             ref={inputRef}
-            type="text"
-            autoComplete="new-password"
+            type="search"
+            autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             spellCheck={false}
-            name="competidex-buscar-pokemon"
+            name="pokemon-search"
             placeholder={loadingIndex ? "Cargando Pokédex..." : "Escriba el nombre de un Pokémon"}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

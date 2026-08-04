@@ -172,9 +172,22 @@
   outline: none;
 }
 
+.pam-findInput[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .pam-findInput:focus {
   border-color: rgba(255, 215, 92, 0.65);
   box-shadow: 0 0 0 3px rgba(255, 215, 92, 0.12);
+}
+
+.pam-findInput[type="search"]::-webkit-search-cancel-button,
+.pam-findInput[type="search"]::-webkit-search-decoration,
+.pam-findInput[type="search"]::-webkit-search-results-button,
+.pam-findInput[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .pam-findRight {

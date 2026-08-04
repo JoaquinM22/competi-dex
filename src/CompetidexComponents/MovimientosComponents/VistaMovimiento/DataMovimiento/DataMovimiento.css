@@ -60,10 +60,18 @@
   padding: 16px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
   touch-action: pan-y;
   position: relative;
   transform: translateZ(0);
+}
+
+@media (max-width: 768px) {
+
+  .tarjetaInicial-Movimiento {
+    overscroll-behavior: auto;
+  }
+
 }
 
 .tarjetaInicial-Movimiento > * + * {

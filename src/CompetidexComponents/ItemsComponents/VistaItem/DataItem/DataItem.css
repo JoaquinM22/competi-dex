@@ -63,7 +63,15 @@
   padding: 16px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
+}
+
+@media (max-width: 768px) {
+
+  .tarjetaInicial-Item {
+    overscroll-behavior: auto;
+  }
+
 }
 
 .tarjetaInicial-Item > * + * {

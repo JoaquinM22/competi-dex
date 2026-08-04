@@ -270,7 +270,7 @@
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  touch-action: auto;
 
   border-radius: 0;
   background: transparent;
@@ -360,6 +360,10 @@
 
   .dyr-diff-row {
     grid-template-columns: 80px 1fr;
+  }
+
+  .dyr-responsive {
+    touch-action: auto;
   }
 
 }

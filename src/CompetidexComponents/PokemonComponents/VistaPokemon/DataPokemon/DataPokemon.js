@@ -1,6 +1,6 @@
 //** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\DataPokemon.js
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaLocationArrow } from "react-icons/fa6";
 import { getTypeColor, getTypeMeta } from "../../../../utils/competidexMeta";
 import { useMoves } from "../../../MovimientosComponents/MovesProvider";
@@ -104,6 +104,38 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
     const [loadingMovimientos, setLoadingMovimientos] = useState(false);
     const [areasLocalizacionNormalizadas, setAreasLocalizacionNormalizadas] = useState([]);
     const [loadingAreaLocalizacion, setLoadingAreaLocalizacion] = useState(false);
+    const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    {
+        if(typeof window === "undefined") return false;
+        return window.innerWidth <= 640;
+    });
+    const tarjetaInicialRef = useRef(null);
+
+    const scrollToPokemonTop = useMemo(() =>
+    {
+        return () =>
+        {
+            if(typeof window === "undefined") return;
+
+            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+            if(document.documentElement)
+            {
+                document.documentElement.scrollTop = 0;
+            }
+
+            if(document.body)
+            {
+                document.body.scrollTop = 0;
+            }
+
+            if(tarjetaInicialRef.current)
+            {
+                tarjetaInicialRef.current.scrollTop = 0;
+            }
+        };
+
+    }, []);
 
     // Vuelve la vista arriba del todo
     useEffect(() =>
@@ -113,6 +145,25 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         {
             try { h.scrollRestoration = "manual"; } catch { }
         }
+    }, []);
+
+    useEffect(() =>
+    {
+        if(typeof window === "undefined") return;
+
+        const mq = window.matchMedia("(max-width: 640px)");
+        const sync = () => setIsMobileViewport(mq.matches);
+
+        sync();
+
+        if(mq.addEventListener)
+        {
+            mq.addEventListener("change", sync);
+            return () => mq.removeEventListener("change", sync);
+        }
+
+        mq.addListener(sync);
+        return () => mq.removeListener(sync);
     }, []);
 
     // Cuando abro la seccion de "DYR" por primera vez, ahi recien renderiza el componente, para mejor performance
@@ -130,6 +181,11 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         if(!nextApiName) return;
 
         setPokemonApiNameActual(nextApiName);
+        scrollToPokemonTop();
+
+        const rafId = window.requestAnimationFrame
+            ? window.requestAnimationFrame(() => scrollToPokemonTop())
+            : window.setTimeout(() => scrollToPokemonTop(), 0);
 
         // Cada vez que cambia el pokemon, se resetea la UI de secciones
         setMostrarStats(true);
@@ -150,7 +206,19 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         setAreasLocalizacionNormalizadas([]);
         setLoadingAreaLocalizacion(false);
 
-    }, [pokemon?.apiName]);
+        return () =>
+        {
+            if(window.cancelAnimationFrame && typeof rafId === "number")
+            {
+                window.cancelAnimationFrame(rafId);
+            
+            }else
+            {
+                window.clearTimeout(rafId);
+            }
+        };
+
+    }, [pokemon?.apiName, scrollToPokemonTop]);
 
     // Normaliza los movimientos crudos del Pokemon para dejarlos listos para la vista de movimientos
     useEffect(() =>
@@ -443,7 +511,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
 
                             {/* Tarjeta Resumen con info del Pokémon */}
                             <div className="tarjetaInicialWrapper">
-                                <div className="tarjetaInicial">
+                                <div className="tarjetaInicial" ref={tarjetaInicialRef}>
 
                                     {/* Generación Pokémon */}
                                     <GeneracionPkm
@@ -562,7 +630,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             baseId={dex.baseId}
                                             prev={dex.prev}
                                             next={dex.next}
-                                            defaultOpen={true}
+                                            defaultOpen={!isMobileViewport}
                                         />
                                     ))}
 

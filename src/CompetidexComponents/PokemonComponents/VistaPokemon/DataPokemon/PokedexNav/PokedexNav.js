@@ -24,6 +24,11 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
 
   }, [prevSprite, nextSprite]);
 
+  useEffect(() =>
+  {
+    setOpen(defaultOpen);
+  }, [defaultOpen, baseId]);
+
   // Detecta género por nombre visible (con símbolos) o por sufijo (-m/-f/-male/-female)
   function detectGender(nombre)
   {

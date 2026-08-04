@@ -223,15 +223,15 @@ export default function BuscadorItems({ onSearch, titulo = "Objeto" })
       <form onSubmit={handleSubmit} className="buscador-item-form" autoComplete="off">
         <div className="buscador-item-autocomplete">
           <input
-            inputMode="text"
+            inputMode="search"
             enterKeyHint="search"
             ref={inputRef}
-            type="text"
-            autoComplete="new-password"
+            type="search"
+            autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             spellCheck={false}
-            name="competidex-buscar-objeto"
+            name="item-search"
             placeholder="Escriba el nombre de un Objeto"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

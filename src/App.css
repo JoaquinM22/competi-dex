@@ -12,6 +12,7 @@
   background-position: center;
   color: white;
   overflow-x: clip;
+  overflow-anchor: none;
   --app-footer-height: 56px;
 }
 
@@ -27,6 +28,7 @@
   max-width: none;
   margin: 0 auto;
   flex: 1 0 auto;
+  overflow-anchor: none;
 }
 
 .competidexArrowIcon {
@@ -45,4 +47,10 @@
     width: 100%;
   }
 
+}
+
+html,
+body,
+#root {
+  overflow-anchor: none;
 }

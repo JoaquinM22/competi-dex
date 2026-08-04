@@ -664,13 +664,14 @@ export default function PokesPoseenHabilidad({ pokesPoseen = [], title = "Pokém
                   <span className="pph-findLabel">Buscar</span>
 
                   <input
-                    inputMode="text"
+                    inputMode="search"
                     enterKeyHint="search"
-                    autoComplete="new-password"
+                    type="search"
+                    autoComplete="off"
                     autoCorrect="off"
                     autoCapitalize="none"
                     spellCheck={false}
-                    name="competidex-buscar-hab-pokesposeen"
+                    name="hab-pokes-search-mobile"
                     ref={findInputRef}
                     className="pph-findInput"
                     value={findText}
@@ -922,13 +923,14 @@ export default function PokesPoseenHabilidad({ pokesPoseen = [], title = "Pokém
             <span className="pph-findLabel">Buscar</span>
 
             <input
-              inputMode="text"
+              inputMode="search"
               enterKeyHint="search"
-              autoComplete="new-password"
+              type="search"
+              autoComplete="off"
               autoCorrect="off"
               autoCapitalize="none"
               spellCheck={false}
-              name="competidex-buscar-hab-pokesposeen-dos"
+              name="hab-pokes-search"
               ref={findInputRef}
               className="pph-findInput"
               value={findText}

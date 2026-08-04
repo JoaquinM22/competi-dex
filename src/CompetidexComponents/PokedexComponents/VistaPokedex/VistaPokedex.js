@@ -1125,13 +1125,14 @@ export default function VistaPokedex()
                     <span className="pokedexFindLabel">Buscar Pokémon</span>
 
                     <input
-                      inputMode="text"
+                      inputMode="search"
                       enterKeyHint="search"
-                      autoComplete="new-password"
+                      type="search"
+                      autoComplete="off"
                       autoCorrect="off"
                       autoCapitalize="none"
                       spellCheck={false}
-                      name="competidex-buscar-pokedex"
+                      name="pokedex-search"
                       ref={findInputRef}
                       className="pokedexFindInput"
                       value={findText}

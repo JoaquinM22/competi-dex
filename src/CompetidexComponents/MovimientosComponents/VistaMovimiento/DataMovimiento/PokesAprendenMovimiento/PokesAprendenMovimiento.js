@@ -465,13 +465,14 @@ export default function PokesAprendenMovimiento({ pokesAprenden = [], title = "P
                     <span className="pam-findLabel">Buscar</span>
 
                     <input
-                      inputMode="text"
+                      inputMode="search"
                       enterKeyHint="search"
-                      autoComplete="new-password"
+                      type="search"
+                      autoComplete="off"
                       autoCorrect="off"
                       autoCapitalize="none"
                       spellCheck={false}
-                      name="competidex-buscar-pokes-aprenden-movs"
+                      name="pokes-aprenden-search-mobile"
                       ref={findInputRef}
                       className="pam-findInput"
                       value={findText}
@@ -722,13 +723,14 @@ export default function PokesAprendenMovimiento({ pokesAprenden = [], title = "P
             <span className="pam-findLabel">Buscar</span>
 
             <input
-              inputMode="text"
+              inputMode="search"
               enterKeyHint="search"
-              autoComplete="new-password"
+              type="search"
+              autoComplete="off"
               autoCorrect="off"
               autoCapitalize="none"
               spellCheck={false}
-              name="competidex-buscar-pokes-aprenden-movs-dos"
+              name="pokes-aprenden-search"
               ref={findInputRef}
               className="pam-findInput"
               value={findText}

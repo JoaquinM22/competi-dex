@@ -181,15 +181,15 @@ export default function BuscadorHabilidad({ onSearch, titulo = "Habilidad" })
       <form onSubmit={handleSubmit} className="buscador-hab-form" autoComplete="off">
         <div className="buscador-hab-autocomplete">
           <input
-            inputMode="text"
+            inputMode="search"
             enterKeyHint="search"
             ref={inputRef}
-            type="text"
-            autoComplete="new-password"
+            type="search"
+            autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             spellCheck={false}
-            name="competidex-buscar-habilidad"
+            name="ability-search"
             placeholder="Escriba el nombre de una Habilidad"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

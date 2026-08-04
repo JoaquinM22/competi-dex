@@ -129,16 +129,39 @@ export function createItemMapper(opts)
     return out;
   }
 
-  function precioItem(raw)
+  function preciosItem(raw)
   {
-    const cost = raw && raw.cost;
+    const prices = (raw && Array.isArray(raw.prices)) ? raw.prices : [];
+    const out = [];
 
-    if (cost === null || cost === undefined) return null;
-    if (typeof cost !== "number") return null;
-    if (!isFinite(cost)) return null;
-    if (cost <= 0) return null;
+    for(let i = 0; i < prices.length; i++)
+    {
+      const price = prices[i] || {};
+      const precioCompra = price.purchase_price;
+      const precioVenta = price.sell_price;
+      const versionJuego = String(price?.version_group?.name || "").trim();
 
-    return cost;
+      const normalizedCompra = (typeof precioCompra === "number" && isFinite(precioCompra) && precioCompra > 0)
+        ? precioCompra
+        : null;
+
+      const normalizedVenta = (typeof precioVenta === "number" && isFinite(precioVenta) && precioVenta > 0)
+        ? precioVenta
+        : null;
+
+      if(!versionJuego && normalizedCompra === null && normalizedVenta === null)
+      {
+        continue;
+      }
+
+      out.push({
+        precioItem: normalizedCompra,
+        precioVentaItem: normalizedVenta,
+        versionJuego: versionJuego || null
+      });
+    }
+
+    return out;
   }
 
   async function obtenerItem(nameOrId)
@@ -158,7 +181,7 @@ export function createItemMapper(opts)
       id: (raw && raw.id !== undefined) ? raw.id : null,
       nombreApi: (raw && raw.name) ? raw.name : key,
       nombreItem: nombreEs(raw),
-      precioItem: precioItem(raw),
+      preciosItem: preciosItem(raw),
       categoriaItem: categoriaItem(raw),
       descItem: descEs(raw),
       atributosItem: atributosItem(raw)

@@ -241,7 +241,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  touch-action: auto;
   overscroll-behavior-x: contain;
 }
 
@@ -499,9 +499,13 @@
 
 @media (max-width: 768px) {
 
+  .tarjetaInicial {
+    overscroll-behavior: auto;
+  }
+
   .evo-viewport {
     justify-content: flex-start;
-    touch-action: pan-x;
+    touch-action: auto;
   }
 
   .evo-viewport.solo-una-evo {
