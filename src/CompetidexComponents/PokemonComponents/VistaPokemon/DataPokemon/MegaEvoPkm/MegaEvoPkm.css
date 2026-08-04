@@ -331,12 +331,25 @@
   display: inline-block;
   transform: rotate(135deg);
   transition: transform .25s ease;
+  color: #ffffff;
 }
 
 .iconoRotadoCMegaEvo {
   display: inline-block;
   transform: rotate(-45deg);
   transition: transform .25s ease;
+  color: #ffffff;
+}
+
+.iconoNormalCMegaEvo .competidexArrowIcon,
+.iconoRotadoCMegaEvo .competidexArrowIcon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  color: inherit;
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center center;
 }
 
 .mega-dyr .dyr-table,

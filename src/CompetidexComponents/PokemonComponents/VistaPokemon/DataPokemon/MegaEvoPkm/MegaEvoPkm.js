@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { IoMdMale, IoMdFemale } from "react-icons/io";
-import { LiaLocationArrowSolid } from "react-icons/lia";
+import { FaLocationArrow } from "react-icons/fa6";
 import { spriteUrl, spriteShinyUrl } from "../../../../../config/endpoints";
 import { getTypeColor, getTypeMeta } from "../../../../../utils/competidexMeta";
 import SpriteModal from "../../../../SharedComponents/SpriteModal/SpriteModal";
@@ -400,7 +400,7 @@ export default function MegaEvoPkm({ megas })
                             aria-controls={panelId}
                           >
                             <span className={isOpen ? "iconoRotadoCMegaEvo" : "iconoNormalCMegaEvo"}>
-                                <LiaLocationArrowSolid className="competidexArrowIcon" aria-hidden="true" />
+                                <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
                             </span>
                           </button>
                         </div>
