@@ -21,6 +21,7 @@ import NombreIDPkm from "./NombreIDPkm/NombreIDPkm";
 import FormasPkm from "./FormasPkm/FormasPkm";
 import MegaEvoPkm from "./MegaEvoPkm/MegaEvoPkm";
 import GigaPkm from "./GigaPkm/GigaPkm";
+import GritoPkm from "./GritoPkm/GritoPkm";
 import PokedexNav from "./PokedexNav/PokedexNav";
 import GeneroPkm from "./GeneroPkm/GeneroPkm";
 import IndiceCapturaPkm from "./IndiceCapturaPkm/IndiceCapturaPkm";
@@ -621,6 +622,14 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             />
                                         </div>
                                     )}
+
+                                    {/* Grito Pokémon */}
+                                    <div className="contenedorGenerico margenAbajo">
+                                        <GritoPkm
+                                            gritoUrl={pokemonData.criesLatest || null}
+                                            size="large"
+                                        />
+                                    </div>
 
                                     {/* Numero de Pokedex en todos los juegos donde aparece */}
                                     {arrDex.map((dex, index) => (

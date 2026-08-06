@@ -1,0 +1,387 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\GritoPkm\GritoPkm.css */
+
+.gritoPkm-contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 10px 20px;
+    background-color: #2a2a2a;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gritoPkm-titleRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.gritoPkm-titleRow-small {
+    margin-bottom: 6px;
+}
+
+.gritoPkm-titleRow-medium {
+    margin-bottom: 7px;
+}
+
+.gritoPkm-titleRow-normal {
+    margin-bottom: 8px;
+}
+
+.gritoPkm-titleRow-large {
+    margin-bottom: 10px;
+}
+
+.gritoPkm-label {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+}
+
+.gritoPkm-label-word {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+.gritoPkm-label-small {
+    font-size: 13px;
+}
+
+.gritoPkm-label-medium {
+    font-size: 15px;
+}
+
+.gritoPkm-label-normal {
+    font-size: 17px;
+}
+
+.gritoPkm-label-large {
+    font-size: 20px;
+}
+
+.gritoPkm-playerWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #414345;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.gritoPkm-playerShell {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    margin-bottom: 0px;
+}
+
+.gritoPkm-audioHidden {
+    display: none;
+}
+
+.gritoPkm-ContainerBtn {
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background-color: #2a2a2a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.gritoPkm-ContainerBtn:hover {
+    transform: scale(1.05);
+    background-color: #121417;
+}
+
+.gritoPkm-PlayBtn {
+    color: white;
+    width: 18px;
+    height: 18px;
+}
+
+.gritoPkm-PauseBtn {
+    color: white;
+    width: 18px;
+    height: 18px;
+}
+
+.gritoPkm-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    width: 100%;
+}
+
+.gritoPkm-progress {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 12px;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: #111318;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+}
+
+.gritoPkm-progressFill {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ffd700, #e0b400);
+    box-shadow: 0 0 14px rgba(255,215,0,0.26);
+}
+
+.gritoPkm-progressDot {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.45);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.gritoPkm-timeRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    width: 100%;
+    padding-right: 0;
+    margin-top: -15px;
+}
+
+.gritoPkm-timeValues {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.gritoPkm-time {
+    min-width: 34px;
+    color: white;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.gritoPkm-timeDivider {
+    color: white;
+    min-width: 8px;
+}
+
+.gritoPkm-volumeWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.gritoPkm-volumeBtn {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    padding: 0;
+}
+
+.gritoPkm-volumeBtn:hover {
+    cursor: pointer;
+    background-color: #121417;
+}
+
+.gritoPkm-volumeIcon {
+    width: 18px;
+    height: 18px;
+    color: #ffffff;
+}
+
+.gritoPkm-volumePopup {
+    position: absolute;
+    right: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(50%);
+    z-index: 50;
+    padding: 8px 6px;
+    border-radius: 14px;
+    background: rgba(25, 28, 34, 0.98);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease, transform .15s ease;
+}
+
+.gritoPkm-volumePopup.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(50%) translateY(-2px);
+}
+
+.gritoPkm-volumeSlider {
+    width: 16px;
+    height: 96px;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(
+        to top,
+        #ffffff 0%,
+        #ffffff var(--vol-progress, 100%),
+        #111318 var(--vol-progress, 100%),
+        #111318 100%
+    ) center / 4px 100% no-repeat;
+    cursor: pointer;
+    border-radius: 999px;
+}
+
+.gritoPkm-volumeSlider::-webkit-slider-runnable-track {
+    width: 6px;
+    height: 96px;
+    background: transparent;
+    border-radius: 999px;
+}
+
+.gritoPkm-volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+    margin-left: -4px;
+}
+
+.gritoPkm-volumeSlider::-moz-range-track {
+    width: 6px;
+    background: #111318;
+    border-radius: 999px;
+}
+
+.gritoPkm-volumeSlider::-moz-range-progress {
+    background: #ffffff;
+    border-radius: 999px;
+    width: 4px;
+}
+
+.gritoPkm-volumeSlider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+}
+
+.gritoPkm-empty {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #d9dee7;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.gritoPkm-contenedor-normal {
+    width: auto;
+}
+
+@media (max-width: 480px) {
+
+    .gritoPkm-playerWrap {
+        gap: 3px;
+    }
+
+    .gritoPkm-titleRow {
+        margin-bottom: 6px;
+    }
+
+    .gritoPkm-label-small {
+        font-size: 12px;
+    }
+
+    .gritoPkm-label-medium {
+        font-size: 13px;
+    }
+
+    .gritoPkm-label-normal {
+        font-size: 14px;
+    }
+
+    .gritoPkm-label-large {
+        font-size: 16px;
+    }
+
+    .gritoPkm-label {
+        white-space: normal;
+    }
+
+    .gritoPkm-playerShell {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .gritoPkm-ContainerBtn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .gritoPkm-timeRow {
+        justify-content: flex-end;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .gritoPkm-volumePopup {
+        right: auto;
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .gritoPkm-volumePopup.open {
+        transform: translateX(0) translateY(-2px);
+    }
+
+}

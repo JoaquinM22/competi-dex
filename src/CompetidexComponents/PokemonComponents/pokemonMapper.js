@@ -527,6 +527,7 @@ function returnEmptyPkm()
     "color": "",
     "generation": "",
     "stats": returnEmptyStats(),
+    "criesLatest": null,
     "evolutionChain": [], // [ returnEmptyPkmEvolution(), ... ]
     "formas": [], // [ returnEmptyPkmForm(), ... ]
     "giga": returnEmptyGigamax(), 
@@ -1251,6 +1252,7 @@ export function createPokemonMapper(opts)
     pokemon.color = getColorPkmByKey(pokemon.apiName) || safeText(speciesRaw?.color?.name); // Color Oficial
     pokemon.generation = getPokemonGenByKey(pokemon.apiName, safeText(speciesRaw?.generation?.name)); // Generacion
     pokemon.stats = getStats(raw?.stats); // Stats
+    pokemon.criesLatest = safeText(raw?.cries?.latest) || null; // Grito Pokémon
 
     // Cadena Evolutiva
     const dataEvoChain = (typeof getUrlRaw === "function" && speciesRaw?.evolution_chain?.url)
