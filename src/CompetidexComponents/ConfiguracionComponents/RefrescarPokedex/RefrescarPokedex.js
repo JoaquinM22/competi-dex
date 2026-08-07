@@ -5,7 +5,11 @@ import { usePokedex } from "../../PokedexComponents/PokedexProvider";
 import { PIKACHU_RUNING_GIF } from "../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../utils/competidexImgCache";
 import { showToastr } from "../../../services/ToastrService";
+import { consumeSessionRefresh } from "../../../utils/sessionRefreshLimiter";
 import "./RefrescarPokedex.css";
+
+const POKEDEX_REFRESH_ALL_LIMIT_PER_DAY = 1;
+const POKEDEX_REFRESH_ALL_WINDOW_MS = 1000 * 60 * 60 * 24;
 
 function ConfirmModal({ open, title, message, confirmText, cancelText, tone, loading, onConfirm, onClose })
 {
@@ -66,7 +70,7 @@ function ConfirmModal({ open, title, message, confirmText, cancelText, tone, loa
 
 export default function RefrescarPokedex()
 {
-    const { refreshAllPokedexCache } = usePokedex();
+    const { refreshAllPokedexCache, clearAllPokedexCache } = usePokedex();
     const [modal, setModal] = useState({ open: false });
     const [loading, setLoading] = useState(false);
 
@@ -95,6 +99,29 @@ export default function RefrescarPokedex()
         {
             if(typeof refreshAllPokedexCache === "function")
             {
+                const limitState = consumeSessionRefresh(
+                    "pokedex:all",
+                    POKEDEX_REFRESH_ALL_LIMIT_PER_DAY,
+                    POKEDEX_REFRESH_ALL_WINDOW_MS,
+                    { storage: "local" }
+                );
+
+                if(!limitState.allowed)
+                {
+                    setModal({ open: false });
+                    showToastr({
+                        title: "Aviso en Pokédex",
+                        text: "Ya alcanzaste el límite de refresco global de Pokédex para hoy.",
+                        variant: "warning"
+                    });
+                    return;
+                }
+
+                if(typeof clearAllPokedexCache === "function")
+                {
+                    clearAllPokedexCache();
+                }
+
                 const result = await refreshAllPokedexCache();
 
                 setModal({ open: false });

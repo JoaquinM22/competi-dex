@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { useItems } from "../../ItemsComponents/ItemsProvider";
 import { showToastr } from "../../../services/ToastrService";
+import { consumeSessionRefresh } from "../../../utils/sessionRefreshLimiter";
 import "./LimpiarBuscadorItems.css";
+
+const SESSION_REFRESH_LIMIT = 3;
 
 function ConfirmModal({ open, title, message, confirmText, cancelText, tone, onConfirm, onClose })
 {
@@ -65,10 +68,21 @@ export default function LimpiarBuscadorItems()
           let result = null;
           if(typeof refreshSuggestCache === "function")
           {
+            const limitState = consumeSessionRefresh("items", SESSION_REFRESH_LIMIT);
+            if(!limitState.allowed)
+            {
+              showToastr({
+                title: "Objetos",
+                text: "Ya alcanzaste el límite de actualizaciones para esta sesión.",
+                variant: "warning"
+              });
+              return;
+            }
+
             result = await refreshSuggestCache();
           }
 
-          if(result && result.anyRefreshed)
+          if(result && result.manifestChanged)
           {
             showToastr({
               title: "Objetos",

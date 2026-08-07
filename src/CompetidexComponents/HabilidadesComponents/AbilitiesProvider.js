@@ -208,6 +208,7 @@ export function AbilitiesProvider({ children })
   const warmCache = useRef(new Map());
   const rawCache = useRef(new Map());
   const refreshResolverRef = useRef(null);
+  const forceManifestRefreshRef = useRef(false);
   const esToKeyRef = useRef(new Map());
   const slugToKeyRef = useRef(new Map());
   const keyToSlugRef = useRef(new Map());
@@ -240,23 +241,31 @@ export function AbilitiesProvider({ children })
     {
       const persisted = loadAbilitiesPersistentCaches();
       let anyRefreshed = false;
+      let manifestChanged = false;
+      let nextManifestVersion = "";
 
       try
       {
         setLoadingIndex(true);
 
         let manifest = persisted.manifest;
+        const cachedManifestVersion = String(persisted.mapVersion || persisted.manifest?.version || "").trim();
         const manifestAt = persisted.manifestAt;
         const manifestExpired = !manifestAt || (Date.now() - manifestAt) > MANIFEST_TTL_MS;
+        const mustRefreshManifest = forceManifestRefreshRef.current === true;
+        forceManifestRefreshRef.current = false;
 
-        if(!manifest || manifestExpired)
+        if(!manifest || manifestExpired || mustRefreshManifest)
         {
           const manifestUrl = manifestUrlNoCache();
-          manifest = await fetch(manifestUrl, { headers: { accept: "application/json" } }).then(res =>
+          const fetchedManifest = await fetch(manifestUrl, { headers: { accept: "application/json" } }).then(res =>
           {
             if (!res.ok) throw new Error("HTTP " + res.status + " GET " + manifestUrl);
             return res.json();
           });
+          nextManifestVersion = String(fetchedManifest?.version || "").trim();
+          manifestChanged = !persisted.manifest || (!!nextManifestVersion && nextManifestVersion !== cachedManifestVersion);
+          manifest = fetchedManifest;
 
           saveAbilitiesPersistentCaches(
             manifest,
@@ -266,14 +275,21 @@ export function AbilitiesProvider({ children })
             persisted.mapVersion || "",
             persisted.lastMapUrl || ""
           );
-          anyRefreshed = true;
+          anyRefreshed = manifestChanged || anyRefreshed;
 
           if (!alive) return;
+
+          if(mustRefreshManifest && !manifestChanged)
+          {
+            setAbilityMap(persisted.map || null);
+            setMapVersion(cachedManifestVersion || "");
+            return;
+          }
         }
 
         let mapJson = persisted.map;
 
-        const version = String(manifest?.version || "").trim();
+        const version = nextManifestVersion || String(manifest?.version || "").trim();
         const urlPath = String(manifest?.ability_url || "").trim();
         if (!urlPath) throw new Error("manifest abilities invalido: falta ability_url");
 
@@ -281,7 +297,7 @@ export function AbilitiesProvider({ children })
         const lastMapUrl = String(persisted.lastMapUrl || "").trim();
         const mapChanged = !!(lastMapUrl && lastMapUrl !== mapUrl);
 
-        if((!mapJson || mapChanged) && mapUrl)
+        if((!mapJson || mapChanged || manifestChanged) && mapUrl)
         {
           mapJson = await fetch(mapUrl, { headers: { accept: "application/json" } }).then(res =>
           {
@@ -320,7 +336,7 @@ export function AbilitiesProvider({ children })
         {
           const resolve = refreshResolverRef.current;
           refreshResolverRef.current = null;
-          try { resolve({ anyRefreshed }); } catch (e) {}
+          try { resolve({ anyRefreshed, manifestChanged, nextManifestVersion }); } catch (e) {}
         }
       }
 
@@ -641,6 +657,7 @@ export function AbilitiesProvider({ children })
   {
     return new Promise(function(resolve)
     {
+      forceManifestRefreshRef.current = true;
       refreshResolverRef.current = resolve;
       setRefreshTick(function(v) { return v + 1; });
     });

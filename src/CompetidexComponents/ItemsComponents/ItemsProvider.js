@@ -177,6 +177,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
   const cache = useRef(new Map());
   const rawCache = useRef(new Map());
   const refreshResolverRef = useRef(null);
+  const forceManifestRefreshRef = useRef(false);
 
   const [refreshTick, setRefreshTick] = useState(0);
   const initialPersisted = useMemo(() => loadItemsPersistentCaches(), []);
@@ -220,6 +221,8 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
   {
     let alive = true;
     let anyRefreshed = false;
+    let manifestChanged = false;
+    let nextManifestVersion = "";
 
     (async function()
     {
@@ -227,14 +230,31 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
       try
       {
         let manifest = persisted.manifest;
+        const cachedManifestVersion = String(persisted.manifest?.version || "").trim();
         const manifestAt = persisted.manifestAt;
         const manifestExpired = !manifestAt || (Date.now() - manifestAt) > MANIFEST_TTL_MS;
+        const mustRefreshManifest = forceManifestRefreshRef.current === true;
+        forceManifestRefreshRef.current = false;
 
-        if(!manifest || manifestExpired)
+        if(!manifest || manifestExpired || mustRefreshManifest)
         {
-          manifest = await getUrl(manifestUrlNoCache());
+          const fetchedManifest = await getUrl(manifestUrlNoCache());
+          nextManifestVersion = String(fetchedManifest?.version || "").trim();
+          manifestChanged = !persisted.manifest || (!!nextManifestVersion && nextManifestVersion !== cachedManifestVersion);
+          manifest = fetchedManifest;
+
           saveItemsPersistentCaches(manifest, persisted.itemMap || null, Date.now(), persisted.itemMapAt || 0, persisted.lastItemMapUrl || "");
-          anyRefreshed = true;
+          anyRefreshed = manifestChanged || anyRefreshed;
+
+          if(!alive) return;
+
+          if(mustRefreshManifest && !manifestChanged)
+          {
+            itemMapRef.current = (persisted.itemMap && typeof persisted.itemMap === "object") ? persisted.itemMap : {};
+            setItemMapReady(true);
+            setLoadingIndex(false);
+            return;
+          }
         }
 
         if (!alive) return;
@@ -248,7 +268,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
         const lastUrl = String(persisted.lastItemMapUrl || "").trim();
         const urlChanged = !!(lastUrl && itemsUrl && lastUrl !== itemsUrl);
 
-        if((!itemMap || urlChanged) && itemsUrl)
+        if((!itemMap || urlChanged || manifestChanged) && itemsUrl)
         {
           itemMap = await getUrl(itemsUrl);
           saveItemsPersistentCaches(manifest, itemMap, Date.now(), Date.now(), itemsUrl);
@@ -335,7 +355,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
         {
           const resolve = refreshResolverRef.current;
           refreshResolverRef.current = null;
-          try { resolve({ anyRefreshed }); } catch (e) {}
+          try { resolve({ anyRefreshed, manifestChanged, nextManifestVersion }); } catch (e) {}
         }
       }
 
@@ -689,6 +709,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
   {
     return new Promise(function(resolve)
     {
+      forceManifestRefreshRef.current = true;
       refreshResolverRef.current = resolve;
       setRefreshTick(function(v) { return v + 1; });
     });

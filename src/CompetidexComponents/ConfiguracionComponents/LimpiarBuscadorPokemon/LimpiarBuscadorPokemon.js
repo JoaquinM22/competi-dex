@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { usePokemon } from "../../PokemonComponents/PokemonProvider";
 import { showToastr } from "../../../services/ToastrService";
+import { consumeSessionRefresh } from "../../../utils/sessionRefreshLimiter";
 import "./LimpiarBuscadorPokemon.css";
+
+const SESSION_REFRESH_LIMIT = 3;
 
 function ConfirmModal({ open, title, message, confirmText, cancelText, tone, onConfirm, onClose })
 {
@@ -65,10 +68,21 @@ export default function LimpiarBuscadorPokemon()
           let result = null;
           if(typeof refreshSuggestCachePokemon === "function")
           {
+            const limitState = consumeSessionRefresh("pokemon", SESSION_REFRESH_LIMIT);
+            if(!limitState.allowed)
+            {
+              showToastr({
+                title: "Pokémon",
+                text: "Ya alcanzaste el límite de actualizaciones para esta sesión.",
+                variant: "warning"
+              });
+              return;
+            }
+
             result = await refreshSuggestCachePokemon();
           }
 
-          if(result && result.anyRefreshed)
+          if(result && result.manifestChanged)
           {
             showToastr({
               title: "Pokémon",

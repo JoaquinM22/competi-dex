@@ -97,6 +97,7 @@ export function PokemonProvider({ children })
 {
   const cache = useRef(new Map());
   const refreshResolverRef = useRef(null);
+  const forceManifestRefreshRef = useRef(false);
 
   const [index, setIndex] = useState(function()
   {
@@ -175,17 +176,34 @@ export function PokemonProvider({ children })
     {
       const persisted = loadPokemonPersistentCaches();
       let anyRefreshed = false;
+      let manifestChanged = false;
+      let nextManifestVersion = "";
       try
       {
         let manifest = persisted.manifest;
+        const cachedManifestVersion = String(persisted.manifest?.version || "").trim();
         const manifestAt = persisted.manifestAt;
         const manifestExpired = !manifestAt || (Date.now() - manifestAt) > MANIFEST_TTL_MS;
+        const mustRefreshManifest = forceManifestRefreshRef.current === true;
+        forceManifestRefreshRef.current = false;
 
-        if(!manifest || manifestExpired)
+        if(!manifest || manifestExpired || mustRefreshManifest)
         {
-          manifest = await getJson(manifestUrlNoCache());
+          const fetchedManifest = await getJson(manifestUrlNoCache());
+          nextManifestVersion = String(fetchedManifest?.version || "").trim();
+          manifestChanged = !persisted.manifest || (!!nextManifestVersion && nextManifestVersion !== cachedManifestVersion);
+          manifest = fetchedManifest;
+
           savePokemonPersistentCaches(manifest, persisted.map || null, Date.now(), persisted.mapAt || 0, persisted.lastMapUrl || "");
-          anyRefreshed = true;
+          anyRefreshed = manifestChanged || anyRefreshed;
+
+          if (mustRefreshManifest && !manifestChanged)
+          {
+            pokemonMapRef.current = (persisted.map && typeof persisted.map === "object") ? persisted.map : {};
+            if (alive) setLoadingIndex(false);
+            if (alive) setPokemonMapReady(true);
+            return;
+          }
         }
 
         if (!alive) return;
@@ -197,7 +215,7 @@ export function PokemonProvider({ children })
         const lastMapUrl = String(persisted.lastMapUrl || "").trim();
         const mapChanged = !!(lastMapUrl && mapUrl && lastMapUrl !== mapUrl);
 
-        if((!pokemonMap || mapChanged) && mapUrl)
+        if((!pokemonMap || mapChanged || manifestChanged) && mapUrl)
         {
           pokemonMap = await getJson(mapUrl);
           savePokemonPersistentCaches(manifest, pokemonMap, Date.now(), Date.now(), mapUrl);
@@ -297,7 +315,7 @@ export function PokemonProvider({ children })
         {
           const resolve = refreshResolverRef.current;
           refreshResolverRef.current = null;
-          try { resolve({ anyRefreshed }); } catch (e) {}
+          try { resolve({ anyRefreshed, manifestChanged, nextManifestVersion }); } catch (e) {}
         }
       }
 
@@ -610,6 +628,7 @@ export function PokemonProvider({ children })
   {
     return new Promise(function(resolve)
     {
+      forceManifestRefreshRef.current = true;
       refreshResolverRef.current = resolve;
       setRefreshTick(function(v) { return v + 1; });
     });

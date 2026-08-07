@@ -64,6 +64,7 @@ const KEY_MANIFEST_AT = `moves:manifestAt:${CACHE_VERSION}`;
 
 const KEY_ESMAP = `moves:esMap:${CACHE_VERSION}`;
 const KEY_ESMAP_AT  = `moves:esMapAt:${CACHE_VERSION}`;
+const KEY_MANIFEST_VERSION = `moves:manifestVersion:${CACHE_VERSION}`;
 
 // Para detectar cambio de URL aunque la "version" sea igual
 const KEY_LAST_ESMAP_URL = `moves:lastEsMapUrl:${CACHE_VERSION}`;
@@ -140,6 +141,75 @@ function getMoveDisplayEsFromRaw(raw, fallbackKey = "")
   if (display) return display;
 
   return String(fallbackKey || "").trim();
+}
+
+function normalizeMoveMachineInfo(machineInfo)
+{
+  if(!machineInfo || typeof machineInfo !== "object") return null;
+
+  const machine = String(machineInfo.machine || "").trim();
+  const machine_es = String(machineInfo.machine_es || "").trim();
+
+  return {
+    machine: machine || null,
+    machine_es: machine_es || null
+  };
+}
+
+function getMoveSummaryFromMapEntry(apiKey, entry)
+{
+  if(!apiKey || !entry) return null;
+
+  const machinesByGroup = {};
+  if(entry.machinesByGroup && typeof entry.machinesByGroup === "object")
+  {
+    for(const [groupKey, machineInfo] of Object.entries(entry.machinesByGroup))
+    {
+      const normalized = normalizeMoveMachineInfo(machineInfo);
+      if(normalized) machinesByGroup[groupKey] = normalized;
+    }
+  }
+
+  const isContact =
+    entry.isContact === true
+      ? true
+      : entry.isContact === false
+        ? false
+        : null;
+
+  return {
+    key: apiKey,
+    id: typeof entry.id === "number" ? entry.id : null,
+    api_name: apiKey,
+    name: apiKey,
+    display_es: String(entry.display || apiKey).trim() || apiKey,
+    display: String(entry.display || apiKey).trim() || apiKey,
+    type: entry.type ?? null,
+    damage_class: entry.damage_class ?? null,
+    power: entry.power ?? null,
+    accuracy: entry.accuracy ?? null,
+    pp: entry.pp ?? null,
+    isContact,
+    machinesByGroup,
+    machines_by_group: machinesByGroup,
+    machine_codes_by_group: Object.fromEntries(
+      Object.entries(machinesByGroup).map(([groupKey, machineInfo]) => [groupKey, machineInfo?.machine || null])
+    ),
+    machine_codes_es_by_group: Object.fromEntries(
+      Object.entries(machinesByGroup).map(([groupKey, machineInfo]) => [groupKey, machineInfo?.machine_es || null])
+    ),
+  };
+}
+
+function getMoveSummaryByKeyFromMap(esMapObj, nameOrId)
+{
+  const key = moveKey(nameOrId);
+  if(!key) return null;
+
+  const entry = (esMapObj && typeof esMapObj === "object") ? esMapObj[key] : null;
+  if(!entry) return null;
+
+  return getMoveSummaryFromMapEntry(key, entry);
 }
 
 export async function getMoveRawFromProvider(nameOrId)
@@ -358,6 +428,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   }, [persistEnabled]);
 
   const persistTimerRef = useRef(null);
+  const forceManifestRefreshRef = useRef(false);
 
   // Guardado con MERGE + chequeo ref
   const schedulePersist = useCallback(() =>
@@ -427,7 +498,9 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   useEffect(() =>
   {
     let alive = true;
-    let anyRefreshed = false;
+    let didUpdate = false;
+    let manifestChanged = false;
+    let nextManifestVersion = "";
 
     (async () =>
     {
@@ -435,42 +508,53 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
       try
       {
         // a) manifest cache (localStorage)
-        let manifest = loadLS(KEY_MANIFEST);
+        const cachedManifest = loadLS(KEY_MANIFEST);
         const manifestAt = loadTS(KEY_MANIFEST_AT);
         const manifestExpired = !manifestAt || (Date.now() - manifestAt) > MANIFEST_TTL_MS;
+        const mustRefreshManifest = forceManifestRefreshRef.current === true;
+        forceManifestRefreshRef.current = false;
 
-        if(!manifest || manifestExpired)
+        let manifest = cachedManifest;
+
+        if(mustRefreshManifest || !manifest || manifestExpired)
         {
-          manifest = await getUrl(manifestUrlNoCache());
+          try
+          {
+            manifest = await getUrl(manifestUrlNoCache());
+
+          }catch(fetchManifestError)
+          {
+            manifest = cachedManifest;
+          }
+
           saveLS(KEY_MANIFEST, manifest);
           saveTS(KEY_MANIFEST_AT, Date.now());
-          anyRefreshed = true;
         }
 
         // b) moves map cache (localStorage)
         let esMap = loadLS(KEY_ESMAP);
-        const esMapAt = loadTS(KEY_ESMAP_AT);
 
         const movesPath = (manifest && manifest.moves_url) ? String(manifest.moves_url) : null;
         const movesUrl = movesPath ? COMPETIDEX_DATA.movesMap(movesPath) : null;
 
-        const lastUrl = (localStorage.getItem(KEY_LAST_ESMAP_URL) || "").trim();
-        const urlChanged = !!(lastUrl && movesUrl && lastUrl !== movesUrl);
+        const cachedManifestVersion = String(cachedManifest?.version || "").trim();
+        nextManifestVersion = String(manifest?.version || "").trim();
+        const hasCachedManifest = !!cachedManifest;
+        manifestChanged = !hasCachedManifest || (!!nextManifestVersion && nextManifestVersion !== cachedManifestVersion);
+        const shouldRefreshMoveMap = manifestChanged || (!esMap && !!movesUrl);
 
-        if((!esMap || urlChanged) && movesUrl)
+        if(shouldRefreshMoveMap && movesUrl)
         {
           esMap = await getUrl(movesUrl);
           saveLS(KEY_ESMAP, esMap);
           saveTS(KEY_ESMAP_AT, Date.now());
           try { localStorage.setItem(KEY_LAST_ESMAP_URL, movesUrl); } catch {}
-          anyRefreshed = true;
+          didUpdate = true;
+        }
 
-        }else
+        if(manifestChanged)
         {
-          if(!lastUrl && movesUrl)
-          {
-            try { localStorage.setItem(KEY_LAST_ESMAP_URL, movesUrl); } catch {}
-          }
+          didUpdate = true;
         }
 
         esMapRef.current = (esMap && typeof esMap === "object") ? esMap : {};
@@ -527,7 +611,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
         // d) Armar index desde esMap
         const last = loadIndexAt();
         const expired = !last || (Date.now() - last) > INDEX_TTL_MS;
-        const shouldRebuildIndex = !index.length || expired || urlChanged;
+        const shouldRebuildIndex = !index.length || expired || manifestChanged;
 
         if(alive && shouldRebuildIndex)
         {
@@ -537,7 +621,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
           setIndex(items);
           saveIndex(items);
           saveIndexAt(Date.now());
-          anyRefreshed = true;
+          didUpdate = true;
 
           setLoadingIndex(false);
         }
@@ -557,7 +641,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
         {
           const resolve = refreshResolverRef.current;
           refreshResolverRef.current = null;
-          try { resolve({ anyRefreshed }); } catch (e) {}
+          try { resolve({ anyRefreshed: didUpdate, manifestChanged, nextManifestVersion }); } catch (e) {}
         }
       }
 
@@ -846,34 +930,13 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   }, [resolveMachinesForSummary, schedulePersist]);
 
   // Cargar varios con pool
-  const getMany = useCallback(async (keys, poolSize = learnsetConcurrency) =>
+  const getMany = useCallback(async (keys) =>
   {
-    const uniq = [...new Set(keys.map(moveKey))];
-    let p = 0;
-    const out = new Array(uniq.length);
+    const uniq = [...new Set((Array.isArray(keys) ? keys : []).map(moveKey).filter(Boolean))];
 
-    async function worker()
-    {
-      while(p < uniq.length)
-      {
-        const idx = p++;
-        const k = uniq[idx];
-        try
-        {
-          out[idx] = await getMove(k);
+    return uniq.map((k) => getMoveSummaryByKeyFromMap(esMapRef.current, k) || { key: k, name: k, api_name: k, display_es: k, display: k });
 
-        }catch
-        {
-          out[idx] = { key: k, name: k };
-        }
-      }
-    }
-
-    await Promise.all(Array.from({ length: Math.min(poolSize, uniq.length) }, worker));
-    
-    return out;
-
-  }, [getMove, learnsetConcurrency]);
+  }, []);
 
   const getManyEsNamesMoves = useCallback(async (keys) =>
   {
@@ -881,7 +944,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
     return new Map(details.map(function(d)
     {
-      return [d.api_name, d.display_es];
+      return [d.api_name, d.display_es || d.display || d.name || d.key || ""];
     }));
 
   }, [getMany]);
@@ -898,24 +961,12 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   // Build learnset
   const buildLearnset = useCallback(async (dataMoves) =>
   {
-    const keys = [];
-    const seen = new Set();
-
-    for(const m of (dataMoves || []))
-    {
-      const k = moveKey(m.move?.name || "");
-      if (k && !seen.has(k)) { seen.add(k); keys.push(k); }
-    }
-
-    const details = await getMany(keys);
-    const byKey = new Map(details.map(d => [d.key, d]));
-
     const result = new Map();
 
     for(const m of (dataMoves || []))
     {
       const k = moveKey(m.move?.name || "");
-      const base = byKey.get(k) || { key: k, name: k };
+      const base = getMoveSummaryByKeyFromMap(esMapRef.current, k) || { key: k, name: k, api_name: k };
 
       for(const det of (m.version_group_details || []))
       {
@@ -934,22 +985,11 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
         if(method === "machine")
         {
-          let rawCode = base.machines_by_group?.[group] || null;
-          if(!rawCode && base.machine_urls_by_group?.[group])
-          {
-            const code = await getMachineCodeByUrl(base.machine_urls_by_group[group]);
-            if(code)
-            {
-              rawCode = code;
-              base.machines_by_group = base.machines_by_group || {};
-              base.machines_by_group[group] = code;
-              saveWarm(cache.current);
-              schedulePersist();
-            }
-          }
+          const machineInfo = base.machinesByGroup?.[group] || null;
+          const machine = normalizeMoveMachineInfo(machineInfo);
 
-          entry.machine_code = rawCode;
-          entry.machine_code_es = rawCode ? formatMachineCodeES(rawCode) : null;
+          entry.machine_code = machine?.machine || null;
+          entry.machine_code_es = machine?.machine_es || null;
         }
 
         switch(method)
@@ -976,7 +1016,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
     return Array.from(result.values());
 
-  }, [getMany, getMachineCodeByUrl, schedulePersist]);
+  }, []);
 
   const getPokemonMovesGroupVersion = useCallback(async (dataMoves) =>
   {
@@ -1088,6 +1128,12 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
   }, []);
 
+  const getMoveSummaryByKey = useCallback((nameOrId) =>
+  {
+    return getMoveSummaryByKeyFromMap(esMapRef.current, nameOrId);
+
+  }, []);
+
   // Suggest para Buscador: 100% desde index + esMap
   const suggestMoves = useCallback((query, limit = 8) =>
   {
@@ -1121,12 +1167,12 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
     for(const key of merged)
     {
       const cached = cache.current.get(key);
-      const display = (keyToDisplayRef.current && keyToDisplayRef.current.get(key)) || key;
-      const entry = (esMapRef.current && esMapRef.current[key]) ? esMapRef.current[key] : null;
+      const summary = getMoveSummaryByKeyFromMap(esMapRef.current, key);
+      const display = summary?.display_es || (keyToDisplayRef.current && keyToDisplayRef.current.get(key)) || key;
 
-      const rawId = (entry && typeof entry.id === "number") ? entry.id : null;
-      const rawType = (cached && cached.type) ? cached.type : (entry ? entry.type : null);
-      const rawClass = (cached && cached.damage_class) ? cached.damage_class : (entry ? entry.damage_class : null);
+      const rawId = summary?.id ?? (cached && typeof cached.id === "number" ? cached.id : null);
+      const rawType = summary?.type ?? (cached && cached.type) ?? null;
+      const rawClass = summary?.damage_class ?? (cached && cached.damage_class) ?? null;
 
       out.push({
         key,
@@ -1287,11 +1333,12 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   {
     return new Promise((resolve) =>
     {
+      forceManifestRefreshRef.current = true;
       refreshResolverRef.current = resolve;
       setRefreshTick((v) => v + 1);
     });
 
-  }, [clearSuggestCache]);
+  }, []);
 
   const value = useMemo(() => ({
     index,
@@ -1300,6 +1347,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
     getMove,
     getMoveRaw,
+    getMoveSummaryByKey,
     getMoveContactByKey,
     getMany,
     getManyEsNamesMoves,
@@ -1328,6 +1376,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
     getMove,
     getMoveRaw,
+    getMoveSummaryByKey,
     getMoveContactByKey,
     getMany,
     getManyEsNamesMoves,

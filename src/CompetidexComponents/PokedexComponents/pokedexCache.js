@@ -178,7 +178,7 @@ export async function refreshAllPokedexCache(poolSize = 6)
 
       try
       {
-        results[idx] = await refreshPokedexRegion(key);
+        results[idx] = await refreshPokedexRegion(key, { force: true });
 
       }catch(error)
       {

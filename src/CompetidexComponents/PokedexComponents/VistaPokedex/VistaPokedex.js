@@ -11,6 +11,7 @@ import { POKEDEX_FORMS_PATCH } from "../utilsPokedex/pokemonFormOverrides";
 import { usePokedex } from "../PokedexProvider";
 import { usePokemon } from "../../PokemonComponents/PokemonProvider";
 import { showToastr } from "../../../services/ToastrService";
+import { consumeSessionRefresh } from "../../../utils/sessionRefreshLimiter";
 import LoadingPkm from "../../SharedComponents/LoadingPkm/LoadingPkm";
 import ErrorNotFoundPkm from "../../SharedComponents/ErrorNotFoundPkm/ErrorNotFoundPkm";
 import SpriteModal from "../../SharedComponents/SpriteModal/SpriteModal";
@@ -193,6 +194,9 @@ function cleanPokedexName(name)
     .trim();
 }
 
+const POKEDEX_REFRESH_LIMIT_PER_APIKEY = 3;
+const POKEDEX_REFRESH_WINDOW_MS = 1000 * 60 * 60 * 24;
+
 export default function VistaPokedex()
 {
   const { gameSlug } = useParams();
@@ -323,7 +327,25 @@ export default function VistaPokedex()
 
       if(activeDexKey)
       {
-        const result = await refreshPokedexRegion(activeDexKey);
+        const limitState = consumeSessionRefresh(
+          `pokedex:${activeDexKey}`,
+          POKEDEX_REFRESH_LIMIT_PER_APIKEY,
+          POKEDEX_REFRESH_WINDOW_MS,
+          { storage: "local" }
+        );
+
+        if(!limitState.allowed)
+        {
+          showToastr({
+            title: "Pokédex",
+            text: "Ya alcanzaste el límite de actualizaciones para esta Pokédex hoy.",
+            variant: "warning"
+          });
+          closeConfirm();
+          return;
+        }
+
+        const result = await refreshPokedexRegion(activeDexKey, { force: true });
 
         if(result?.refreshed)
         {

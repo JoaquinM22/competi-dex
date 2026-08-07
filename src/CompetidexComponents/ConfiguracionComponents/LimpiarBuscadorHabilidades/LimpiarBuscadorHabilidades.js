@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { useAbilities } from "../../HabilidadesComponents/AbilitiesProvider";
 import { showToastr } from "../../../services/ToastrService";
+import { consumeSessionRefresh } from "../../../utils/sessionRefreshLimiter";
 import "./LimpiarBuscadorHabilidades.css";
+
+const SESSION_REFRESH_LIMIT = 3;
 
 function ConfirmModal({ open, title, message, confirmText, cancelText, tone, onConfirm, onClose })
 {
@@ -63,10 +66,21 @@ export default function LimpiarBuscadorHabilidades()
           let result = null;
           if(typeof refreshSuggestCacheAbilities === "function")
           {
+            const limitState = consumeSessionRefresh("abilities", SESSION_REFRESH_LIMIT);
+            if(!limitState.allowed)
+            {
+              showToastr({
+                title: "Habilidades",
+                text: "Ya alcanzaste el límite de actualizaciones para esta sesión.",
+                variant: "warning"
+              });
+              return;
+            }
+
             result = await refreshSuggestCacheAbilities();
           }
 
-          if(result && result.anyRefreshed)
+          if(result && result.manifestChanged)
           {
             showToastr({
               title: "Habilidades",
