@@ -87,15 +87,6 @@
     cursor: default;
 }
 
-.al-tabArrow:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-}
-
-.al-tabArrow:disabled:hover {
-    background: #23272f;
-}
-
 .al-tabsRail {
     display: flex;
     gap: 8px;

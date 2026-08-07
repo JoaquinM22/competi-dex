@@ -559,8 +559,8 @@ export default function ListaMovimientosPkm({
         
         {/* Boton Mover a la izquierda */}
         <button
-          className={`tabs-arrow left ${canLeft ? "" : "disabled"}`}
-          onClick={() => canLeft && scrollByDir("left")}
+          className="tabs-arrow left"
+          onClick={() => scrollByDir("left")}
           type="button"
         >
           ‹
@@ -585,8 +585,8 @@ export default function ListaMovimientosPkm({
 
         {/* Boton Mover a la derecha */}
         <button
-          className={`tabs-arrow right ${canRight ? "" : "disabled"}`}
-          onClick={() => canRight && scrollByDir("right")}
+          className="tabs-arrow right"
+          onClick={() => scrollByDir("right")}
           type="button"
         >
           ›

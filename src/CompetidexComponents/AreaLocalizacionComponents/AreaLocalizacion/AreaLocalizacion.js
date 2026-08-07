@@ -459,9 +459,8 @@ export default function AreaLocalizacion({ areasLocalizacion = [] })
                 <div className="al-tabsShell" role="tablist" aria-label="Generaciones">
                     <button
                         type="button"
-                        className={`al-tabArrow left ${canLeft ? "" : "disabled"}`}
-                        onClick={() => canLeft && scrollByDir("left")}
-                        disabled={!canLeft}
+                        className="al-tabArrow left"
+                        onClick={() => scrollByDir("left")}
                         aria-label="Generación anterior"
                     >
                         ‹
@@ -506,9 +505,8 @@ export default function AreaLocalizacion({ areasLocalizacion = [] })
 
                     <button
                         type="button"
-                        className={`al-tabArrow right ${canRight ? "" : "disabled"}`}
-                        onClick={() => canRight && scrollByDir("right")}
-                        disabled={!canRight}
+                        className="al-tabArrow right"
+                        onClick={() => scrollByDir("right")}
                         aria-label="Generación siguiente"
                     >
                         ›
