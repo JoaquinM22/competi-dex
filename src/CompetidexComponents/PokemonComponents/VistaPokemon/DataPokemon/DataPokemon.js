@@ -440,7 +440,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                 <>
                                     {/* Titulo Seccion Estadísticas de Combate */}
                                     <div className="contenedorTituloSeccion">
-                                        <h2 className="tituloSeccion">Estadísticas de Combate</h2>
+                                        <h2 className="tituloSeccion">Características de Combate</h2>
                                         {/* <button 
                                             className="toggleStats"
                                             onClick={() => setMostrarStats(!mostrarStats)}
@@ -458,7 +458,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             <div>
                                                 <TablaEstadisticasPkm
                                                     statsPoke={pokemonData.stats}
-                                                    nombrePkm={pokemonData.apiName || ""}
+                                                    nombrePkm={pokemonData.specieName || ""}
                                                 />
                                             </div>
                                         </div>
@@ -743,6 +743,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                 <div>
                                     <MegaEvoPkm
                                         megas={megas}
+                                        apiNameBasePkm={pokemonData.specieName || ""}
                                     />
                                 </div>
                             </div>

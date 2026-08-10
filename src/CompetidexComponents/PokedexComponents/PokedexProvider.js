@@ -8,6 +8,7 @@ import {
   getPrevNext,
   getPokedex,
   getPokedexEntry,
+  hasPokemonInPokedexRegion,
   precargarPokedex,
   precargarTodasLasPokedex,
   clearPokedexRegion,
@@ -370,6 +371,7 @@ export function PokedexProvider({ children, preloadAll = true, preloadConcurrenc
 
       getPokedex,
       getPokedexEntry,
+      hasPokemonInPokedexRegion,
       getPrevNext,
 
       clearPokedexRegion,

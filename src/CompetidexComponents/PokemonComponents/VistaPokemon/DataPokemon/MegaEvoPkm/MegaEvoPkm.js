@@ -15,7 +15,7 @@ import ImgPokemon from "../ImgPokemon/ImgPokemon";
 import DebilidadesYResistencias from "../../../../SharedComponents/DebilidadesYResistencias/DebilidadesYResistencias";
 import "./MegaEvoPkm.css";
 
-export default function MegaEvoPkm({ megas })
+export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
 {
   const [openDYR, setOpenDYR] = useState({});
   const [mountedDYR, setMountedDYR] = useState({});
@@ -373,6 +373,7 @@ export default function MegaEvoPkm({ megas })
                         <div className="stats-inner">
                           <TablaEstadisticas
                             statsPoke={statsMega}
+                            nombrePkm={apiNameBasePkm}
                           />
                         </div>
                       </div>

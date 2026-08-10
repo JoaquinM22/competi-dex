@@ -3,7 +3,6 @@
 .movs-wrapper {
   background: var(--panel, #1f2227);
   border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
   padding-bottom: 12px;
   margin-left: clamp(8px, 1.2vw, 16px);
   margin-right: clamp(8px, 1.2vw, 16px);

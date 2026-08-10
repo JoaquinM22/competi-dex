@@ -301,6 +301,22 @@ export function getPokedexEntry(apiKey, entryNumber)
   return dex?.[String(entryNumber)] || null;
 }
 
+export function hasPokemonInPokedexRegion(apiKey, pokemonApiKey)
+{
+  const regionKey = normalizePokedexKey(apiKey);
+  const pokemonKey = normalizePokedexKey(pokemonApiKey);
+
+  if(!regionKey || !pokemonKey) return false;
+
+  const dex = getPokedex(regionKey);
+  if(!dex || typeof dex !== "object") return false;
+
+  return Object.values(dex).some(function(entry)
+  {
+    return normalizePokedexKey(entry?.name) === pokemonKey;
+  });
+}
+
 export function getPrevNext(apiKey, entryNumber)
 {
   const dex = getPokedex(apiKey);
