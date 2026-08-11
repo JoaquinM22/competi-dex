@@ -262,10 +262,10 @@ export default function TablaEstadisticasPkm({ statsPoke, nombrePkm = "" })
             <div className="centrarTexto">
               <>
                 <div>
-                  Valores mínimos calculados con <strong>naturaleza desfavorable</strong>, 0 EVs y 0 IVs.
+                  Valores <strong>mínimos</strong> calculados con <strong>naturaleza desfavorable</strong>, <strong>0 EVs</strong> y <strong>0 IVs</strong>.
                 </div>
                 <div>
-                  Valores máximos calculados con <strong>naturaleza favorable</strong>, 252 EVs y 31 IVs.
+                  Valores <strong>máximos</strong> calculados con <strong>naturaleza favorable</strong>, <strong>252 EVs</strong> y <strong>31 IVs</strong>.
                 </div>
               </> 
             </div>
@@ -399,7 +399,7 @@ export default function TablaEstadisticasPkm({ statsPoke, nombrePkm = "" })
               </div>
             </td>
 
-            <td className="bordeColor textoNegrita">{stat.desfavorable}</td>
+            <td className="bordeColor">{stat.desfavorable}</td>
             <td className="bordeColor textoNegrita">{stat.favorable}</td>
           </tr>
         ))}
