@@ -6,7 +6,8 @@ export const ROUTES = {
     MOVE: "movimiento",
     POKEMON: "pokemon",
     POKEDEX: "pokedex",
-    DYR_CALCULATOR: "calculadora-de-debilidades-y-resistencias",  
+    DYR_CALCULATOR: "calculadora-de-debilidades-y-resistencias",
+    STATS_PKM_CALCULATOR: "calculadora-de-caracteristicas"
 };
 
 export function itemRoute(slug = "")

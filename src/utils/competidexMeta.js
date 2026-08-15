@@ -198,7 +198,7 @@ export function getMoveTargetLabelEs(input)
 // -------------- DATOS META DE BLANCO MOVIMIENTOS - FIN -------------- 
 
 
-// -------------- DATOS META DE ESTADÍSTICAS - INICIO --------------
+// -------------- DATOS META DE CARACTERÍSTICAS - INICIO --------------
 // #region STATS
 
 //https://pokeapi.co/api/v2/stat?limit=9999
@@ -207,7 +207,8 @@ export const STATS_META =
   "unknown": {
     "order": 999,
     "apiKey": null,
-    "labelEs": "Estadística Desconocida",
+    "labelEs": "Característica Desconocida",
+    "labelEsShort": "Característica Desc.",
     "icon": null,
     "conector": ""
   },
@@ -215,6 +216,7 @@ export const STATS_META =
     "order": 1,
     "apiKey": "attack",
     "labelEs": "Ataque",
+    "labelEsShort": "Ataque",
     "icon": null,
     "conector": "el"
   },
@@ -222,6 +224,7 @@ export const STATS_META =
     "order": 2,
     "apiKey": "defense",
     "labelEs": "Defensa",
+    "labelEsShort": "Defensa",
     "icon": null,
     "conector": "la"
   },
@@ -229,6 +232,7 @@ export const STATS_META =
     "order": 3,
     "apiKey": "special-attack",
     "labelEs": "Ataque Especial",
+    "labelEsShort": "At. Esp.",
     "icon": null,
     "conector": "el"
   },
@@ -236,6 +240,7 @@ export const STATS_META =
     "order": 4,
     "apiKey": "special-defense",
     "labelEs": "Defensa Especial",
+    "labelEsShort": "Def. Esp.",
     "icon": null,
     "conector": "la"
   },
@@ -243,8 +248,17 @@ export const STATS_META =
     "order": 5,
     "apiKey": "speed",
     "labelEs": "Velocidad",
+    "labelEsShort": "Velocidad",
     "icon": null,
     "conector": "la"
+  },
+  "hp": {
+    "order": 6,
+    "apiKey": "hp",
+    "labelEs": "PS",
+    "labelEsShort": "PS",
+    "icon": null,
+    "conector": "los"
   }
 };
 
@@ -269,11 +283,187 @@ export function getStatLabelEs(input)
   return getStatMeta(input)?.labelEs || "Estadística Desconocida";
 }
 
+export function getStatLabelEsShort(input)
+{
+  return getStatMeta(input)?.labelEsShort || "Estadística Desc.";
+}
+
 export function getStatConector(input)
 {
   return getStatMeta(input)?.conector || "";
 }
-// -------------- DATOS META DE ESTADÍSTICAS - FIN -------------- 
+// -------------- DATOS META DE CARACTERÍSTICAS - FIN -------------- 
+
+
+// -------------- DATOS META DE NATURALEZAS - INICIO --------------
+// #region NATURALEZAS
+
+export const NATURE_PKM_META =
+{
+  // Naturaleza Desconocida
+  "unknown": {
+    "labelEs": "Naturaleza Desconocida",
+    "up": null,
+    "down": null
+  },
+
+  // Bajan el ATAQUE
+  "hardy": {
+    "labelEs": "Fuerte",
+    "up": null,
+    "down": null
+  },
+  "bold": {
+    "labelEs": "Osada",
+    "up": "defense",
+    "down": "attack"
+  },
+  "timid": {
+    "labelEs": "Miedosa",
+    "up": "speed",
+    "down": "attack"
+  },
+  "modest": {
+    "labelEs": "Modesta",
+    "up": "special-attack",
+    "down": "attack"
+  },
+  "calm": {
+    "labelEs": "Serena",
+    "up": "special-defense",
+    "down": "attack"
+  },
+
+  // Bajan la DEFENSA
+  "lonely": {
+    "labelEs": "Huraña",
+    "up": "attack",
+    "down": "defense"
+  },
+  "docile": {
+    "labelEs": "Dócil",
+    "up": null,
+    "down": null
+  },
+  "hasty": {
+    "labelEs": "Activa",
+    "up": "speed",
+    "down": "defense"
+  },
+  "mild": {
+    "labelEs": "Afable",
+    "up": "special-attack",
+    "down": "defense"
+  },
+  "gentle": {
+    "labelEs": "Amable",
+    "up": "special-defense",
+    "down": "defense"
+  },
+
+  // Bajan el ATAQUE ESPECIAL
+  "adamant": {
+    "labelEs": "Firme",
+    "up": "attack",
+    "down": "special-attack"
+  },
+  "impish": {
+    "labelEs": "Agitada",
+    "up": "defense",
+    "down": "special-attack"
+  },
+  "jolly": {
+    "labelEs": "Alegre",
+    "up": "speed",
+    "down": "special-attack"
+  },
+  "bashfull": {
+    "labelEs": "Tímida",
+    "up": null,
+    "down": null
+  },
+  "careful": {
+    "labelEs": "Cauta",
+    "up": "special-defense",
+    "down": "special-attack"
+  },
+
+  // Bajan la DEFENSA ESPECIAL
+  "naughty": {
+    "labelEs": "Pícara",
+    "up": "attack",
+    "down": "special-defense"
+  },
+  "lax": {
+    "labelEs": "Floja",
+    "up": "defense",
+    "down": "special-defense"
+  },
+  "naive": {
+    "labelEs": "Ingenua",
+    "up": "speed",
+    "down": "special-defense"
+  },
+  "rash": {
+    "labelEs": "Alocada",
+    "up": "special-attack",
+    "down": "special-defense"
+  },
+  "quirky": {
+    "labelEs": "Rara",
+    "up": null,
+    "down": null
+  },
+
+  // Bajan la VELOCIDAD
+  "brave": {
+    "labelEs": "Audaz",
+    "up": "attack",
+    "down": "speed"
+  },
+  "relaxed": {
+    "labelEs": "Plácida",
+    "up": "defense",
+    "down": "speed"
+  },
+  "serious": {
+    "labelEs": "Seria",
+    "up": null,
+    "down": null
+  },
+  "quiet": {
+    "labelEs": "Mansa",
+    "up": "special-attack",
+    "down": "speed"
+  },
+  "sassy": {
+    "labelEs": "Grosera",
+    "up": "special-defense",
+    "down": "speed"
+  }
+};
+
+export function normalizeNaturePkmKey(input)
+{
+  const raw = String(input || "").trim().toLowerCase();
+  if (!raw) return null;
+
+  return raw;
+}
+
+export function getNaturePkmMeta(input)
+{
+  const key = normalizeNaturePkmKey(input);
+  return (key && NATURE_PKM_META[key])
+    ? NATURE_PKM_META[key]
+    : NATURE_PKM_META.unknown;
+}
+
+export function getNaturePkmLabelEs(input)
+{
+  return getNaturePkmMeta(input)?.labelEs || "Naturaleza Desconocida";
+}
+// -------------- DATOS META DE NATURALEZAS - FIN --------------
 
 
 // -------------- DATOS META DE POKÉMON BLOQUEADOS - INICIO -------------- 

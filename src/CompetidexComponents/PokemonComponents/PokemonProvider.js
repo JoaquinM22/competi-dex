@@ -24,6 +24,7 @@ import {
   normalizePokemonText,
   slugifyPokemonForUrl,
   isPokemonBlocked,
+  isPokemonBlockedAbilities,
   toPokemonEndpointName
 } from "../../utils/competidexMeta";
 
@@ -541,9 +542,17 @@ export function PokemonProvider({ children })
 
   }, [index]);
 
-  function suggestPokemon(q, limit)
+  function getPokemonBlocker(blockMode)
+  {
+    if (blockMode === "abilities") return isPokemonBlockedAbilities;
+    return isPokemonBlocked;
+  }
+
+  function suggestPokemon(q, limit, options)
   {
     if (limit == null) limit = 8;
+    const blockMode = options && options.blockMode ? options.blockMode : "default";
+    const isBlocked = getPokemonBlocker(blockMode);
     const n = normalizePokemonText(q);
     if (!n) return [];
 
@@ -551,7 +560,7 @@ export function PokemonProvider({ children })
     for(let i = 0; i < searchIndex.length; i++)
     {
       const it = searchIndex[i];
-      if (isPokemonBlocked(it.key)) continue;
+      if (isBlocked(it.key)) continue;
 
       let score = -1;
       for(let j = 0; j < it.tokens.length; j++)

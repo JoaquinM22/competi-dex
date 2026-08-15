@@ -542,6 +542,28 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 </div>
                                             </div>
                                         </div>
+                                    ) : tipos.length === 2 ? (
+                                        <div className="tipos-stack-center">
+                                            <div className="contenedor-tipos-horizontal-dos">
+                                                {tipos.map((tipo, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="tipo-wrap-pkm-horizontal-dos"
+                                                        style={tipoPkmWidth ? {
+                                                            "backgroundColor": getTipoBgPkm(tipo),
+                                                            "--tipo-pkm-width": `${tipoPkmWidth}px`
+                                                        } : {
+                                                            "backgroundColor": getTipoBgPkm(tipo)
+                                                        }}
+                                                    >
+                                                        <Tipo
+                                                            tipo={tipo}
+                                                            size={"normal"}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     ) : (
                                         <div className="tipos-stack-center">
                                             <div className="contenedor-tipos-vertical">

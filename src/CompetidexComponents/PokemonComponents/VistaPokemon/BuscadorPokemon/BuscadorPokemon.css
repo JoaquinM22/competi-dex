@@ -118,7 +118,7 @@
 
 .buscador-form button:hover,
 .buscador-btn-submit:hover {
-  background-color: red;
+  background-color: red !important;
   transform: scale(1.05);
 }
 

@@ -14,7 +14,7 @@ La idea del proyecto es crecer con el tiempo. Esta primera versión ya deja una 
 
 ## Componentes principales
 
-La web está organizada en 6 componentes principales:
+La web está organizada en 7 componentes principales:
 
 1. **Objetos**
    - Consulta y búsqueda de ítems del universo Pokémon.
@@ -41,6 +41,12 @@ La web está organizada en 6 componentes principales:
    - Herramienta de apoyo para analizar combinaciones de tipos.
    - Útil para consultas rápidas y para estrategias competitivas.
    - Considera habilidades especiales que pueden modificar la matriz de daño.
+
+7. **Calculadora de Características**
+   - Permite calcular las características finales de un Pokémon ajustando naturaleza, EVs, IVs y nivel.
+   - Incluye dos modos de cálculo: lógica de la 9na generación y anteriores, y lógica de Pokémon Champions.
+   - Muestra en tiempo real el impacto de cada ajuste sobre las características.
+   - Permite exportar el resultado final en una imagen PNG.
 
 ## Características
 

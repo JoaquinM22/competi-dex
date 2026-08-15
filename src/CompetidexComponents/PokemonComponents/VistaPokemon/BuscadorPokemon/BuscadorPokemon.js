@@ -6,17 +6,23 @@ import { FiSearch } from "react-icons/fi";
 import { usePokemon } from "../../PokemonProvider";
 import { spriteUrl } from "../../../../config/endpoints";
 import { preloadCachedImage } from "../../../../utils/competidexImgCache";
+import { isPokemonBlocked, isPokemonBlockedAbilities } from "../../../../utils/competidexMeta";
 import { showToastr } from "../../../../services/ToastrService";
 import Tipo from "../../../SharedComponents/Tipo/Tipo";
 import "./BuscadorPokemon.css";
 
-export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
+export default function BuscadorPokemon({
+  onSearch,
+  titulo = "Pokémon",
+  wrapperBgColor = "#323741",
+  searchWrapperBgColor = "#282c34",
+  useBlockedAbilitiesList = false
+})
 {
   const {
     suggestPokemon,
     resolvePokemonInput,
-    loadingIndex,
-    pokemonMap,
+    loadingIndex
   } = usePokemon();
 
   const [inputValue, setInputValue] = useState("");
@@ -27,6 +33,7 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
   const listRef = useRef(null);
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
+  const isBlockedByMode = useBlockedAbilitiesList ? isPokemonBlockedAbilities : isPokemonBlocked;
 
   useEffect(() =>
   {
@@ -103,12 +110,12 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
       return;
     }
 
-    const s = suggestPokemon(q, 8);
+    const s = suggestPokemon(q, 8, { blockMode: useBlockedAbilitiesList ? "abilities" : "default" });
     setSugs(s);
     setOpen(!!s.length);
     setActive(0);
 
-  }, [inputValue, suggestPokemon, loadingIndex]);
+  }, [inputValue, suggestPokemon, loadingIndex, useBlockedAbilitiesList]);
 
   function handleSubmit(e)
   {
@@ -139,6 +146,18 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
 
     const chosen = sugs[active];
     const key = chosen ? (chosen.apiName || chosen.key) : (resolvePokemonInput(q)?.key || q);
+
+    if ((useBlockedAbilitiesList ? isPokemonBlockedAbilities : isPokemonBlocked)(key))
+    {
+      showToastr({
+        title: "Aviso en Pokémon",
+        text: "Ese Pokémon no está disponible en este buscador.",
+        variant: "warning"
+      });
+
+      return;
+    }
+
     executeSearch(key);
   }
 
@@ -216,6 +235,18 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
       }
 
       const key = resolvePokemonInput(q)?.key || q;
+
+      if ((useBlockedAbilitiesList ? isPokemonBlockedAbilities : isPokemonBlocked)(key))
+      {
+        showToastr({
+          title: "Aviso en Pokémon",
+          text: "Ese Pokémon no está disponible en este buscador.",
+          variant: "warning"
+        });
+
+        return;
+      }
+
       executeSearch(key);
     }
 
@@ -231,7 +262,11 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
   }
 
   return (
-    <div className="buscador-wrapper" ref={wrapperRef}>
+    <div
+      className="buscador-wrapper"
+      ref={wrapperRef}
+      style={{ backgroundColor: wrapperBgColor }}
+    >
       
       {/* Titulo del Buscador */}
       <h1 className="buscador-titulo">{titulo}</h1>
@@ -263,6 +298,7 @@ export default function BuscadorPokemon({ onSearch, titulo = "Pokémon" })
             className="buscador-btn-submit"
             aria-label="Buscar"
             title="Buscar"
+            style={{ backgroundColor: searchWrapperBgColor }}
           >
             <FiSearch aria-hidden="true" className="buscador-btn-icon" />
           </button>

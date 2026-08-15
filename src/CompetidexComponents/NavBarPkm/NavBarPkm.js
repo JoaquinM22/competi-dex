@@ -44,17 +44,17 @@ export default function NavBarPkm()
             document.body.style.overflow = "hidden";
         }
 
-        return () =>
-        {
+        return () => {
             document.body.style.overflow = prevOverflow;
         };
+
     }, [mobileOpen]);
 
     useEffect(() =>
     {
         function onResize()
         {
-            if(window.innerWidth > 1180)
+            if(window.innerWidth > 1305)
             {
                 setMobileOpen(false);
             }
@@ -62,6 +62,7 @@ export default function NavBarPkm()
 
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
+        
     }, []);
 
 
@@ -142,6 +143,7 @@ export default function NavBarPkm()
     const isPokemonSection = (pathname === `/${ROUTES.POKEMON}`) || (pathname.startsWith(`/${ROUTES.POKEMON}/`));
     const isPokedexSection = (pathname === `/${ROUTES.POKEDEX}`) || (pathname.startsWith(`/${ROUTES.POKEDEX}/`));
     const isCalculatorSection = (pathname === `/${ROUTES.DYR_CALCULATOR}`);
+    const isStatsCalculatorSection = (pathname === `/${ROUTES.STATS_PKM_CALCULATOR}`);
 
     const closeMobileMenu = () => setMobileOpen(false);
 
@@ -240,10 +242,18 @@ export default function NavBarPkm()
 
                     <NavLink
                         to={ROUTES.DYR_CALCULATOR}
-                        className={"navBtn ultimoNavBtn" + (isCalculatorSection ? " active" : "")}
+                        className={"navBtn" + (isCalculatorSection ? " active" : "")}
                         onClick={closeMobileMenu}
                     >
                         Calculadora de Debilidades y Resistencias
+                    </NavLink>
+
+                    <NavLink
+                        to={ROUTES.STATS_PKM_CALCULATOR}
+                        className={"navBtn ultimoNavBtn" + (isStatsCalculatorSection ? " active" : "")}
+                        onClick={closeMobileMenu}
+                    >
+                        Calculadora de Características
                     </NavLink>
                     
                 </div>
@@ -288,9 +298,16 @@ export default function NavBarPkm()
 
                 <NavLink
                     to={ROUTES.DYR_CALCULATOR}
-                    className={"navBtn ultimoNavBtn" + (isCalculatorSection ? " active" : "")}
+                    className={"navBtn" + (isCalculatorSection ? " active" : "")}
                 >
                     Calculadora de Debilidades y Resistencias
+                </NavLink>
+
+                <NavLink
+                    to={ROUTES.STATS_PKM_CALCULATOR}
+                    className={"navBtn ultimoNavBtn" + (isStatsCalculatorSection ? " active" : "")}
+                >
+                    Calculadora de Características
                 </NavLink>
 
             </div>
