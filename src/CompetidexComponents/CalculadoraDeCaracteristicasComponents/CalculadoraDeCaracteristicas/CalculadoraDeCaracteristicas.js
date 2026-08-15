@@ -36,7 +36,7 @@ const IV_MIN = 0;
 const IV_MAX = 31;
 const LEVEL_MIN = 1;
 const LEVEL_MAX = 100;
-const KEY_CALC_SETTINGS_PREFIX = `calc:settings:${CACHE_VERSION}`;
+const KEY_CALC_SETTINGS = `calc:settings:${CACHE_VERSION}:active`;
 const NATURE_OPTIONS = Object.entries(NATURE_PKM_META)
   .filter(([key]) => key !== "unknown")
   .map(([key, meta]) => ({
@@ -180,16 +180,16 @@ function getBarColor(base)
   return `hwb(${hue} 0% 0%)`;
 }
 
-function getCalcSettingsKey(apiName)
+function getCalcSettingsKey()
 {
-  return `${KEY_CALC_SETTINGS_PREFIX}:${String(apiName || "").trim().toLowerCase()}`;
+  return KEY_CALC_SETTINGS;
 }
 
-function readCalcSettings(apiName)
+function readCalcSettings()
 {
   try
   {
-    const raw = sessionStorage.getItem(getCalcSettingsKey(apiName));
+    const raw = sessionStorage.getItem(getCalcSettingsKey());
     if(!raw) return null;
     return JSON.parse(raw);
 
@@ -199,11 +199,11 @@ function readCalcSettings(apiName)
   }
 }
 
-function writeCalcSettings(apiName, payload)
+function writeCalcSettings(payload)
 {
   try
   {
-    sessionStorage.setItem(getCalcSettingsKey(apiName), JSON.stringify(payload));
+    sessionStorage.setItem(getCalcSettingsKey(), JSON.stringify(payload));
   }catch(e)
   {
     //
@@ -309,17 +309,19 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
 
     pendingRestoreRef.current = true;
 
-    const saved = readCalcSettings(apiName);
-    const savedBase = saved?.base || saved || {};
-    const savedChampions = saved?.champions || {};
+    const saved = readCalcSettings();
+    const savedApiName = String(saved?.apiName || "").trim().toLowerCase();
+    const savedMatchesCurrentPokemon = !!saved && savedApiName === apiName;
+    const savedBase = savedMatchesCurrentPokemon ? (saved?.base || {}) : {};
+    const savedChampions = savedMatchesCurrentPokemon ? (saved?.champions || {}) : {};
     const savedNature = String(savedBase?.nature || "hardy").trim().toLowerCase();
     const savedChampionsNature = String(savedChampions?.nature || "hardy").trim().toLowerCase();
     const safeNature = NATURE_OPTIONS.some((opt) => opt.key === savedNature) ? savedNature : "hardy";
     const safeChampionsNature = NATURE_OPTIONS.some((opt) => opt.key === savedChampionsNature) ? savedChampionsNature : "hardy";
     const savedTab = String(saved?.activeTab || CALC_MODE_BASE);
-    const safeTab = (savedTab === CALC_MODE_CHAMPIONS && isChampionsPokemon) ? CALC_MODE_CHAMPIONS : CALC_MODE_BASE;
+    const safeTab = (savedMatchesCurrentPokemon && savedTab === CALC_MODE_CHAMPIONS && isChampionsPokemon) ? CALC_MODE_CHAMPIONS : CALC_MODE_BASE;
 
-    if(saved)
+    if(savedMatchesCurrentPokemon)
     {
       setActiveTab(safeTab);
       setNivel(clamp(savedBase.nivel ?? 50, LEVEL_MIN, LEVEL_MAX));
@@ -345,6 +347,37 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
       setChampionsEvs(buildState(0));
       setOpenNature(false);
     }
+
+    writeCalcSettings({
+      apiName,
+      activeTab: savedMatchesCurrentPokemon ? safeTab : CALC_MODE_BASE,
+      base: savedMatchesCurrentPokemon
+        ? {
+            nivel: clamp(savedBase.nivel ?? 50, LEVEL_MIN, LEVEL_MAX),
+            nature: safeNature,
+            natureSearch: String(savedBase.natureSearch || ""),
+            evs: restoreStatState(savedBase.evs, 0, 0, EV_MAX_PER_STAT),
+            ivs: restoreStatState(savedBase.ivs, 31, IV_MIN, IV_MAX),
+          }
+        : {
+            nivel: 50,
+            nature: "hardy",
+            natureSearch: "",
+            evs: buildState(0),
+            ivs: buildState(31),
+          },
+      champions: savedMatchesCurrentPokemon
+        ? {
+            nature: safeChampionsNature,
+            natureSearch: String(savedChampions.natureSearch || ""),
+            evs: restoreStatState(savedChampions.evs, 0, 0, CHAMPIONS_EV_MAX_PER_STAT),
+          }
+        : {
+            nature: "hardy",
+            natureSearch: "",
+            evs: buildState(0),
+          }
+    });
 
   }, [pokemon?.apiName, isChampionsPokemon]);
 
@@ -373,7 +406,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
       return;
     }
 
-    writeCalcSettings(apiName, {
+    writeCalcSettings({
+      apiName,
       activeTab: calcMode,
       base: {
         nivel,
