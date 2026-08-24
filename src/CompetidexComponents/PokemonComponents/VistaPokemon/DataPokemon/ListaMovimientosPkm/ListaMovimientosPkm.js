@@ -82,8 +82,8 @@ function measureTextWidth(text, fontSize = 12)
 
 /*
 
-  * grupos: [{ grupoVersion, nivel: [], mt: [], tutor: [], huevo: [], ... }]
-  * modo: "nivel" | "mt" | "tutor" | "huevo"
+  * grupos: [{ grupoVersion, nivel: [], mt: [], tutor: [], huevo: [], entrenamiento: [], otros: [], ... }]
+  * modo: "nivel" | "mt" | "tutor" | "huevo" | "entrenamiento" | "otro"
 */
 export default function ListaMovimientosPkm({
   grupos,
@@ -97,6 +97,10 @@ export default function ListaMovimientosPkm({
 {
   const navigate = useNavigate();
   const ordered = Array.isArray(grupos) ? grupos : [];
+  const bucketKey = modo === "otro" || modo === "otros" ? "otros" : modo;
+  const showLevelColumn = bucketKey === "nivel";
+  const showMtColumn = bucketKey === "mt";
+  const showCommonColumns = !showLevelColumn && !showMtColumn;
 
   const goToMove = useCallback((nombreMovApi, nombreMov) =>
   {
@@ -226,7 +230,7 @@ export default function ListaMovimientosPkm({
   const filas = useMemo(() =>
   {
     const g = ordered[active]; if (!g) return [];
-    const bucket = Array.isArray(g[modo]) ? g[modo] : [];
+    const bucket = Array.isArray(g[bucketKey]) ? g[bucketKey] : [];
 
     const withLevel = bucket.map((m) => ({
       ...m,
@@ -278,12 +282,11 @@ export default function ListaMovimientosPkm({
     }else
     {
       // default
-      if(modo === "nivel")
+      if(showLevelColumn)
       {
         sorted.sort((a, b) => (a.nivel ?? 0) - (b.nivel ?? 0) || String(a.nombre || "").localeCompare(String(b.nombre || "")));
       }
-
-      if(modo === "mt")
+      else if(showMtColumn)
       {
         sorted.sort((a, b) => String(a.nombre || "").localeCompare(String(b.nombre || "")));
       }
@@ -292,7 +295,7 @@ export default function ListaMovimientosPkm({
 
     return sorted;
 
-  }, [ordered, active, modo, sortConfig]);
+  }, [ordered, active, bucketKey, showLevelColumn, showMtColumn, sortConfig]);
 
   const tipoCellWidth = useMemo(() =>
   {
@@ -383,6 +386,8 @@ export default function ListaMovimientosPkm({
     mt:    `${displayName} no tiene movimientos por MT/DT/MO en ${displayActiveGroup}.`,
     tutor: `${displayName} no tiene movimientos por Tutor en ${displayActiveGroup}.`,
     huevo: `${displayName} no tiene movimientos por Huevo en ${displayActiveGroup}.`,
+    entrenamiento: `${displayName} no tiene movimientos por Entrenamiento en ${displayActiveGroup}.`,
+    otro: `${displayName} no tiene otros movimientos en ${displayActiveGroup}.`,
   };
 
   // Buscador Movimiento
@@ -524,7 +529,7 @@ export default function ListaMovimientosPkm({
 
   }
 
-  const getColSpan = () => (modo === "nivel" || modo === "mt") ? 7 : 6;
+  const getColSpan = () => (showLevelColumn || showMtColumn) ? 7 : 6;
   const showHuevoBlockedMessage = modo === "huevo" && !huevoContext.canRenderTable;
 
   const renderSortIcon = (key) =>
@@ -731,7 +736,7 @@ export default function ListaMovimientosPkm({
           <thead>
 
             {/* Movimientos por Nivel */}
-            {modo === "nivel" && (
+            {showLevelColumn && (
               <tr>
                 <th onClick={(e) => handleSort("nivel", e.shiftKey)}>Nivel {renderSortIcon("nivel")}</th>
                 <th onClick={(e) => handleSort("nombre", e.shiftKey)}>Movimiento {renderSortIcon("nombre")}</th>
@@ -744,7 +749,7 @@ export default function ListaMovimientosPkm({
             )}
 
             {/* Movimientos por MT/DT/MO */}
-            {modo === "mt" && (
+            {showMtColumn && (
               <tr>
                 <th onClick={(e) => handleSort("mtmo", e.shiftKey)}>MT/DT/MO {renderSortIcon("mtmo")}</th>
                 <th onClick={(e) => handleSort("nombre", e.shiftKey)}>Movimiento {renderSortIcon("nombre")}</th>
@@ -757,7 +762,7 @@ export default function ListaMovimientosPkm({
             )}
 
             {/* Movimientos por Tutor/Huevo */}
-            {(modo === "tutor" || modo === "huevo") && (
+            {showCommonColumns && (
               <tr>
                 <th onClick={(e) => handleSort("nombre", e.shiftKey)}>Movimiento {renderSortIcon("nombre")}</th>
                 <th onClick={(e) => handleSort("tipo", e.shiftKey)}>Tipo {renderSortIcon("tipo")}</th>
@@ -797,8 +802,8 @@ export default function ListaMovimientosPkm({
                       else delete rowRefs.current[rowKey];
                     }}
                   >
-                    {modo === "nivel" && <td className="col-nivel">{fmt(m.nivel)}</td>}
-                    {modo === "mt" && <td className="col-mtmo">{fmt(m.mtmo)}</td>}
+                    {showLevelColumn && <td className="col-nivel">{fmt(m.nivel)}</td>}
+                    {showMtColumn && <td className="col-mtmo">{fmt(m.mtmo)}</td>}
 
                     <td className="col-nombre">
                       <button

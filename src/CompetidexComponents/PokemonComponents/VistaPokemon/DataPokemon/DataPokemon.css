@@ -88,6 +88,8 @@
 .toggleMovsMT,
 .toggleMovsTutor,
 .toggleMovsHuevo,
+.toggleMovsEntrenamiento,
+.toggleMovsOtro,
 .toggleGiga {
   background: none;
   border: 0;
@@ -107,6 +109,8 @@
 .toggleMovsMT:hover,
 .toggleMovsTutor:hover,
 .toggleMovsHuevo:hover,
+.toggleMovsEntrenamiento:hover,
+.toggleMovsOtro:hover,
 .toggleGiga:hover {
   transform: scale(1.2);
 }
@@ -133,6 +137,8 @@
 #idMovsMT,
 #idMovsTutor,
 #idMovsHuevo,
+#idMovsEntrenamiento,
+#idMovsOtro,
 #idGigaPkm {
   width: 100%;
   max-width: 100%;
@@ -150,6 +156,8 @@
 #idMovsMT.visible,
 #idMovsTutor.visible,
 #idMovsHuevo.visible,
+#idMovsEntrenamiento.visible,
+#idMovsOtro.visible,
 #idGigaPkm.visible {
   opacity: 1;
 }
@@ -164,6 +172,8 @@
 #idMovsMT.oculto,
 #idMovsTutor.oculto,
 #idMovsHuevo.oculto,
+#idMovsEntrenamiento.oculto,
+#idMovsOtro.oculto,
 #idGigaPkm.oculto {
   max-height: 0;
   opacity: 0;
@@ -175,6 +185,8 @@
 #idMovsNivel,
 #idMovsTutor,
 #idMovsHuevo,
+#idMovsEntrenamiento,
+#idMovsOtro,
 #idMovsMT{
   margin-top: 10px;
 }

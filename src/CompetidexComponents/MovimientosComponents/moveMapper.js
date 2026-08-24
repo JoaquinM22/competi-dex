@@ -126,6 +126,50 @@ export function createMoveMapper()
     return s.charAt(0).toLowerCase() + s.slice(1);
   }
 
+  const EMPTY_MOVE_FLAGS = {
+    isContact: null,
+    reflejaMantoEspejo: null,
+    elegiblePorMetronomo: null,
+    bloquedByProtect: null,
+    reflejaEspejoMagico: null,
+    afectadoPorRobo: null,
+    isSoundMove: null,
+    isWindMove: null,
+    isBulletMove: null,
+    traspasaSustituto: null,
+    isBiteMove: null,
+    isPulseMove: null,
+    isPunchMove: null,
+    isSharpMove: null,
+    isDanceMove: null,
+    isDefrostMove: null,
+    inmuneACopion: null,
+    inmuneAOtraVez: null,
+    inmuneAMandato: null,
+    inmuneAYoPrimero: null,
+    inmuneAMimetico: null,
+    afectadoPorGravedad: null,
+    afectadoPorAnticuracion: null,
+    duplicaPorReduccion: null,
+    inmuneAEsquema: null,
+    noElegiblePorSonambulo: null,
+    afectadoPorRocaDelRey: null
+  };
+
+  function normalizeMoveFlags(flags)
+  {
+    const out = Object.assign({}, EMPTY_MOVE_FLAGS);
+    if(!flags || typeof flags !== "object") return out;
+
+    for(const key of Object.keys(out))
+    {
+      const value = flags[key];
+      out[key] = value === true ? true : (value === false ? false : null);
+    }
+
+    return out;
+  }
+
   const AILMENT_ES = {
     "unknown": "Desconocido",
     "burn": "Quemar",
@@ -639,7 +683,7 @@ export function createMoveMapper()
   }
 
   // ----------- Función Obtener Objeto Movimiento Final -----------
-  function obtenerMov(raw, nameOrId = "", getMoveContactByKey = null)
+  function obtenerMov(raw, nameOrId = "", getMoveFlagsByKey = null)
   {
     const key = (typeof nameOrId === "string")
       ? nameOrId.trim().toLowerCase()
@@ -650,6 +694,8 @@ export function createMoveMapper()
     {
       console.log("[moveMapper] RAW move:", key, raw);
     }
+
+    console.log("raw move data: ", raw);
 
     const blancoRaw = raw && raw.target ? raw.target.name : null;
 
@@ -666,15 +712,11 @@ export function createMoveMapper()
       indiceCritico = isFinite(nCrit) ? nCrit : null;
     }
 
-    let isContact = null;
-    if(typeof getMoveContactByKey === "function")
+    let flags = Object.assign({}, EMPTY_MOVE_FLAGS);
+    if(typeof getMoveFlagsByKey === "function")
     {
-      const contactKey = (raw && raw.name) ? raw.name : key;
-      const contactVal = getMoveContactByKey(contactKey);
-
-      if(contactVal === true) isContact = true;
-      else if(contactVal === false) isContact = false;
-      else isContact = null;
+      const flagsKey = (raw && raw.name) ? raw.name : key;
+      flags = normalizeMoveFlags(getMoveFlagsByKey(flagsKey));
     }
 
     const mov = {
@@ -693,7 +735,7 @@ export function createMoveMapper()
       tieneStatsCambios: !!statsCambiosPack.has,
 
       indiceCritico: indiceCritico,
-      isContact: isContact,
+      flags: flags,
 
       potenciaMov: (raw && raw.power !== undefined && raw.power !== null) ? raw.power : -1,
       precisionMov: (raw && raw.accuracy !== undefined && raw.accuracy !== null) ? raw.accuracy : -1,
@@ -721,6 +763,8 @@ export function createMoveMapper()
     {
       console.log("[moveMapper] MAPPED move:", key, mov);
     }
+
+    console.log("Mov: ", mov);
 
     return mov;
   }

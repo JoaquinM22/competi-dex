@@ -23,7 +23,7 @@ export default function VistaMovimiento()
 {
     const { nombreMovimiento: paramNombreMovimiento } = useParams();
     const navigate = useNavigate();
-    const { getMoveRaw, getMoveContactByKey, resolveMoveInput, esMapReady } = useMoves();
+    const { getMoveRaw, getMoveFlagsByKey, resolveMoveInput, esMapReady } = useMoves();
 
     const [movABuscar, setMovABuscar] = useState("");
     const [unMovimiento, setUnMovimiento] = useState(null);
@@ -97,7 +97,7 @@ export default function VistaMovimiento()
                 setErrorMov(null);
 
                 const rawMov = await getMoveRaw(movABuscar);
-                const mov = moveMapper.obtenerMov(rawMov, movABuscar, getMoveContactByKey);
+                const mov = moveMapper.obtenerMov(rawMov, movABuscar, getMoveFlagsByKey);
                 if (!alive) return;
 
                 setUnMovimiento(mov);
@@ -120,7 +120,7 @@ export default function VistaMovimiento()
 
         return () => { alive = false; };
 
-    }, [movABuscar, getMoveContactByKey]);
+    }, [movABuscar, getMoveFlagsByKey]);
 
     function handleSearch(resolved)
     {

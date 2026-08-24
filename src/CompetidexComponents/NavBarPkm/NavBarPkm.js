@@ -54,7 +54,7 @@ export default function NavBarPkm()
     {
         function onResize()
         {
-            if(window.innerWidth > 1305)
+            if(window.innerWidth > 1492)
             {
                 setMobileOpen(false);
             }
@@ -144,6 +144,7 @@ export default function NavBarPkm()
     const isPokedexSection = (pathname === `/${ROUTES.POKEDEX}`) || (pathname.startsWith(`/${ROUTES.POKEDEX}/`));
     const isCalculatorSection = (pathname === `/${ROUTES.DYR_CALCULATOR}`);
     const isStatsCalculatorSection = (pathname === `/${ROUTES.STATS_PKM_CALCULATOR}`);
+    const isAdvancedPkmSearchSection = (pathname === `/${ROUTES.ADVANCED_PKM_SEARCH}`);
 
     const closeMobileMenu = () => setMobileOpen(false);
 
@@ -250,10 +251,18 @@ export default function NavBarPkm()
 
                     <NavLink
                         to={ROUTES.STATS_PKM_CALCULATOR}
-                        className={"navBtn ultimoNavBtn" + (isStatsCalculatorSection ? " active" : "")}
+                        className={"navBtn" + (isStatsCalculatorSection ? " active" : "")}
                         onClick={closeMobileMenu}
                     >
                         Calculadora de Características
+                    </NavLink>
+
+                    <NavLink
+                        to={ROUTES.ADVANCED_PKM_SEARCH}
+                        className={"navBtn ultimoNavBtn" + (isAdvancedPkmSearchSection ? " active" : "")}
+                        onClick={closeMobileMenu}
+                    >
+                        Buscador Avanzado
                     </NavLink>
                     
                 </div>
@@ -305,9 +314,16 @@ export default function NavBarPkm()
 
                 <NavLink
                     to={ROUTES.STATS_PKM_CALCULATOR}
-                    className={"navBtn ultimoNavBtn" + (isStatsCalculatorSection ? " active" : "")}
+                    className={"navBtn" + (isStatsCalculatorSection ? " active" : "")}
                 >
                     Calculadora de Características
+                </NavLink>
+
+                <NavLink
+                    to={ROUTES.ADVANCED_PKM_SEARCH}
+                    className={"navBtn ultimoNavBtn" + (isAdvancedPkmSearchSection ? " active" : "")}
+                >
+                    Buscador Avanzado
                 </NavLink>
 
             </div>

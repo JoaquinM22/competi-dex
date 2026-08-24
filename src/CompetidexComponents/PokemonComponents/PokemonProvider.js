@@ -35,26 +35,53 @@ const MANIFEST_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 dias
 //** Json con todos los Pokémon para el buscador, posee esta forma:
 /*
   {
-    "bulbasaur": {
-      "id": 1,
-      "types": [
-        "grass",
-        "poison"
-      ]
-    },
     "charizard": {
       "id": 6,
       "types": [
         "fire",
         "flying"
-      ]
-    },
-    "ivysaur": {
-      "id": 2,
-      "types": [
-        "grass",
-        "poison"
-      ]
+      ],
+      "generation": "generation-i",
+      "abilities": [
+        {
+          "name": "blaze",
+          "slot": 1
+        },
+        {
+          "name": "solar-power",
+          "slot": 3
+        }
+      ],
+      "weight": 90.5,
+      "height": 1.7,
+      "stats": {
+        "hp": 78,
+        "effort_hp": 0,
+        "atk": 84,
+        "effort_atk": 0,
+        "def": 78,
+        "effort_def": 0,
+        "spe_atk": 109,
+        "effort_spe_atk": 3,
+        "spe_def": 85,
+        "effort_spe_def": 0,
+        "speed": 100,
+        "effort_speed": 0
+      },
+      "malePercentage": 87.5,
+      "femalePercentage": 12.5,
+      "sinSexo": false,
+      "captureRate": 45,
+      "puedeCriar": true,
+      "color": "red",
+      "display": "Charizard",
+      "hasMegaForms": true,
+      "hasGigaForm": true,
+      "eggGroups": [
+        "monster",
+        "dragon"
+      ],
+      "categoryPkm": "Pokémon Llama"
     },
     ...
   }

@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaLocationArrow } from "react-icons/fa6";
 import { getTypeColor, getTypeMeta } from "../../../../utils/competidexMeta";
+import { hasPokemonInPokedexRegion } from "../../../PokedexComponents/pokedexCache";
 import { useMoves } from "../../../MovimientosComponents/MovesProvider";
 import { useAreaLocalizacion } from "../../../AreaLocalizacionComponents/AreaLocalizacionProvider";
 import Tipo from "../../../SharedComponents/Tipo/Tipo";
@@ -25,6 +26,8 @@ import GritoPkm from "./GritoPkm/GritoPkm";
 import PokedexNav from "./PokedexNav/PokedexNav";
 import GeneroPkm from "./GeneroPkm/GeneroPkm";
 import IndiceCapturaPkm from "./IndiceCapturaPkm/IndiceCapturaPkm";
+import CategoriaPkm from "./CategoriaPkm/CategoriaPkm";
+import GruposHuevoPkm from "./GruposHuevoPkm/GruposHuevoPkm";
 import AreaLocalizacion from "../../../AreaLocalizacionComponents/AreaLocalizacion/AreaLocalizacion";
 import "./DataPokemon.css";
 
@@ -94,6 +97,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
     const [mostrarMovsMT, setMostrarMovsMT] = useState(true);
     const [mostrarMovsTutor, setMostrarMovsTutor] = useState(true);
     const [mostrarMovsHuevo, setMostrarMovsHuevo] = useState(true);
+    const [mostrarMovsEntrenamiento, setMostrarMovsEntrenamiento] = useState(true);
+    const [mostrarMovsOtro, setMostrarMovsOtro] = useState(true);
     const [mostrarEvolucion, setMostrarEvolucion] = useState(false);
     const [mostrarFormas, setMostrarFormas] = useState(false);
     const [mostrarMegas, setMostrarMegas] = useState(false);
@@ -112,10 +117,11 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
     });
     const tarjetaInicialRef = useRef(null);
 
+    // Eleva la vista arriba del todo
     const scrollToPokemonTop = useMemo(() =>
     {
-        return () =>
-        {
+        return () => {
+
             if(typeof window === "undefined") return;
 
             window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -148,6 +154,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         }
     }, []);
 
+    // Controla el tamaño para celulares
     useEffect(() =>
     {
         if(typeof window === "undefined") return;
@@ -176,6 +183,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         }
     }, [mostrarDebilidadesYResistencias]);
 
+    // Cada que cambia el Pokémon pone la vista arriba del todo y cierra todas las secciones
     useEffect(() =>
     {
         const nextApiName = String(pokemon?.apiName || "").trim().toLowerCase();
@@ -195,6 +203,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         setMostrarMovsMT(false);
         setMostrarMovsTutor(false);
         setMostrarMovsHuevo(false);
+        setMostrarMovsEntrenamiento(false);
+        setMostrarMovsOtro(false);
         setMostrarEvolucion(false);
         setMostrarFormas(false);
         setMostrarMegas(false);
@@ -207,8 +217,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         setAreasLocalizacionNormalizadas([]);
         setLoadingAreaLocalizacion(false);
 
-        return () =>
-        {
+        return () => {
             if(window.cancelAnimationFrame && typeof rafId === "number")
             {
                 window.cancelAnimationFrame(rafId);
@@ -279,6 +288,25 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         };
 
     }, [movesRawData, getPokemonMovesGroupVersion]);
+
+    // Booleano para saber si mostrar el BLoque de "Movs por Otro Metodo"
+    const hasMovsOtro = useMemo(() =>
+    {
+        return Array.isArray(movimientosNormalizados)
+            ? movimientosNormalizados.some((grupo) => Array.isArray(grupo?.otros) && grupo.otros.length > 0)
+            : false;
+
+    }, [movimientosNormalizados]);
+
+    // Booleano para saber si mostrar el BLoque de "Movs por Entrenamiento"
+    const isChampionsPokemon = useMemo(() =>
+    {
+        const apiKey = String(pokemon?.specieName || "").trim().toLowerCase();
+        if(!apiKey) return false;
+
+        return hasPokemonInPokedexRegion("champions", apiKey);
+
+    }, [pokemon?.specieName]);
 
     // Normaliza las areas de localizacion del Pokemon
     useEffect(() =>
@@ -352,6 +380,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         pokemonData.giga.apiNameGiga ||
         pokemonData.giga.idGiga != null
     );
+    const gruposHuevoPkm = Array.isArray(pokemonData?.gruposHuevo) ? pokemonData.gruposHuevo : [];
 
     // Arreglo de habilidades para DYR
     const habilidadesNombres = useMemo(() =>
@@ -623,6 +652,24 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         />
                                     </div>
 
+                                    {/* Categoria Pokémon */}
+                                    <div className="contenedorGenerico contenedorCategoriaPkm margenAbajo">
+                                        <CategoriaPkm
+                                            categoriaPkm={pokemonData.categoriaPkm}
+                                            size="normal"
+                                        />
+                                    </div>
+
+                                    {/* Grupos Huevo Pokémon */}
+                                    {gruposHuevoPkm.length > 0 && (
+                                        <div className="contenedorGenerico contenedorGruposHuevoPkm margenAbajo">     
+                                            <GruposHuevoPkm
+                                                gruposHuevo={gruposHuevoPkm}
+                                                size="normal"
+                                            />
+                                        </div>
+                                    )}
+
                                     {/* Habilidades Pokémon */}
                                     {habilidadesVisibles.length > 0 && (
                                         <div className="contenedorGenerico contenedorHabilidadPkm margenAbajo">
@@ -865,6 +912,35 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                     </div>
                                 ) : (
                                     <>
+ 
+                                        {/* Movimientos por Entrenamiento (Solo Pokemon de Champions) */}
+                                        {isChampionsPokemon && (
+                                            <>
+                                                <div className="subContenedorTituloSeccion">
+                                                    <h2>Movimientos por Entrenamiento</h2>
+                                                    <button
+                                                        className="toggleMovsEntrenamiento"
+                                                        onClick={() => setMostrarMovsEntrenamiento(!mostrarMovsEntrenamiento)}
+                                                        type="button"
+                                                    >
+                                                        <span className={mostrarMovsEntrenamiento ? "iconoRotado" : "iconoNormal"}>
+                                                            <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
+                                                        </span>
+                                                    </button>
+                                                </div>
+
+                                                <div id="idMovsEntrenamiento" className={mostrarMovsEntrenamiento ? "visible" : "oculto"}>
+                                                    <ListaMovimientosPkm
+                                                        grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
+                                                        modo="entrenamiento"
+                                                        nombrePokemon={nombreActual}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+
+
+                                        {/* Movimientos por Nivel */}
                                         <div className="subContenedorTituloSeccion">
                                             <h2>Movimientos por Nivel</h2>
                                             <button
@@ -886,6 +962,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             />
                                         </div>
 
+
+                                        {/* Movimientos por MT, DT y MO */}
                                         <div className="subContenedorTituloSeccion">
                                             <h2>Movimientos por MT, DT y MO</h2>
                                             <button
@@ -907,6 +985,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             />
                                         </div>
 
+
+                                        {/* Movimientos por Tutor */}
                                         <div className="subContenedorTituloSeccion">
                                             <h2>Movimientos por Tutor</h2>
                                             <button
@@ -928,6 +1008,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             />
                                         </div>
 
+
+                                        {/* Movimientos Huevo */}
                                         <div className="subContenedorTituloSeccion">
                                             <h2>Movimientos Huevo</h2>
                                             <button
@@ -951,6 +1033,34 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 pokemonApiName={pokemonData?.apiName || ""}
                                             />
                                         </div>
+
+
+                                        {/* Movimientos por Otro (Solo si hay movs con "Otro") */}
+                                        {hasMovsOtro && (
+                                            <>
+                                                <div className="subContenedorTituloSeccion">
+                                                    <h2>Movimientos Por Otro Método</h2>
+                                                    <button
+                                                        className="toggleMovsOtro"
+                                                        onClick={() => setMostrarMovsOtro(!mostrarMovsOtro)}
+                                                        type="button"
+                                                    >
+                                                        <span className={mostrarMovsOtro ? "iconoRotado" : "iconoNormal"}>
+                                                            <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
+                                                        </span>
+                                                    </button>
+                                                </div>
+
+                                                <div id="idMovsOtro" className={mostrarMovsOtro ? "visible" : "oculto"}>
+                                                    <ListaMovimientosPkm
+                                                        grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
+                                                        modo="otro"
+                                                        nombrePokemon={nombreActual}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+
                                     </>
                                 )}
                             </div>

@@ -20,6 +20,7 @@ import VistaPokemon from "./CompetidexComponents/PokemonComponents/VistaPokemon/
 import VistaPokedex from "./CompetidexComponents/PokedexComponents/VistaPokedex/VistaPokedex";
 import CalculadoraDebilidades from "./CompetidexComponents/CalculadoraDebilidadesComponent/CalculadoraDebilidades";
 import VistaCalculadoraCaracteristicas from "./CompetidexComponents/CalculadoraDeCaracteristicasComponents/VistaCalculadoraCaracteristicas";
+import VistaBuscadorAvanzadoPkm from "./CompetidexComponents/BuscadorAvanzadoPkmComponents/VistaBuscadorAvanzadoPkm";
 
 import NavBarPkm from "./CompetidexComponents/NavBarPkm/NavBarPkm";
 import ScrollToTopButton from "./CompetidexComponents/ScrollToTopButton/ScrollToTopButton";
@@ -130,6 +131,9 @@ export default function App()
 
                       {/* Calculadora de Caracteristicas */}
                       <Route path={ROUTES.STATS_PKM_CALCULATOR} element={<VistaCalculadoraCaracteristicas />} />
+
+                      {/* Buscador Avanzado */}
+                      <Route path={ROUTES.ADVANCED_PKM_SEARCH} element={<VistaBuscadorAvanzadoPkm />} />
 
                     </Routes>
 

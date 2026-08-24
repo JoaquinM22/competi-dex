@@ -5,6 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { abilityRoute } from "../../../../../utils/competidexRoutes";
 import "./HabilidadesPkm.css";
 
+function renderTituloSubrayado(texto)
+{
+  const parts = String(texto || "").trim().split(/\s+/).filter(Boolean);
+
+  if(parts.length === 0)
+  {
+    return null;
+  }
+
+  return parts.map(function(part, index)
+  {
+    return (
+      <React.Fragment key={`${part}-${index}`}>
+        <span className="titulo-texto">{part}</span>
+        {index < parts.length - 1 ? " " : ""}
+      </React.Fragment>
+    );
+  });
+}
+
 export default function HabilidadesPkm({ habilidades = [], isHidden = false, size = "normal" })
 {
   const navigate = useNavigate();
@@ -40,7 +60,6 @@ export default function HabilidadesPkm({ habilidades = [], isHidden = false, siz
   const titulo = isHidden
     ? (items.length === 1 ? "Habilidad Oculta" : "Habilidades Ocultas")
     : (items.length === 1 ? "Habilidad" : "Habilidades");
-  const mostrarDosPuntos = isHidden ? items.length > 1 : items.length === 1;
 
   const goToAbility = useCallback(function(item)
   {
@@ -56,8 +75,8 @@ export default function HabilidadesPkm({ habilidades = [], isHidden = false, siz
       
       {/* Titulo */}
       <div className="habilidades-titulo">
-        <span className="titulo-texto">{titulo}</span>
-        {mostrarDosPuntos && <span>:</span>}
+        {renderTituloSubrayado(titulo)}
+        <span>:</span>
       </div>
 
       {/* Lista de Habilidades */}

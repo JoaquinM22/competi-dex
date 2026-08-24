@@ -1,0 +1,117 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\GruposHuevoPkm\GruposHuevoPkm.css */
+
+/* Contenedor de grupos huevo */
+.gruposHuevoPkmComponent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2a2a2a;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Título */
+.gruposHuevoPkmComponent-title {
+    font-size: 22px;
+    margin-bottom: 5px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.gruposHuevoPkmComponent-title .gruposHuevoPkmComponent-title-text {
+    text-decoration: underline;
+}
+
+/* Lista */
+.gruposHuevoPkmComponent-lista {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Cada grupo */
+.gruposHuevoPkmComponent-item {
+    background-color: #414345;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    position: relative;
+}
+
+.gruposHuevoPkmComponent-label {
+    /* font-weight: bold;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+
+    color: #ffd75c;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    font-size: inherit;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+}
+
+/* Tamaños */
+.gruposHuevoPkmComponent-container-small {
+    font-size: 14px;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.gruposHuevoPkmComponent-container-normal {
+    font-size: 18px;
+    padding: 12px 22px;
+    width: 100%;
+}
+
+.gruposHuevoPkmComponent-container-medium {
+    font-size: 16px;
+    padding: 10px 18px;
+    width: 100%;
+}
+
+.gruposHuevoPkmComponent-container-large {
+    font-size: 22px;
+    padding: 18px 35px;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    
+    .gruposHuevoPkmComponent-container {
+        padding: 8px 12px;
+    }
+
+    .gruposHuevoPkmComponent-title {
+        font-size: 18px;
+    }
+
+    .gruposHuevoPkmComponent-lista {
+        font-size: 16px;
+    }
+
+    .gruposHuevoPkmComponent-item {
+        font-size: 15px;
+        padding: 8px;
+    }
+
+}

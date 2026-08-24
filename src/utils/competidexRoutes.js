@@ -7,7 +7,8 @@ export const ROUTES = {
     POKEMON: "pokemon",
     POKEDEX: "pokedex",
     DYR_CALCULATOR: "calculadora-de-debilidades-y-resistencias",
-    STATS_PKM_CALCULATOR: "calculadora-de-caracteristicas"
+    STATS_PKM_CALCULATOR: "calculadora-de-caracteristicas",
+    ADVANCED_PKM_SEARCH: "buscador-avanzado"
 };
 
 export function itemRoute(slug = "")

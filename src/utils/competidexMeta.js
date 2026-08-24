@@ -20541,3 +20541,237 @@ export function hasExtraAbilitiesByKey(input)
   return !!getExtraAbilitiesMetaByKey(input);
 }
 // ---------------- DATOS META POKÉMON CON HABILIDADES EXTRA - FIN ---------------- 
+
+
+// ---------------- DATOS META GRUPOS HUEVO POKÉMON - INICIO ---------------- 
+//#region G. HUEVO PKM
+
+// https://pokeapi.co/api/v2/egg-group?limit=9999
+export const GRUPOS_HUEVO_PKM =
+{
+  "monster": "Monstruo",
+  "water1": "Agua 1",
+  "bug": "Bicho",
+  "flying": "Volador",
+  "ground": "Campo",
+  "fairy": "Hada",
+  "plant": "Planta",
+  "humanshape": "Humanoide",
+  "water3": "Agua 3",
+  "mineral": "Mineral",
+  "indeterminate": "Amorfo",
+  "water2": "Agua 2",
+  "ditto": "Ditto",
+  "dragon": "Dragón",
+  "no-eggs": "Desconocido"
+};
+
+export function normalizeEggGroupKey(input)
+{
+  const raw = String(input || "").trim().toLowerCase();
+  if (!raw) return null;
+
+  return raw;
+}
+
+export function getEggGroupLabelES(input)
+{
+  const key = normalizeEggGroupKey(input);
+  return (key && GRUPOS_HUEVO_PKM[key])
+    ? GRUPOS_HUEVO_PKM[key]
+    : "Grupo Huevo Desconocido";
+}
+// ---------------- DATOS META GRUPOS HUEVO POKÉMON - FIN ---------------- 
+
+
+// ---------------- DATOS META BANDERAS MOVIMIENTOS - INICIO ---------------- 
+//#region FLAGS MOVES
+
+export const FLAGS_MOVES_PKM =
+{
+  // Afectado Por
+  'reflejaEspejoMagico': {
+    'groupKey': 'afectadoPor',
+    'title': 'Espejo Mágico/Capa Mágica',
+    'tooltipDescTRUE': 'Es reflejado por la habilidad "Espejo Mágico" y por el movimiento "Capa Mágica"',
+    'tooltipDescFALSE': 'No es reflejado por la habilidad "Espejo Mágico" y por el movimiento "Capa Mágica"'
+  },
+  'bloquedByProtect': {
+    'groupKey': 'afectadoPor',
+    'title': 'Protección/Detección/Etc.',
+    'tooltipDescTRUE': 'Es bloqueado por movimientos como "Protección", "Detección", entre otros',
+    'tooltipDescFALSE': 'Atraviesa movimientos como "Protección", "Detección", entre otros'
+  },
+  'afectadoPorRobo': {
+    'groupKey': 'afectadoPor',
+    'title': 'Robo',
+    'tooltipDescTRUE': 'Es afectado por el movimiento "Robo"',
+    'tooltipDescFALSE': 'No es afectado por el movimiento "Robo"'
+  },
+  'afectadoPorRocaDelRey': {
+    'groupKey': 'afectadoPor',
+    'title': 'Roca del Rey',
+    'tooltipDescTRUE': 'Le aplica el efecto del objeto "Roca del Rey"',
+    'tooltipDescFALSE': 'No aplica el efecto del objeto "Roca del Rey" si ya tiene un efecto secundario de retroceso'
+  },
+  'reflejaMantoEspejo': {
+    'groupKey': 'afectadoPor',
+    'title': 'Manto Espejo',
+    'tooltipDescTRUE': 'Es afectado por el movimiento "Manto Espejo"',
+    'tooltipDescFALSE': 'No es afectado por el movimiento "Manto Espejo"'
+  },
+  'elegiblePorMetronomo': {
+    'groupKey': 'afectadoPor',
+    'title': 'Metrónomo',
+    'tooltipDescTRUE': 'Puede salir al usar el movimiento "Metrónomo"',
+    'tooltipDescFALSE': 'No puede salir al usar el movimiento "Metrónomo"'
+  },
+  'afectadoPorAnticuracion': {
+    'groupKey': 'afectadoPor',
+    'title': 'Anticuración',
+    'tooltipDescTRUE': 'Es afectado por los efectos de los movimientos "Anticura" y "Psicorruido"',
+    'tooltipDescFALSE': 'No es afectado por los efectos de los movimientos "Anticura" y "Psicorruido"'
+  },
+  'afectadoPorGravedad': {
+    'groupKey': 'afectadoPor',
+    'title': 'Gravedad',
+    'tooltipDescTRUE': 'Es afectado por el movimiento "Gravedad"',
+    'tooltipDescFALSE': 'No es afectado por el movimiento "Gravedad"'
+  },
+
+  // Inmune a Movimiento
+  'inmuneACopion': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Copión',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Copión"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Copión"'
+  },
+  'inmuneAOtraVez': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Otra Vez',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Otra Vez"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Otra Vez"'
+  },
+  'inmuneAMandato': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Mandato',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Mandato"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Mandato"'
+  },
+  'inmuneAYoPrimero': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Yo Primero',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Yo Primero"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Yo Primero"'
+  },
+  'inmuneAMimetico': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Mimético',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Mimético"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Mimético"'
+  },
+  'inmuneAEsquema': {
+    'groupKey': 'inmuneAMovimiento',
+    'title': 'Esquema',
+    'tooltipDescTRUE': 'Es inmune al efecto del movimiento "Esquema"',
+    'tooltipDescFALSE': 'No es inmune al efecto del movimiento "Esquema"'
+  },
+
+  // Tipo de Movimiento
+  'isSoundMove': {
+    'groupKey': 'typeMove',
+    'title': 'Sonido',
+    'tooltipDescTRUE': 'Es un movimiento de sonido. Los movimientos de Sonido no poseen efecto sobre Pokémon con la habilidad "Insonorizar"',
+    'tooltipDescFALSE': 'No es un movimiento de sonido. Los movimientos de Sonido no poseen efecto sobre Pokémon con la habilidad "Insonorizar"'
+  },
+  'isWindMove': {
+    'groupKey': 'typeMove',
+    'title': 'Viento',
+    'tooltipDescTRUE': 'Es un movimiento de viento. Los movimientos de Viento activan la habilidad "Energía Eólica"',
+    'tooltipDescFALSE': 'No es un movimiento de viento. Los movimientos de Viento activan la habilidad "Energía Eólica"'
+  },
+  'isBulletMove': {
+    'groupKey': 'typeMove',
+    'title': 'Bomba/Proyectil',
+    'tooltipDescTRUE': 'Es un movimiento Bomba/Proyectil. Los movimientos que son Bomba/Proyectil no poseen efecto sobre Pokémon con la habilidad "Antibalas"',
+    'tooltipDescFALSE': 'No es un movimiento Bomba/Proyectil. Los movimientos que son Bomba/Proyectil no poseen efecto sobre Pokémon con la habilidad "Antibalas"'
+  },
+  'isBiteMove': {
+    'groupKey': 'typeMove',
+    'title': 'Mordisco',
+    'tooltipDescTRUE': 'Es un movimiento basado en el mordisco. Los movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"',
+    'tooltipDescFALSE': 'No es un movimiento basado en el mordisco. Los movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"'
+  },
+  'isPulseMove': {
+    'groupKey': 'typeMove',
+    'title': 'Pulso/Aura',
+    'tooltipDescTRUE': 'Es un movimiento de Pulso/Aura. Los movimientos que son Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"',
+    'tooltipDescFALSE': 'No es un movimiento de Pulso/Aura. Los movimientos que son Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"'
+  },
+  'isPunchMove': {
+    'groupKey': 'typeMove',
+    'title': 'Puño',
+    'tooltipDescTRUE': 'Es un movimiento basado en los Puños. Los movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"',
+    'tooltipDescFALSE': 'No es un movimiento basado en los Puños. Los movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"'
+  },
+  'isSharpMove': {
+    'groupKey': 'typeMove',
+    'title': 'Corte',
+    'tooltipDescTRUE': 'Es un movimiento basado en los Cortes. Los movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"',
+    'tooltipDescFALSE': 'No es un movimiento basado en los Cortes. Los movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"'
+  },
+  'isDanceMove': {
+    'groupKey': 'typeMove',
+    'title': 'Danza',
+    'tooltipDescTRUE': 'Es un movimiento de Danza. Al usar un movimiento de Danza, activa la habilidad "Pareja de Baile"',
+    'tooltipDescFALSE': 'No es un movimiento de Danza. Al usar un movimiento de Danza, activa la habilidad "Pareja de Baile"'
+  },
+
+  // Otros datos
+  'isDefrostMove': {
+    'groupKey': 'other',
+    'title': 'Descongela',
+    'tooltipDescTRUE': 'En caso de estar congelado, el Pokémon deja de estarlo luego de utilizar este movimiento',
+    'tooltipDescFALSE': 'No descongela al Pokémon'
+  },
+  'traspasaSustituto': {
+    'groupKey': 'other',
+    'title': 'Atraviesa "Sustituto"',
+    'tooltipDescTRUE': 'Es capaz de traspasar el Sustituto del Pokémon rival',
+    'tooltipDescFALSE': 'No es capaz de traspasar el Sustituto del Pokémon rival'
+  },
+  'duplicaPorReduccion': {
+    'groupKey': 'other',
+    'title': 'Reducción',
+    'tooltipDescTRUE': 'Duplica el daño si el rival usó el movimiento "Reducción"',
+    'tooltipDescFALSE': 'No duplica el daño si el rival usó el movimiento "Reducción"'
+  },
+  'noElegiblePorSonambulo': {
+    'groupKey': 'other',
+    'title': 'Sonámbulo',
+    'tooltipDescTRUE': 'No puede ser seleccionado por el movimiento "Sonámbulo"',
+    'tooltipDescFALSE': 'Puede ser seleccionado por el movimiento "Sonámbulo"'
+  }
+};
+
+export function getFlagsByGroupKey(groupKey)
+{
+  const key = String(groupKey || "").trim().toLowerCase();
+  if(!key) return null;
+
+  const items = Object.entries(FLAGS_MOVES_PKM)
+    .filter(([, value]) =>
+    {
+      if(!value || !value.groupKey) return false;
+
+      return String(value.groupKey).trim().toLowerCase() === key;
+    })
+    .map(([flagKey, value]) => ({
+      key: flagKey,
+      ...value
+    }));
+
+  return items.length > 0 ? items : null;
+}
+
+// ---------------- DATOS META BANDERAS MOVIMIENTOS - FIN ---------------- 

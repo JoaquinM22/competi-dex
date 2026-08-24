@@ -19,6 +19,7 @@ import PokesAprendenMovimiento from "./PokesAprendenMovimiento/PokesAprendenMovi
 import CambiosStatsMov from "./CambiosStatsMov/CambiosStatsMov";
 import CriticoMovimiento from "./CriticoMovimiento/CriticoMovimiento";
 import EsDeContacto from "./EsDeContacto/EsDeContacto";
+import BanderasMovimiento from "./BanderasMovimiento/BanderasMovimiento";
 
 export default function DataMovimiento({ movimiento, loading, error })
 {
@@ -38,7 +39,7 @@ export default function DataMovimiento({ movimiento, loading, error })
     precisionMov, // precision
     ppMov, // Puntos de Poder
     prioridadMov, // Prioridad: 0, +1, +2, -1, etc.
-    isContact,
+    flags, // Todas las banderas de efectos varios
     blancoMov, //Blanco: Elegido, ususario, pokemon adyacentes, etc
     descMov, // Descripcion en español
     efectoSecundario, // Objeto con el texto de efecto si posee, y los datos con los que armo dicha oracion
@@ -202,7 +203,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                     />
 
                     <EsDeContacto
-                      isContact={isContact}
+                      isContact={flags.isContact}
                       size="normal"
                     />
 
@@ -239,6 +240,34 @@ export default function DataMovimiento({ movimiento, loading, error })
                       null
 
                     }
+
+                    <BanderasMovimiento
+                      titulo="Afectado Por"
+                      groupKey="afectadoPor"
+                      flags={flags}
+                      size="normal"
+                    />
+
+                    <BanderasMovimiento
+                      titulo="Inmune a Movimiento"
+                      groupKey="inmuneAMovimiento"
+                      flags={flags}
+                      size="normal"
+                    />
+
+                    <BanderasMovimiento
+                      titulo="Tipo de Movimiento"
+                      groupKey="typeMove"
+                      flags={flags}
+                      size="normal"
+                    />
+
+                    <BanderasMovimiento
+                      titulo="Otros Datos"
+                      groupKey="other"
+                      flags={flags}
+                      size="normal"
+                    />
 
                   </div>
 

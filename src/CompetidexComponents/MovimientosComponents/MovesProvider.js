@@ -38,21 +38,58 @@ const KEY_RAW = `moves:raw:${CACHE_VERSION}`;
       "display": "Megapuño",
       "type": "normal",
       "damage_class": "physical",
-      "isContact": true
-    },
-    "pay-day": {
-      "id": 6,
-      "display": "Día de Pago",
-      "type": "normal",
-      "damage_class": "physical",
-      "isContact": true
-    },
-    "fire-punch": {
-      "id": 7,
-      "display": "Puño Fuego",
-      "type": "fire",
-      "damage_class": "physical",
-      "isContact": true     
+      "isContact": true, // Es de Contacto
+      "reflejaMantoEspejo": true, // Puede reflejarse si rival usa movimiento "Manto Espejo"
+      "elegiblePorMetronomo": true, // Puede realizarse por movimiento "Metronomo"
+      "bloquedByProtect": true, // Es bloqueado por movimientos: proteccion, deteccion, etc
+      "reflejaEspejoMagico": false, // Es afectado por habilidad "Espejo Magico"
+      "afectadoPorRobo": false, // Es afectado por movimiento "Robo"
+      "isSoundMove": false, // Es un movimiento de sonido
+      "isWindMove": false, // Es un movimento de viento (Potenciado por habilidad "Energia Eolica")
+      "isBulletMove": false, // Es un movimiento proyectil (no posee efecto sobre habilidad "Antibalas")
+      "traspasaSustituto": false, // Atraviesa sustituto
+      "isBiteMove": false, // Es un movimiento de mordisco (Se potencia x1.5 con habilidad "strong-jaw")
+      "isPulseMove": false, // Es un movimiento de pulso (Se potencia x1.5 con habilidad "mega-launcher")
+      "isPunchMove": true, // Es un movimiento de puños (Se potencia x1.2 con habilidad "iron-fist")
+      "isSharpMove": false, // Es un movimiento de corte (Se potencia x1.5 con habilidad "sharpness")
+      "isDanceMove": false, // Es un movimiento de danza (Activa la habilidad "dancer")
+      "isDefrostMove": false, // Descongela al usuario luego de usar el movimiento, en caso de estarlo
+      "inmuneACopion": false, // No es afectado por Movimiento "Copion"
+      "inmuneAOtraVez": false, // No es afectado por Movimiento "Otra vez"
+      "inmuneAMandato": false, // No es afectado por Movimiento "Mandato"
+      "inmuneAYoPrimero": false, // No es afectado por Movimiento "Yo Primero"
+      "inmuneAMimetico": false, // No es afectado por Movimiento "Mimetico"
+      "afectadoPorGravedad": false, // No se puede realizar el Movimiento si hay "Gravedad"
+      "afectadoPorAnticuracion": false, // No se puede realizar si hay efecto de "Anticuracion"
+      "duplicaPorReduccion": false, // El movimiento hace el doble de daño si el rival uso "Reduccion"
+      "inmuneAEsquema": false, // No es afectado por Movimiento "Esquema"
+      "noElegiblePorSonambulo": false, // No puede ser seleccionado por "Sonambulo"
+      "afectadoPorRocaDelRey": true, // Si aplica el efecto de Roca del Rey
+      "power": 80,
+      "accuracy": 85,
+      "pp": 20,
+      "machinesByGroup": {
+        "red-blue": {
+          "machine": "tm01",
+          "machine_es": "MT01"
+        },
+        "yellow": {
+          "machine": "tm01",
+          "machine_es": "MT01"
+        },
+        "sword-shield": {
+          "machine": "tm00",
+          "machine_es": "MT00"
+        },
+        "red-green-japan": {
+          "machine": "tm01",
+          "machine_es": "MT01"
+        },
+        "blue-japan": {
+          "machine": "tm01",
+          "machine_es": "MT01"
+        }
+      }
     },
     ...
   }
@@ -72,6 +109,36 @@ const KEY_LAST_ESMAP_URL = `moves:lastEsMapUrl:${CACHE_VERSION}`;
 // TTLs
 const INDEX_TTL_MS = 1000 * 60 * 60 * 24; // 24h (solo para session)
 const MANIFEST_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 días
+
+const MOVE_FLAG_KEYS = [
+  "isContact",
+  "reflejaMantoEspejo",
+  "elegiblePorMetronomo",
+  "bloquedByProtect",
+  "reflejaEspejoMagico",
+  "afectadoPorRobo",
+  "isSoundMove",
+  "isWindMove",
+  "isBulletMove",
+  "traspasaSustituto",
+  "isBiteMove",
+  "isPulseMove",
+  "isPunchMove",
+  "isSharpMove",
+  "isDanceMove",
+  "isDefrostMove",
+  "inmuneACopion",
+  "inmuneAOtraVez",
+  "inmuneAMandato",
+  "inmuneAYoPrimero",
+  "inmuneAMimetico",
+  "afectadoPorGravedad",
+  "afectadoPorAnticuracion",
+  "duplicaPorReduccion",
+  "inmuneAEsquema",
+  "noElegiblePorSonambulo",
+  "afectadoPorRocaDelRey"
+];
 
 // Persistencia (index/warm/machine/raw en session)
 const saveIndex = (list) => { try { sessionStorage.setItem(KEY_INDEX, JSON.stringify(list)); } catch {} };
@@ -154,6 +221,22 @@ function normalizeMoveMachineInfo(machineInfo)
     machine: machine || null,
     machine_es: machine_es || null
   };
+}
+
+function normalizeMoveFlags(entry)
+{
+  if(!entry || typeof entry !== "object") return null;
+
+  const source = (entry.flags && typeof entry.flags === "object") ? entry.flags : entry;
+  const flags = {};
+
+  for(const key of MOVE_FLAG_KEYS)
+  {
+    const value = source[key];
+    flags[key] = value === true ? true : (value === false ? false : null);
+  }
+
+  return flags;
 }
 
 function getMoveSummaryFromMapEntry(apiKey, entry)
@@ -364,7 +447,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
   const slugToKeyRef = useRef(new Map());
   const keyToSlugRef = useRef(new Map());
   const keyToDisplayRef = useRef(new Map());
-  const keyToContactRef = useRef(new Map());
+  const keyToFlagsRef = useRef(new Map());
 
   const syncMoveDisplayFromRaw = useCallback((key, raw) =>
   {
@@ -391,26 +474,31 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
   }, []);
 
-  const getMoveContactByKey = useCallback((nameOrId) =>
+  const getMoveFlagsByKey = useCallback((nameOrId) =>
   {
     const key = moveKey(nameOrId);
     if(!key) return null;
 
-    if(keyToContactRef.current.has(key))
+    if(keyToFlagsRef.current.has(key))
     {
-      return keyToContactRef.current.get(key);
+      return keyToFlagsRef.current.get(key);
     }
 
     const esEntry = (esMapRef.current && esMapRef.current[key]) ? esMapRef.current[key] : null;
-    if(!esEntry || esEntry.isContact === undefined || esEntry.isContact === null)
+    if(!esEntry)
     {
       return null;
     }
 
-    const val = esEntry.isContact === true ? true : (esEntry.isContact === false ? false : null);
-    keyToContactRef.current.set(key, val);
+    const flags = normalizeMoveFlags(esEntry);
+    if(!flags)
+    {
+      return null;
+    }
 
-    return val;
+    keyToFlagsRef.current.set(key, flags);
+
+    return flags;
 
   }, []);
 
@@ -569,17 +657,17 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
           const slugToKey = new Map();
           const keyToSlug = new Map();
           const keyToDisplay = new Map();
-          const keyToContact = new Map();
+          const keyToFlags = new Map();
 
           for(let i = 0; i < keys.length; i++)
           {
             const apiKey = keys[i];
             const entry = esMapObj[apiKey] || {};
             const display = entry.display || "";
-            const isContact = entry?.isContact;
+            const flags = normalizeMoveFlags(entry);
 
             keyToDisplay.set(apiKey, display || apiKey);
-            keyToContact.set(apiKey, isContact === true ? true : (isContact === false ? false : null));
+            if(flags) keyToFlags.set(apiKey, flags);
 
             if(display)
             {
@@ -604,7 +692,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
           slugToKeyRef.current = slugToKey;
           keyToSlugRef.current = keyToSlug;
           keyToDisplayRef.current = keyToDisplay;
-          keyToContactRef.current = keyToContact;
+          keyToFlagsRef.current = keyToFlags;
 
         })();
 
@@ -976,7 +1064,15 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
         if(!result.has(group))
         {
-          result.set(group, { group, level_up: [], machine: [], tutor: [], egg: [], other: [] });
+          result.set(group, {
+            group,
+            level_up: [],
+            machine: [],
+            tutor: [],
+            egg: [],
+            training: [],
+            other: []
+          });
         }
 
         const bucket = result.get(group);
@@ -998,6 +1094,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
           case "machine": bucket.machine.push(entry); break;
           case "tutor": bucket.tutor.push(entry); break;
           case "egg": bucket.egg.push(entry); break;
+          case "train": bucket.training.push(entry); break;
           default: bucket.other.push(entry); break;
         }
 
@@ -1011,6 +1108,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
       g.machine.sort((a,b)=>a.name.localeCompare(b.name));
       g.tutor.sort((a,b)=>a.name.localeCompare(b.name));
       g.egg.sort((a,b)=>a.name.localeCompare(b.name));
+      g.training.sort((a,b)=>a.name.localeCompare(b.name));
       g.other.sort((a,b)=>a.name.localeCompare(b.name));
     }
 
@@ -1074,6 +1172,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
           mt: Array.isArray(g?.machine) ? g.machine.map(mapSinNivel("MT/TR")) : [],
           tutor: Array.isArray(g?.tutor) ? g.tutor.map(mapSinNivel("Tutor")) : [],
           huevo: Array.isArray(g?.egg) ? g.egg.map(mapSinNivel("Huevo")) : [],
+          entrenamiento: Array.isArray(g?.training) ? g.training.map(mapSinNivel("Entrenamiento")) : [],
           otros: Array.isArray(g?.other) ? g.other.map(mapSinNivel("Otro")) : []
         };
       })
@@ -1348,7 +1447,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
     getMove,
     getMoveRaw,
     getMoveSummaryByKey,
-    getMoveContactByKey,
+    getMoveFlagsByKey,
     getMany,
     getManyEsNamesMoves,
     translatePokemonMoves,
@@ -1377,7 +1476,7 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
     getMove,
     getMoveRaw,
     getMoveSummaryByKey,
-    getMoveContactByKey,
+    getMoveFlagsByKey,
     getMany,
     getManyEsNamesMoves,
     translatePokemonMoves,

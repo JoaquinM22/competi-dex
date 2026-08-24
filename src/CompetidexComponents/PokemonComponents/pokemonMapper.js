@@ -10,7 +10,8 @@ import {
   getColorPkmByKey,
   getExtraAbilityKeysByKey,
   getPokemonGenByKey,
-  getPokemonEvolutionPatch
+  getPokemonEvolutionPatch,
+  getEggGroupLabelES
 } from "../../utils/competidexMeta";
 import { officialArtworkUrl, shinyArtworkUrl } from "../../config/endpoints";
 
@@ -370,6 +371,48 @@ async function mergeAbilitiesWithExtraMeta(baseAbilities, extraKeys, replaceMode
 
   return uniqAbilitiesByApiName([...abilitiesBase, ...abilitiesExtra]);
 }
+
+function getCategoryPkm(arr)
+{
+  const genera = Array.isArray(arr) ? arr : [];
+  if(!genera.length) return null;
+
+  const preferredLanguages = ["es", "es-419", "en"];
+
+  for(const lang of preferredLanguages)
+  {
+    const match = genera.find((item) => String(item?.language?.name || "").trim().toLowerCase() === lang);
+    if(match && typeof match.genus === "string")
+    {
+      const genus = match.genus.trim();
+      if(genus) return genus;
+    }
+  }
+
+  return null;
+}
+
+function getPkmEggsGroups(arr)
+{
+  const eggGroups = Array.isArray(arr) ? arr : [];
+  if(!eggGroups.length) return [];
+
+  const out = [];
+
+  for(const item of eggGroups)
+  {
+    const apiKey = safeText(item?.name);
+    if(!apiKey) continue;
+
+    const eggGroup = returnEmptyEggGroup();
+    eggGroup.apiKey = apiKey;
+    eggGroup.labelES = safeText(getEggGroupLabelES(apiKey)) || "";
+
+    out.push(eggGroup);
+  }
+
+  return out;
+}
 // ------------ Funciones Auxiliares - FIN ------------ 
 
 
@@ -413,6 +456,14 @@ function returnEmptyDex()
     "prev": returnEmptyDexPkm(),
     "next": returnEmptyDexPkm(),
     "baseId": null
+  };
+}
+
+function returnEmptyEggGroup()
+{
+  return {
+    "apiKey": "",
+    "labelES": ""
   };
 }
 
@@ -537,7 +588,9 @@ function returnEmptyPkm()
     "malePercentage": null,
     "femalePercentage": null,
     "sinSexo": false,
-    "captureRate": null
+    "captureRate": null,
+    "categoriaPkm": "",
+    "gruposHuevo": [] //returnEmptyEggGroup()
   };
 
 }
@@ -1297,6 +1350,12 @@ export function createPokemonMapper(opts)
     // Ratio de Captura
     pokemon.captureRate = safeNumber(speciesRaw?.capture_rate);
 
+    // Categoria Pokemon
+    pokemon.categoriaPkm = getCategoryPkm(speciesRaw?.genera);
+
+    // Grupos Huevo
+    pokemon.gruposHuevo = getPkmEggsGroups(speciesRaw?.egg_groups);
+
     // Data Cruda de Movimientos que aprende el Pokémon
     const movesRawData = Array.isArray(raw?.moves) ? raw.moves : [];
 
@@ -1304,6 +1363,10 @@ export function createPokemonMapper(opts)
     {
       console.log("[pokemonMapper] MAPPED pokemon:", key, pokemon);
     }
+
+    console.log("Raw pokemon data: ", raw);
+    console.log("Species raw pokemon data: ", speciesRaw);
+    console.log("Data Pokemon: ", pokemon);
 
     // Retorno el Objeto Pokémon normalizado y el rawData de los Movimientos que aprende
     return {
