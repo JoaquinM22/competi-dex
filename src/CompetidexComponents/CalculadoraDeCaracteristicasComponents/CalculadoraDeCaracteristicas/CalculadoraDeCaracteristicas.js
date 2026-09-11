@@ -291,7 +291,7 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
 
   const isChampionsPokemon = useMemo(() =>
   {
-    const apiName = String(pokemon?.apiName || "").trim().toLowerCase();
+    const apiName = String(pokemon?.speciePkm || "").trim().toLowerCase();
     if(!apiName) return false;
 
     return hasPokemonInPokedexRegion("champions", apiName);

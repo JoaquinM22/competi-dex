@@ -129,7 +129,8 @@ export function createPokemonCalcCaracteristicasMapper({ getPokemonRaw })
       "img": id ? officialArtworkUrl(id) : "",
       "imgShiny": id ? shinyArtworkUrl(id) : "",
       "types": getRawTypes(raw),
-      "stats": getStats(raw?.stats)
+      "stats": getStats(raw?.stats),
+      "speciePkm": String(raw?.species?.name || "")
     };
   }
 
