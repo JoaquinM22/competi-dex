@@ -1,6 +1,11 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\PpMovimiento\PpMovimiento.js
 
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  advancedMovesSearchRouteWithFilters,
+  getAdvancedSearchTabConfig
+} from "../../../../../utils/competidexRoutes";
 import "./PpMovimiento.css";
 
 function toDash(v)
@@ -36,12 +41,64 @@ function calcMaxPP(basePP)
   return Math.floor(basePP * 1.6);
 }
 
-export default function PpMovimiento({ ppMov, size = "normal" })
+function getPpFilterData(value)
 {
+  if(Number.isFinite(value) && value > 0)
+  {
+    return {
+      operator: "eq",
+      value: value
+    };
+  }
+
+  return {
+    operator: "lte",
+    value: 0
+  };
+}
+
+export default function PpMovimiento({ ppMov, size = "normal", enableAdvancedSearchLink = false })
+{
+  const navigate = useNavigate();
   const base = useMemo(() => toIntOrNull(ppMov), [ppMov]);
   const maxPP = useMemo(() => (base !== null ? calcMaxPP(base) : null), [base]);
+  const ppFilterData = useMemo(() => getPpFilterData(base), [base]);
+  const movsAdvancedSearchTabData = getAdvancedSearchTabConfig("movimientos");
+  const movsAdvancedSearchDescription = movsAdvancedSearchTabData?.description || "Movimientos";
+  const canNavigateToPp = !!enableAdvancedSearchLink;
 
   const sizeClass = `ppmov-container-${size}`;
+  const ppSearchLabel = ppFilterData.operator === "eq"
+    ? "Buscar " + movsAdvancedSearchDescription + " con PP Base = " + ppFilterData.value
+    : "Buscar " + movsAdvancedSearchDescription + " sin PP";
+
+  function handlePpClick()
+  {
+    if(!canNavigateToPp) return;
+
+    navigate(advancedMovesSearchRouteWithFilters({
+      filters: [
+        {
+          field: "pp",
+          operator: ppFilterData.operator,
+          value: ppFilterData.value
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+  }
+
+  function handlePpKeyDown(event)
+  {
+    if(!canNavigateToPp) return;
+    if(event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    handlePpClick();
+  }
 
   return (
     <div className={`ppmov-container ${sizeClass}`}>
@@ -55,16 +112,26 @@ export default function PpMovimiento({ ppMov, size = "normal" })
 
         {/* Valor */}
         <div className="ppmov-value">
-          {base !== null ? (
-            <span>
-              {base}{" "}
-              <span className="ppmov-max">
-                ({maxPP !== null ? maxPP : "-"})
+          <span
+            className={"ppmov-valueAction" + (canNavigateToPp ? " ppmov-valueAction-clickable" : "")}
+            onClick={canNavigateToPp ? handlePpClick : undefined}
+            role={canNavigateToPp ? "button" : undefined}
+            tabIndex={canNavigateToPp ? 0 : undefined}
+            onKeyDown={handlePpKeyDown}
+            aria-label={canNavigateToPp ? ppSearchLabel : undefined}
+            title={canNavigateToPp ? ppSearchLabel : undefined}
+          >
+            {base !== null ? (
+              <span>
+                {base}{" "}
+                <span>
+                  ({maxPP !== null ? maxPP : "-"})
+                </span>
               </span>
-            </span>
-          ) : (
-            toDash(ppMov)
-          )}
+            ) : (
+              toDash(ppMov)
+            )}
+          </span>
         </div>
 
         {/* Toolip */}

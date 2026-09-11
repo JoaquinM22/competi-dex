@@ -45,13 +45,25 @@
     padding: 12px 14px;
     margin: 0;
     word-wrap: break-word;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     position: relative;
     transition: background-color 0.16s ease, transform 0.16s ease;
 }
 
 .banderasMovesComponent-item:hover {
     background-color: #36383b;
+}
+
+.banderasMovesComponent-item-clickable {
+    cursor: pointer;
+}
+
+.banderasMovesComponent-item-clickable:hover,
+.banderasMovesComponent-item-clickable:focus-visible {
+    background-color: #36383b;
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+    outline: none;
 }
 
 .banderasMovesComponent-linea {
@@ -69,7 +81,41 @@
     font-size: inherit;
     line-height: 1.2;
     color: #ffffff;
-    text-shadow: none;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banderasMovesComponent-linea--true .banderasMovesComponent-nombre,
+.banderasMovesComponent-linea--true .banderasMovesComponent-valor,
+.banderasMovesComponent-linea--true .banderasMovesComponent-underline,
+.banderasMovesComponent-linea--true .banderasMovesComponent-separador {
+    color: #FFD700;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banderasMovesComponent-linea--false .banderasMovesComponent-nombre,
+.banderasMovesComponent-linea--false .banderasMovesComponent-valor,
+.banderasMovesComponent-linea--false .banderasMovesComponent-underline,
+.banderasMovesComponent-linea--false .banderasMovesComponent-separador {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banderasMovesComponent-nombre {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.banderasMovesComponent-valor {
+    flex: 0 0 auto;
+    min-width: 24px;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .banderasMovesComponent-underline {
@@ -190,7 +236,27 @@
 
     .banderasMovesComponent-item {
         font-size: 15px;
-        padding: 10px 12px;
+        padding: 10px 9px;
+    }
+
+    .banderasMovesComponent-linea {
+        gap: 8px;
+    }
+
+    .banderasMovesComponent-nombre {
+        flex: 1 1 auto;
+        min-width: 0;
+        text-align: left;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .banderasMovesComponent-valor { 
+        flex: 0 0 auto;
+        min-width: 24px;
+        font-size: 12px;
+        text-align: right;
+        white-space: nowrap;
     }
 
 }

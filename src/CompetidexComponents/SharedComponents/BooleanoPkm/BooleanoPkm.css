@@ -1,0 +1,165 @@
+/** src\CompetidexComponents\SharedComponents\BooleanoPkm\BooleanoPkm.css */
+
+.booleanoPkmComponent {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.booleanoPkmComponent-row {
+    width: 100%;
+    background-color: #2a2a2a;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    position: relative;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.booleanoPkmComponent-row.is-true .booleanoPkmComponent-label,
+.booleanoPkmComponent-row.is-true .booleanoPkmComponent-value {
+    color: #FFD700;
+}
+
+.booleanoPkmComponent-underline {
+    text-decoration: underline;
+}
+
+.booleanoPkmComponent-label {
+    font-size: 25px;
+    white-space: nowrap;
+}
+
+.booleanoPkmComponent-valueWrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 44px;
+    max-width: 100%;
+    text-align: right;
+}
+
+.booleanoPkmComponent-value {
+    font-size: 30px;
+    line-height: 1;
+    overflow-wrap: anywhere;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    padding: 4px 6px;
+    margin: 0;
+    font: inherit;
+    font-size: 30px;
+    font-weight: inherit;
+    border-radius: 12px;
+}
+
+.booleanoPkmComponent-value:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.booleanoPkmComponent-value-clickable {
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.booleanoPkmComponent-value-clickable:hover,
+.booleanoPkmComponent-value-clickable:focus-visible {
+    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+    outline: none;
+}
+
+.booleanoPkmComponent-tooltip {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 8px);
+    max-width: min(420px, 92vw);
+    padding: 12px 14px;
+    border-radius: 12px;
+    box-sizing: border-box;
+
+    background: #0f1116;
+    color: #ffffff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index: 9999;
+    white-space: normal;
+    text-align: center;
+}
+
+.booleanoPkmComponent-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-bottom-color: #0f1116;
+}
+
+.booleanoPkmComponent-row.has-tooltip:hover .booleanoPkmComponent-tooltip,
+.booleanoPkmComponent-row.has-tooltip:focus .booleanoPkmComponent-tooltip,
+.booleanoPkmComponent-row.has-tooltip:focus-within .booleanoPkmComponent-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 6px);
+}
+
+.booleanoPkmComponent-small .booleanoPkmComponent-label {
+    font-size: 16px;
+}
+
+.booleanoPkmComponent-small .booleanoPkmComponent-value {
+    font-size: 22px;
+}
+
+.booleanoPkmComponent-normal .booleanoPkmComponent-label {
+    font-size: 21px;
+}
+
+.booleanoPkmComponent-normal .booleanoPkmComponent-value {
+    font-size: 21px;
+}
+
+.booleanoPkmComponent-large .booleanoPkmComponent-label {
+    font-size: 20px;
+}
+
+.booleanoPkmComponent-large .booleanoPkmComponent-value {
+    font-size: 44px;
+}
+
+@media (max-width: 480px) {
+    
+    .booleanoPkmComponent-row {
+        padding: 10px 12px;
+    }
+
+    .booleanoPkmComponent-label {
+        font-size: 14px;
+        flex-basis: 84px;
+    }
+
+    .booleanoPkmComponent-value {
+        font-size: 20px;
+    }
+
+    .booleanoPkmComponent-tooltip {
+        max-width: 94vw;
+    }
+
+}

@@ -1,0 +1,20 @@
+/** src\CompetidexComponents\BuscadorAvanzadoComponents\BuscadorAvanzadoItemsComponents\ListaItemsPaginada\ResumenItemModal\ResumenItemModal.css */
+
+.resumenItemModalComponent {
+    display: grid;
+    gap: 14px;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #383b3f;
+    max-width: 580px;
+    align-items: center;
+}
+
+@media (max-width: 500px) {
+    
+    .resumenItemModalComponent {
+        padding: 6px;
+        gap: 10px;
+    }
+
+}

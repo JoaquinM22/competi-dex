@@ -1,8 +1,10 @@
 //** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\DataPokemon.js
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaLocationArrow } from "react-icons/fa6";
 import { getTypeColor, getTypeMeta } from "../../../../utils/competidexMeta";
+import { advancedPokemonSearchRouteWithFilters } from "../../../../utils/competidexRoutes";
 import { hasPokemonInPokedexRegion } from "../../../PokedexComponents/pokedexCache";
 import { useMoves } from "../../../MovimientosComponents/MovesProvider";
 import { useAreaLocalizacion } from "../../../AreaLocalizacionComponents/AreaLocalizacionProvider";
@@ -29,6 +31,7 @@ import IndiceCapturaPkm from "./IndiceCapturaPkm/IndiceCapturaPkm";
 import CategoriaPkm from "./CategoriaPkm/CategoriaPkm";
 import GruposHuevoPkm from "./GruposHuevoPkm/GruposHuevoPkm";
 import AreaLocalizacion from "../../../AreaLocalizacionComponents/AreaLocalizacion/AreaLocalizacion";
+import BooleanoPkm from "../../../SharedComponents/BooleanoPkm/BooleanoPkm";
 import "./DataPokemon.css";
 
 // Funcion Auxiliar para normalizar una habilidad para DYR
@@ -83,6 +86,7 @@ function measureTextWidth(text, fontSize = 12)
 
 export default function DataPokemon({ pokemon, movesRawData = [], loading, error })
 {
+    const navigate = useNavigate();
     const { getPokemonMovesGroupVersion } = useMoves();
     const {
         ensureAreaLocalizacionRaw,
@@ -115,7 +119,76 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         if(typeof window === "undefined") return false;
         return window.innerWidth <= 640;
     });
+
+    const [isSmallBooleanViewport, setIsSmallBooleanViewport] = useState(() =>
+    {
+        if(typeof window === "undefined") return false;
+        return window.innerWidth <= 500;
+    });
+
     const tarjetaInicialRef = useRef(null);
+    const booleanoPkmSize = isSmallBooleanViewport ? "small" : "normal";
+
+    function handleMegaEvolutionsAdvancedSearch()
+    {
+        navigate(advancedPokemonSearchRouteWithFilters({
+            filters: [
+                {
+                    field: "isMegaForm",
+                    operator: "eq",
+                    value: true
+                }
+            ],
+            sort: {
+                field: "id",
+                direction: "asc"
+            }
+        }));
+    }
+
+    function handleGigaAdvancedSearch()
+    {
+        navigate(advancedPokemonSearchRouteWithFilters({
+            filters: [
+                {
+                    field: "isGigaForm",
+                    operator: "eq",
+                    value: true
+                }
+            ],
+            sort: {
+                field: "id",
+                direction: "asc"
+            }
+        }));
+    }
+
+    function handleFormsAdvancedSearch()
+    {
+        navigate(advancedPokemonSearchRouteWithFilters({
+            filters: [
+                {
+                    field: "isMegaForm",
+                    operator: "eq",
+                    value: false
+                },
+                {
+                    field: "isGigaForm",
+                    operator: "eq",
+                    value: false
+                },
+                {
+                    field: "id",
+                    operator: "gte",
+                    value: 10000
+                }
+            ],
+            sort: {
+                field: "id",
+                direction: "asc"
+            }
+        }));
+    }
 
     // Eleva la vista arriba del todo
     const scrollToPokemonTop = useMemo(() =>
@@ -164,14 +237,22 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
 
         sync();
 
-        if(mq.addEventListener)
-        {
-            mq.addEventListener("change", sync);
-            return () => mq.removeEventListener("change", sync);
-        }
+        mq.addEventListener("change", sync);
+        return () => mq.removeEventListener("change", sync);
+    }, []);
 
-        mq.addListener(sync);
-        return () => mq.removeListener(sync);
+    // Controla el tamaño de las tarjetas booleanas en pantallas chicas
+    useEffect(() =>
+    {
+        if(typeof window === "undefined") return;
+
+        const mq = window.matchMedia("(max-width: 500px)");
+        const sync = () => setIsSmallBooleanViewport(mq.matches);
+
+        sync();
+
+        mq.addEventListener("change", sync);
+        return () => mq.removeEventListener("change", sync);
     }, []);
 
     // Cuando abro la seccion de "DYR" por primera vez, ahi recien renderiza el componente, para mejor performance
@@ -464,10 +545,10 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                 />
                             </div>
 
-                            {/* Estadísticas de Combate */}
+                            {/* Características de Combate */}
                             {pokemonData.stats && (
                                 <>
-                                    {/* Titulo Seccion Estadísticas de Combate */}
+                                    {/* Titulo Seccion Características de Combate */}
                                     <div className="contenedorTituloSeccion">
                                         <h2 className="tituloSeccion">Características de Combate</h2>
                                         {/* <button 
@@ -481,8 +562,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         </button>  */}
                                     </div>
 
-                                    {/* Componente Estadísticas de Combate */}
-                                    <div id="idStats" className={mostrarStats ? "visible" : "oculto"}>
+                                    {/* Componente Características de Combate */}
+                                    <div id="idStats" className={(mostrarStats ? "visible" : "oculto") + " dataPokemonStatsArea"}>
                                         <div id="contenedorStats">
                                             <div>
                                                 <TablaEstadisticasPkm
@@ -493,37 +574,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         </div>
                                     </div>
                                 </>
-                            )}
-
-                            {/* Cadena Evolutiva */}
-                            {Array.isArray(pokemonData.evolutionChain) && pokemonData.evolutionChain.length > 0 && (
-                                <>
-                                    {/* Titulo Cadena Evolutiva */}
-                                    <div className="contenedorTituloSeccion">
-                                        <h2 className="tituloSeccion">Cadena Evolutiva</h2>
-                                        <button
-                                            className="toggleEvolucion"
-                                            onClick={() => setMostrarEvolucion(!mostrarEvolucion)}
-                                            type="button"
-                                        >
-                                            <span className={mostrarEvolucion ? "iconoRotado" : "iconoNormal"}>
-                                                <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    {/* Componente Cadena Evolutiva */}
-                                    <div id="cadenaEvo" className={mostrarEvolucion ? "visible" : "oculto"}>
-                                        <div className={`evo-viewport ${pokemonData.evolutionChain.length === 1 ? "solo-una-evo" : ""}`}>
-                                            <div className="evo-track">
-                                                <CadenaEvolutivaPkm
-                                                    cadenaEvolutiva={pokemonData.evolutionChain}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
+                            )}      
 
                         </div>
 
@@ -547,6 +598,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                     <GeneracionPkm
                                         generacion={pokemonData.generation}
                                         size="normal"
+                                        enableAdvancedSearchLink={true}
+                                        advancedSearchTabKey="pokemon"
                                     />
 
                                     {/* Imagen Pokémon */}
@@ -567,6 +620,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                     <Tipo
                                                         tipo={tipos[0]}
                                                         size="normal"
+                                                        enableAdvancedSearchLink={true}
+                                                        advancedSearchTabKey="pokemon"
                                                     />
                                                 </div>
                                             </div>
@@ -588,6 +643,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                         <Tipo
                                                             tipo={tipo}
                                                             size={"normal"}
+                                                            enableAdvancedSearchLink={true}
+                                                            advancedSearchTabKey="pokemon"
                                                         />
                                                     </div>
                                                 ))}
@@ -610,6 +667,8 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                         <Tipo
                                                             tipo={tipo}
                                                             size="normal"
+                                                            enableAdvancedSearchLink={true}
+                                                            advancedSearchTabKey="pokemon"
                                                         />
                                                     </div>
                                                 ))}
@@ -622,6 +681,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         <ColorPkm
                                             color={pokemonData.color}
                                             size="normal"
+                                            enableAdvancedSearchLink={true}
                                         />
                                     </div>
 
@@ -632,15 +692,17 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             porcentajeHembra={pokemonData.femalePercentage}
                                             sinSexo={pokemonData.sinSexo}
                                             size="normal"
+                                            enableAdvancedSearchLink={true}
                                         />
                                     </div>
 
                                     {/* Peso y Altura Pokémon */}
                                     <div className="contenedorGenerico contenedorPesoYAlturaPkm margenAbajo">
                                         <PesoYAlturaPkm
-                                            altura={pokemonData.height !== null && pokemonData.height !== undefined ? `${pokemonData.height}m` : undefined}
-                                            peso={pokemonData.weight !== null && pokemonData.weight !== undefined ? `${pokemonData.weight}Kg` : undefined}
+                                            altura={pokemonData.height !== null && pokemonData.height !== undefined ? pokemonData.height : undefined}
+                                            peso={pokemonData.weight !== null && pokemonData.weight !== undefined ? pokemonData.weight : undefined}
                                             size="normal"
+                                            enableAdvancedSearchLink={true}
                                         />
                                     </div>
 
@@ -649,6 +711,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         <IndiceCapturaPkm
                                             rate={pokemonData.captureRate}
                                             size="normal"
+                                            enableAdvancedSearchLink={true}
                                         />
                                     </div>
 
@@ -657,6 +720,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         <CategoriaPkm
                                             categoriaPkm={pokemonData.categoriaPkm}
                                             size="normal"
+                                            enableAdvancedSearchLink={true}
                                         />
                                     </div>
 
@@ -666,9 +730,23 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             <GruposHuevoPkm
                                                 gruposHuevo={gruposHuevoPkm}
                                                 size="normal"
+                                                enableAdvancedSearchLink={true}
                                             />
                                         </div>
                                     )}
+
+                                    {/* Puede Criar */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Puede Criar"
+                                            value={pokemonData.puedeCriar}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="puedeCriar"
+                                        />
+                                    </div>
 
                                     {/* Habilidades Pokémon */}
                                     {habilidadesVisibles.length > 0 && (
@@ -698,6 +776,71 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             gritoUrl={pokemonData.criesLatest || null}
                                             size="large"
                                         />
+                                    </div>    
+
+                                    {/* Es Pokemon Bebe */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Es Pokémon Bebé"
+                                            value={pokemonData.isBabyPkm}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="isBabyPkm"
+                                        />
+                                    </div>
+
+                                    {/* Es Pokemon Mítico/Singular */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Es Pokémon Mítico/Singular"
+                                            value={pokemonData.isMythicalPkm}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="isMythicalPkm"
+                                        />
+                                    </div>
+
+                                    {/* Es Pokemon Legendario */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Es Pokémon Legendario"
+                                            value={pokemonData.isLegendaryPkm}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="isLegendaryPkm"
+                                        />
+                                    </div>
+
+                                    {/* Tiene Mega Evoluciones */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Posee Mega Evolución/es"
+                                            value={pokemonData.hasMegaForms}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="hasMegaForms"
+                                        />
+                                    </div>
+
+                                    {/* Posee Gigamax */}
+                                    <div className="contenedorGenerico margenAbajo">          
+                                        <BooleanoPkm
+                                            label="Posee Gigamax"
+                                            value={pokemonData.hasGigaForm}
+                                            size={booleanoPkmSize}
+                                            trueTooltip=""
+                                            falseTooltip=""
+                                            enableAdvancedSearchLink={true}
+                                            advancedSearchFilterKey="hasGigaForm"
+                                        />
                                     </div>
 
                                     {/* Numero de Pokedex en todos los juegos donde aparece */}
@@ -705,6 +848,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                         <PokedexNav
                                             key={index}
                                             titulo={dex.title}
+                                            path={dex.path}
                                             baseId={dex.baseId}
                                             prev={dex.prev}
                                             next={dex.next}
@@ -718,6 +862,36 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                         </div>
 
                     </div>
+
+                    {/* Cadena Evolutiva */}
+                    {Array.isArray(pokemonData.evolutionChain) && pokemonData.evolutionChain.length > 0 && (
+                        <>
+                            {/* Titulo Cadena Evolutiva */}
+                            <div className="contenedorTituloSeccion">
+                                <h2 className="tituloSeccion">Cadena Evolutiva</h2>
+                                <button
+                                    className="toggleEvolucion"
+                                    onClick={() => setMostrarEvolucion(!mostrarEvolucion)}
+                                    type="button"
+                                >
+                                    <span className={mostrarEvolucion ? "iconoRotado" : "iconoNormal"}>
+                                        <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
+                                    </span>
+                                </button>
+                            </div>
+
+                            {/* Componente Cadena Evolutiva */}
+                            <div id="cadenaEvo" className={mostrarEvolucion ? "visible" : "oculto"}>
+                                <div className={`evo-viewport ${pokemonData.evolutionChain.length === 1 ? "solo-una-evo" : ""}`}>
+                                    <div className="evo-track">
+                                        <CadenaEvolutivaPkm
+                                            cadenaEvolutiva={pokemonData.evolutionChain}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     {/* Debilidades y Resistencias */}
                     {!loading && !error && Array.isArray(tipos) && tipos.length > 0 && Array.isArray(habilidadesNombres) && habilidadesNombres.length > 0 && (
@@ -766,7 +940,23 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                         <>
                             {/* Titulo Seccion Formas */}
                             <div className="contenedorTituloSeccion">
-                                <h2 className="tituloSeccion">Formas</h2>
+                                <h2
+                                    className="tituloSeccion tituloSeccionAdvancedSearch"
+                                    onClick={handleFormsAdvancedSearch}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={function(event)
+                                    {
+                                        if(event.key !== "Enter" && event.key !== " ") return;
+
+                                        event.preventDefault();
+                                        handleFormsAdvancedSearch();
+                                    }}
+                                    aria-label="Buscar Pokémon que sean Formas"
+                                    title="Buscar Pokémon que sean Formas"
+                                >
+                                    Formas
+                                </h2>
                                 <button
                                     className="toggleFormas"
                                     onClick={() => setMostrarFormas(!mostrarFormas)}
@@ -795,7 +985,23 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                         <>
                             {/* Titulo Seccion Mega Evoluciones */}
                             <div className="contenedorTituloSeccion">
-                                <h2 className="tituloSeccion">Mega Evoluciones</h2>
+                                <h2
+                                    className="tituloSeccion tituloSeccionAdvancedSearch"
+                                    onClick={handleMegaEvolutionsAdvancedSearch}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={function(event)
+                                    {
+                                        if(event.key !== "Enter" && event.key !== " ") return;
+
+                                        event.preventDefault();
+                                        handleMegaEvolutionsAdvancedSearch();
+                                    }}
+                                    aria-label="Buscar Pokémon que sean Mega Evoluciones"
+                                    title="Buscar Pokémon que sean Mega Evoluciones"
+                                >
+                                    Mega Evoluciones
+                                </h2>
                                 <button
                                     className="toggleMegas"
                                     onClick={() => setMostrarMegas(!mostrarMegas)}
@@ -824,7 +1030,23 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                         <>
                             {/* Titulo Seccion Gigamax */}
                             <div className="contenedorTituloSeccion">
-                                <h2 className="tituloSeccion">Gigamax</h2>
+                                <h2
+                                    className="tituloSeccion tituloSeccionAdvancedSearch"
+                                    onClick={handleGigaAdvancedSearch}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={function(event)
+                                    {
+                                        if(event.key !== "Enter" && event.key !== " ") return;
+
+                                        event.preventDefault();
+                                        handleGigaAdvancedSearch();
+                                    }}
+                                    aria-label="Buscar Pokémon que sean Formas Gigamax"
+                                    title="Buscar Pokémon que sean Formas Gigamax"
+                                >
+                                    Gigamax
+                                </h2>
                                 <button
                                     className="toggleGiga"
                                     onClick={() => setMostrarGiga(!mostrarGiga)}
@@ -934,6 +1156,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                         grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
                                                         modo="entrenamiento"
                                                         nombrePokemon={nombreActual}
+                                                        enableAdvancedSearchLink={true}
                                                     />
                                                 </div>
                                             </>
@@ -959,6 +1182,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
                                                 modo="nivel"
                                                 nombrePokemon={nombreActual}
+                                                enableAdvancedSearchLink={true}
                                             />
                                         </div>
 
@@ -982,6 +1206,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
                                                 modo="mt"
                                                 nombrePokemon={nombreActual}
+                                                enableAdvancedSearchLink={true}
                                             />
                                         </div>
 
@@ -1005,6 +1230,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
                                                 modo="tutor"
                                                 nombrePokemon={nombreActual}
+                                                enableAdvancedSearchLink={true}
                                             />
                                         </div>
 
@@ -1031,6 +1257,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                 puedeCriar={!!pokemonData?.puedeCriar}
                                                 evolutionChain={Array.isArray(pokemonData?.evolutionChain) ? pokemonData.evolutionChain : []}
                                                 pokemonApiName={pokemonData?.apiName || ""}
+                                                enableAdvancedSearchLink={true}
                                             />
                                         </div>
 
@@ -1056,6 +1283,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                                         grupos={Array.isArray(movimientosNormalizados) ? movimientosNormalizados : []}
                                                         modo="otro"
                                                         nombrePokemon={nombreActual}
+                                                        enableAdvancedSearchLink={true}
                                                     />
                                                 </div>
                                             </>

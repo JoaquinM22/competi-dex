@@ -63,7 +63,7 @@ export default function CambiosStatsMov({
         <span className="titulo-subrayado">Cambios</span>{" "}
         <span className="titulo-subrayado">en</span>{" "}
         <span className="titulo-subrayado">las</span>{" "}
-        <span className="titulo-subrayado">estadísticas</span>{" "}
+        <span className="titulo-subrayado">características</span>{" "}
         <span className="titulo-subrayado">del</span>{" "}
         <span className="titulo-subrayado">
           {aplicaA === "usuario" ? "usuario" : "objetivo"}

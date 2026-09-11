@@ -8,8 +8,10 @@ import {
   pokemonRoute,
   itemRoute,
   abilityRoute,
-  moveRoute
+  moveRoute,
+  advancedPokemonSearchRoute
 } from "../../utils/competidexRoutes";
+import { ADVANCED_SEARCH_SESSION_STORAGE_KEY } from "../../utils/competidexMeta";
 import { useItems } from "../ItemsComponents/ItemsProvider";
 import { useAbilities } from "../HabilidadesComponents/AbilitiesProvider";
 import { useMoves } from "../MovimientosComponents/MovesProvider";
@@ -22,6 +24,29 @@ import Titulo from "../Titulo/Titulo";
 import Configuracion from "../ConfiguracionComponents/Configuracion";
 import PokedexSelector from "../PokedexComponents/PokedexSelector/PokedexSelector";
 import "./NavBarPkm.css";
+
+function getLastAdvancedPokemonSearchRoute()
+{
+    const fallbackRoute = advancedPokemonSearchRoute();
+
+    if(typeof window === "undefined" || !window.sessionStorage)
+    {
+        return fallbackRoute;
+    }
+
+    try
+    {
+        const rawValue = window.sessionStorage.getItem(ADVANCED_SEARCH_SESSION_STORAGE_KEY);
+        const parsedValue = rawValue ? JSON.parse(rawValue) : {};
+        const storedPokemonRoute = String(parsedValue?.pokemon || "");
+
+        return storedPokemonRoute.startsWith(fallbackRoute) ? storedPokemonRoute : fallbackRoute;
+
+    }catch(e)
+    {
+        return fallbackRoute;
+    }
+}
 
 export default function NavBarPkm()
 {
@@ -144,7 +169,8 @@ export default function NavBarPkm()
     const isPokedexSection = (pathname === `/${ROUTES.POKEDEX}`) || (pathname.startsWith(`/${ROUTES.POKEDEX}/`));
     const isCalculatorSection = (pathname === `/${ROUTES.DYR_CALCULATOR}`);
     const isStatsCalculatorSection = (pathname === `/${ROUTES.STATS_PKM_CALCULATOR}`);
-    const isAdvancedPkmSearchSection = (pathname === `/${ROUTES.ADVANCED_PKM_SEARCH}`);
+    const isAdvancedPkmSearchSection = (pathname === `/${ROUTES.ADVANCED_SEARCH}`) || (pathname.startsWith(`/${ROUTES.ADVANCED_SEARCH}/`));
+    const toAdvancedSearch = getLastAdvancedPokemonSearchRoute();
 
     const closeMobileMenu = () => setMobileOpen(false);
 
@@ -258,7 +284,7 @@ export default function NavBarPkm()
                     </NavLink>
 
                     <NavLink
-                        to={ROUTES.ADVANCED_PKM_SEARCH}
+                        to={toAdvancedSearch}
                         className={"navBtn ultimoNavBtn" + (isAdvancedPkmSearchSection ? " active" : "")}
                         onClick={closeMobileMenu}
                     >
@@ -320,7 +346,7 @@ export default function NavBarPkm()
                 </NavLink>
 
                 <NavLink
-                    to={ROUTES.ADVANCED_PKM_SEARCH}
+                    to={toAdvancedSearch}
                     className={"navBtn ultimoNavBtn" + (isAdvancedPkmSearchSection ? " active" : "")}
                 >
                     Buscador Avanzado

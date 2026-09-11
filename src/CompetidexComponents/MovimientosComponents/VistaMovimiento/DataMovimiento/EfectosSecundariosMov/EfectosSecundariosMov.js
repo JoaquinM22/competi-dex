@@ -1,6 +1,11 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\EfectosSecundariosMov\EfectosSecundariosMov.js
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  advancedMovesSearchRouteWithFilters,
+  getAdvancedSearchTabConfig
+} from "../../../../../utils/competidexRoutes";
 import "./EfectosSecundariosMov.css";
 
 function countSubeffects(e)
@@ -25,8 +30,9 @@ function countSubeffects(e)
   return 0;
 }
 
-export default function EfectosSecundariosMov({ efectos = [], size = "normal" })
+export default function EfectosSecundariosMov({ efectos = [], size = "normal", enableAdvancedSearchLink = false })
 {
+  const navigate = useNavigate();
   const raw = Array.isArray(efectos) ? efectos : [];
 
   const items = raw
@@ -52,6 +58,41 @@ export default function EfectosSecundariosMov({ efectos = [], size = "normal" })
   const sizeClass = `efectosmov-container-${size}`;
 
   const noEffects = (items.length === 0);
+  const hasSecondaryEffect = !noEffects;
+  const movsAdvancedSearchTabData = getAdvancedSearchTabConfig("movimientos");
+  const movsAdvancedSearchDescription = movsAdvancedSearchTabData?.description || "Movimientos";
+  const canNavigateToSecondaryEffects = !!enableAdvancedSearchLink;
+  const secondaryEffectsSearchLabel = hasSecondaryEffect
+    ? "Buscar " + movsAdvancedSearchDescription + " que Poseen Efectos Secundarios"
+    : "Buscar " + movsAdvancedSearchDescription + " que no Poseen Efectos Secundarios";
+
+  function handleSecondaryEffectsClick()
+  {
+    if(!canNavigateToSecondaryEffects) return;
+
+    navigate(advancedMovesSearchRouteWithFilters({
+      filters: [
+        {
+          field: "hasSecondaryEffect",
+          operator: "eq",
+          value: hasSecondaryEffect
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+  }
+
+  function handleSecondaryEffectsKeyDown(event)
+  {
+    if(!canNavigateToSecondaryEffects) return;
+    if(event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    handleSecondaryEffectsClick();
+  }
 
   return (
     <div className={`efectosmov-container ${sizeClass}`}>
@@ -62,7 +103,15 @@ export default function EfectosSecundariosMov({ efectos = [], size = "normal" })
         <span>:</span>
       </div>
 
-      <div className="efectosmov-lista">
+      <div
+        className={"efectosmov-lista" + (canNavigateToSecondaryEffects ? " efectosmov-lista-clickable" : "")}
+        onClick={canNavigateToSecondaryEffects ? handleSecondaryEffectsClick : undefined}
+        role={canNavigateToSecondaryEffects ? "button" : undefined}
+        tabIndex={canNavigateToSecondaryEffects ? 0 : undefined}
+        onKeyDown={handleSecondaryEffectsKeyDown}
+        aria-label={canNavigateToSecondaryEffects ? secondaryEffectsSearchLabel : undefined}
+        title={canNavigateToSecondaryEffects ? secondaryEffectsSearchLabel : undefined}
+      >
         {items.length > 0 ? (
 
           items.map((e, i) => (

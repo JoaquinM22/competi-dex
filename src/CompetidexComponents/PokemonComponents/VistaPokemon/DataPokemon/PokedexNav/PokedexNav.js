@@ -5,13 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { IoMdMale, IoMdFemale } from "react-icons/io";
 import { FaLocationArrow } from "react-icons/fa6";
 import { preloadCachedImage } from "../../../../../utils/competidexImgCache";
-import { pokemonRoute } from "../../../../../utils/competidexRoutes";
+import { pokemonRoute, pokedexRoute } from "../../../../../utils/competidexRoutes";
+import { formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import "./PokedexNav.css";
 
-export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = true })
+export default function PokedexNav({ titulo, path, prev, next, baseId, defaultOpen = true })
 {
   const navigate = useNavigate();
   const [open, setOpen] = useState(defaultOpen);
+  const pokedexPath = String(path || "").trim();
+  const pokedexSlug = pokedexPath.replace(/^\/+/, "");
+  const canNavigateToPokedex = !!pokedexSlug;
   const prevSprite = String(prev?.sprite || "").trim();
   const nextSprite = String(next?.sprite || "").trim();
   const hasPrev = !!(prev && (prev.entry !== null && prev.entry !== undefined) && String(prev.nombreApi || prev.nombre || "").trim());
@@ -96,12 +100,36 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
     return <span className="dexnav-text">{nombre}</span>;
   }
 
+  function handlePokedexTitleClick()
+  {
+    if(!canNavigateToPokedex) return;
+
+    navigate(pokedexRoute(pokedexSlug));
+  }
+
   return (
     <div className="dexnav">
       
       {/* Header */}
       <div className="dexnav-header">
-        <h3 className="dexnav-titulo">{titulo}</h3>
+        <h3
+          className={"dexnav-titulo" + (canNavigateToPokedex ? " dexnav-tituloClickable" : "")}
+          onClick={canNavigateToPokedex ? handlePokedexTitleClick : undefined}
+          role={canNavigateToPokedex ? "button" : undefined}
+          tabIndex={canNavigateToPokedex ? 0 : undefined}
+          onKeyDown={function(e)
+          {
+            if(!canNavigateToPokedex) return;
+            if(e.key !== "Enter" && e.key !== " ") return;
+
+            e.preventDefault();
+            handlePokedexTitleClick();
+          }}
+          aria-label={canNavigateToPokedex ? `Ver ${titulo}` : undefined}
+          title={canNavigateToPokedex ? `Ver ${titulo}` : undefined}
+        >
+          {titulo}
+        </h3>
         <button
           className="dexnav-toggle"
           onClick={() => setOpen(!open)}
@@ -121,6 +149,7 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
           hasPrev ? (
 
             <div
+              title={`Ver Datos de Pokémon ${prev.nombre}`}
               className="dexnav-card"
               onClick={() => navigate(pokemonRoute(encodeURIComponent(prev.nombreApi)))}
               role="button"
@@ -137,7 +166,7 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
               <span className="dexnav-sub">Anterior</span>
               {prevSprite ? <img src={prevSprite} alt={prev.nombre} /> : null}
               <div className="dexnav-name">
-                <span className="dexnav-badge">#{prev.entry}</span>
+                <span className="dexnav-badge">#{formatNumberWithDots(prev.entry)}</span>
                 {renderName(prev.nombre)}
               </div>
             </div>
@@ -151,7 +180,7 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
 
         {/* ID Central */}
         <div className="dexnav-center">
-          <div className="dexnav-center-id">#{baseId}</div>
+          <div className="dexnav-center-id">#{formatNumberWithDots(baseId)}</div>
         </div>
 
         {/* Siguiente */}
@@ -159,6 +188,7 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
           hasNext ? (
 
             <div
+              title={`Ver Datos de Pokémon ${next.nombre}`}
               className="dexnav-card"
               onClick={() => navigate(pokemonRoute(encodeURIComponent(next.nombreApi)))}
               role="button"
@@ -175,7 +205,7 @@ export default function PokedexNav({ titulo, prev, next, baseId, defaultOpen = t
               <span className="dexnav-sub">Siguiente</span>
               {nextSprite ? <img src={nextSprite} alt={next.nombre} /> : null}
               <div className="dexnav-name">
-                <span className="dexnav-badge">#{next.entry}</span>
+                <span className="dexnav-badge">#{formatNumberWithDots(next.entry)}</span>
                 {renderName(next.nombre)}
               </div>
             </div>

@@ -920,7 +920,7 @@ export default function DebilidadesYResistencias({
           {tiposIdsList?.length === 0 || !tiposIdsList ? (
             <span className="dyr-empty">Ninguno</span>
           ) : (
-            tiposIdsList.map((t) => <Tipo key={t} tipo={t} size="medium" />)
+            tiposIdsList.map((t) => <Tipo key={t} tipo={t} size="medium" enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" />)
           )}
         </div>
       </td>
@@ -979,7 +979,7 @@ export default function DebilidadesYResistencias({
         {group.abilityDescs?.length > 0 && (
           <div className="dyr-notes" style={{ marginTop: 12 }}>
             {group.abilityDescs.map(({ name, text }) => (
-              <div key={name}>• <strong>{name}</strong>{text ? ` - ${text}` : ""}</div>
+              <div key={name}>• <strong className="dyr-notes-Title">{name}</strong>{text ? ` - ${text}` : ""}</div>
             ))}
           </div>
         )}

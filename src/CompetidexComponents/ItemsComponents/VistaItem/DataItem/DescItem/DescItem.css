@@ -12,7 +12,7 @@
   border-radius: 14px;
   padding: 12px 14px;
   box-sizing: border-box;
-  color: #ffffff;
+  color: #ffffff !important;
   font-weight: bold;
 }
 
@@ -42,6 +42,12 @@
   background: var(--panel, #1f2227);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.descitem-text {
+  font-weight: bold !important;
+  color: #ffffff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .descitem-marginArriba {

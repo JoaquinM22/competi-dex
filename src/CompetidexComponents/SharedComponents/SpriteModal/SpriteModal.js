@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { MdDownload } from "react-icons/md";
+import { spriteUrl, spriteShinyUrl } from "../../../config/endpoints";
 import { ERROR_404_SPRITE_IMG, SHINY_ICON_IMG } from "../../../utils/competidexMeta";
 import { preloadCachedImage, probeCachedImage } from "../../../utils/competidexImgCache";
 import "./SpriteModal.css";
@@ -23,7 +24,15 @@ function slugifyName(name, shinyFlag)
   return s || (shinyFlag ? "pokemon_shiny" : "pokemon");
 }
 
-export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 150 })
+export default function SpriteModal({
+  id,
+  normalUrl,
+  shinyUrl,
+  altText,
+  thumbSize = 150,
+  disableModal = false,
+  backgrounColorSpriteContainer = undefined
+})
 {
   const [open, setOpen] = useState(false);
   const [dlOpen, setDlOpen] = useState(false); // Mini pop up descarga
@@ -31,6 +40,17 @@ export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 
   const [isDownloading, setIsDownloading] = useState(false);
   const [ok, setOk] = useState({ normal: true, shiny: true });
   const downloadWrapRef = useRef(null);
+
+  useEffect(() =>
+  {
+    if (disableModal)
+    {
+      setOpen(false);
+      setDlOpen(false);
+      setIsShiny(false);
+    }
+
+  }, [disableModal]);
 
   useEffect(() =>
   {
@@ -77,7 +97,7 @@ export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 
     setDlOpen(false);
     preloadCachedImage(SHINY_ICON_IMG);
 
-  }, [normalUrl, shinyUrl, altText]);
+  }, [id, normalUrl, shinyUrl, altText]);
 
   useEffect(() =>
   {
@@ -102,17 +122,23 @@ export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 
 
   }, [dlOpen]);
 
-  const hasNormalUrl = !!String(normalUrl || "").trim();
-  const hasShinyUrl = !!String(shinyUrl || "").trim();
+  const spriteId = Number(id);
+  const resolvedNormalUrl = String(normalUrl || "").trim() || (Number.isFinite(spriteId) && spriteId > 0 ? spriteUrl(spriteId) : "");
+  const resolvedShinyUrl = String(shinyUrl || "").trim() || (Number.isFinite(spriteId) && spriteId > 0 ? spriteShinyUrl(spriteId) : "");
+
+  const hasNormalUrl = !!String(resolvedNormalUrl || "").trim();
+  const hasShinyUrl = !!String(resolvedShinyUrl || "").trim();
 
   async function abrir()
   {
+    if (disableModal) return;
+
     setOpen(true);
     const normalPromise = hasNormalUrl
-      ? probeCachedImage(normalUrl || "")
+      ? probeCachedImage(resolvedNormalUrl || "")
       : Promise.resolve(false);
     const shinyPromise = hasShinyUrl
-      ? probeCachedImage(shinyUrl || "")
+      ? probeCachedImage(resolvedShinyUrl || "")
       : Promise.resolve(false);
 
     const [okNormal, okShiny] = await Promise.all([normalPromise, shinyPromise]);
@@ -121,7 +147,13 @@ export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 
 
   function urlActual()
   {
-    return isShiny ? shinyUrl : normalUrl;
+    return isShiny ? resolvedShinyUrl : resolvedNormalUrl;
+  }
+
+  function urlThumbActual()
+  {
+    if (isShiny && resolvedShinyUrl) return resolvedShinyUrl;
+    return resolvedNormalUrl;
   }
 
   function okActual()
@@ -235,26 +267,27 @@ export default function SpriteModal({ normalUrl, shinyUrl, altText, thumbSize = 
       {/* Imagen Sprite */}
       <img
         className="pokedexSpriteThumb"
-        src={normalUrl || ERROR_404_SPRITE_IMG}
+        src={urlThumbActual() || ERROR_404_SPRITE_IMG}
         alt={altText}
         width={thumbSize}
         height={thumbSize}
         loading="lazy"
         decoding="async"
-        onClick={abrir}
+        onClick={disableModal ? undefined : abrir}
         onError={(e) => (e.currentTarget.src = ERROR_404_SPRITE_IMG)}
         style={{
           width: thumbSize + "px",
           height: thumbSize + "px",
           imageRendering: "pixelated",
-          cursor: "pointer",
+          cursor: disableModal ? "default" : "pointer",
           display: "block",
           margin: "0 auto",
+          ...(backgrounColorSpriteContainer ? { backgroundColor: backgrounColorSpriteContainer } : {})
         }}
       />
 
       {/* Pop Up Imagen + Acciones */}
-      {open && createPortal(
+      {!disableModal && open && createPortal(
         <div className="spriteModalOverlay" onClick={() => { setDlOpen(false); setOpen(false); }}>
           <div
             className="spriteModalContent"

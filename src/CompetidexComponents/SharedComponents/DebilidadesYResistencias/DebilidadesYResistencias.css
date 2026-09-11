@@ -2,8 +2,8 @@
 
 .dyr-wrapper {
   background: #2a2a2a;
-  border: 1px solid #4c4c4c;
-  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.26);
+  border-radius: 25px;
   padding: 14px;
   color: #e8ecf1;
 }
@@ -25,22 +25,26 @@
 
 .dyr-tab {
   background: transparent;
-  color: #b7c3d7;
   padding: 8px 12px;
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   border-radius: 8px 8px 0 0;
+
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background: rgba(24, 28, 36, 0.304);
 }
 
 .dyr-tab:hover {
-  color: #ffffff;
+  color: #FFD700;
   background: #181c24;
 }
 
 .dyr-tab.active {
-  color: #ffffff;
-  border-bottom-color: #ffffff;
+  color: #FFD700;
+  border-bottom-color: #FFD700;
   background: #161b22;
 }
 
@@ -73,11 +77,12 @@
 /* Cabecera */
 .dyr-thead th {
   background: #36383b;
-  color: #e3e7ee;
-  font-weight: 700;
   text-align: center;
   padding: 10px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .dyr-head-left {
@@ -120,7 +125,9 @@
 }
 
 .dyr-badge-right {
-  color: #ffffff;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 /* Líneas entre filas */
@@ -156,10 +163,11 @@
 }
 
 .dyr-empty {
-  opacity: 0.7;
+  color: #bbbbbb;
   font-style: italic;
   width: 100%;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 .ri-badge {
@@ -182,7 +190,9 @@
   position: relative;
   font-size: clamp(12px, calc(var(--dyr-badge) * 0.33), var(--dyr-badge-font));
   letter-spacing: 0.2px;
-  color: #ffffff;
+  color: white;
+  font-weight: bold !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 /* Diferencias */
@@ -194,7 +204,9 @@
 
 .dyr-diff h4 {
   margin: 0 0 8px 0;
-  color: #dfe8ff;
+  color: white !important;
+  font-weight: bold !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
   font-size: 1rem;
 }
 
@@ -207,8 +219,9 @@
 }
 
 .dyr-diff-grupo {
-  color: #cfd7e6;
-  font-weight: 600;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 .dyr-diff-changes {
@@ -232,12 +245,16 @@
   background: rgba(46,160,67,0.12);
   color: #50d173;
   border-color: #2ea043;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 .dyr-badge.rem {
   background: rgba(248,81,73,0.12);
   color: #ff7b72;
   border-color: #f85149;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 /* Tipo en chips de diferencias */
@@ -322,6 +339,12 @@
   background: rgba(0,0,0,0.18);
   border: 1px solid rgba(255,255,255,0.10);
   box-sizing: border-box;
+}
+
+.dyr-notes-Title {
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* Responsive */

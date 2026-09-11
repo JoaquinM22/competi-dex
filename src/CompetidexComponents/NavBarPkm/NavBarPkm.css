@@ -73,6 +73,10 @@
   border-left: none;
 }
 
+.navBarDesktop > .pokedexSelWrap + .navBtn {
+  border-left: none;
+}
+
 /* Hover: gris claro */
 .navBtn:hover {
   background-color: #3a3f49;
@@ -81,7 +85,6 @@
 
 /* Active */
 .navBtn.active {
-  background-color: #343944;
   color: #ffd75c;
   text-shadow: 0 0 6px rgba(255, 215, 92, 0.55);
 }

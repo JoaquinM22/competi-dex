@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdMale, IoMdFemale } from "react-icons/io";
 import { MdDownload } from "react-icons/md";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { ERROR_404_IMG, SHINY_ICON_IMG } from "../../../../../utils/competidexMeta";
 import { pokemonRoute } from "../../../../../utils/competidexRoutes";
 import { preloadCachedImage, probeCachedImage } from "../../../../../utils/competidexImgCache";
@@ -328,21 +329,25 @@ export default function CadenaEvolutivaPkm({ cadenaEvolutiva })
                   <>
                     {poke.nombrePreEvo && (
                       <div className="contenedorFlechayTexto">
-                        <div className="flecha">&#8594;</div>
+                        <div className="flecha"><FaLongArrowAltRight color="white" size={20} /></div>
                         <p className="metodo-evo">{poke.metodoEvo}</p>
                       </div>
                     )}
 
                     <div className="pokemon">
-                      <img
-                        src={poke.fotos?.[0] || ERROR_404_IMG}
-                        alt={`Imagen de ${poke.nombreEvolucion}`}
-                        className="imagen-forma"
-                        onClick={() => abrirModal(poke)}
-                        onError={(e) => (e.currentTarget.src = ERROR_404_IMG)}
-                        loading="lazy"
-                        decoding="async"
-                      />
+
+                      <div className="cadenaEvoComponent-ContainerImg">
+                        <img
+                          src={poke.fotos?.[0] || ERROR_404_IMG}
+                          title={`Abrir Imagen de ${poke.nombreEvolucion}`}
+                          alt={`Imagen de ${poke.nombreEvolucion}`}
+                          className="imagen-forma"
+                          onClick={() => abrirModal(poke)}
+                          onError={(e) => (e.currentTarget.src = ERROR_404_IMG)}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
 
                       {renderNombreConGenero(poke)}
                     </div>

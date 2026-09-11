@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { usePokemon } from "../../../../../CompetidexComponents/PokemonComponents/PokemonProvider";
 import { spriteUrl, spriteShinyUrl } from "../../../../../config/endpoints";
 import { pokemonRoute } from "../../../../../utils/competidexRoutes";
-import { getTypeLabelEs, isPokemonBlockedAbilities, toPokemonDisplayName, getBaseApiKeyFromMega } from "../../../../../utils/competidexMeta";
+import { getTypeLabelEs, isPokemonBlockedAbilities, toPokemonDisplayName, getBaseApiKeyFromMega, formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import Tipo from "../../../../SharedComponents/Tipo/Tipo";
 import Modal from "../../../../SharedComponents/Modal/Modal";
 import SpriteModal from "../../../../SharedComponents/SpriteModal/SpriteModal";
@@ -622,7 +622,7 @@ export default function PokesPoseenHabilidad({ pokesPoseen = [], title = "Pokém
             <>
               <div className="pph-modalTopMeta">
                 <span className="pph-totalCount">
-                  Total: {items.length} Pokémon
+                  Total: {formatNumberWithDots(items.length)} Pokémon
                 </span>
               </div>
 
@@ -825,7 +825,7 @@ export default function PokesPoseenHabilidad({ pokesPoseen = [], title = "Pokém
                           {it.typesEN && it.typesEN.length ? (
                             it.typesEN.map(function(t)
                             {
-                              return <Tipo key={t} tipo={t} size={inModal ? "small" : tipoSize} />;
+                              return <Tipo key={t} enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" tipo={t} size={inModal ? "small" : tipoSize} />;
                             })
                           ) : (
                             <span className="pph-typesEmpty">—</span>
@@ -1087,7 +1087,7 @@ export default function PokesPoseenHabilidad({ pokesPoseen = [], title = "Pokém
                             {it.typesEN && it.typesEN.length ? (
                               it.typesEN.map(function(t)
                               {
-                                return <Tipo key={t} tipo={t} size={tipoSize} />;
+                                return <Tipo key={t} enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" tipo={t} size={tipoSize} />;
                               })
                             ) : (
                               <span className="pph-typesEmpty">—</span>

@@ -22,6 +22,19 @@
   font-weight: bold;
 }
 
+.categoriaitem-row-clickable {
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.categoriaitem-row-clickable:hover,
+.categoriaitem-row-clickable:focus-visible {
+  transform: translateY(-1px);
+  background-color: #343944;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  outline: none;
+}
+
 .categoriaitem-underline {
   text-decoration: underline;
 }
@@ -29,14 +42,22 @@
 .categoriaitem-label {
   font-size: 25px;
   flex-shrink: 0;
+
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .categoriaitem-value {
   font-size: 22px;
   line-height: 1.2;
-  text-align: right;
+  text-align: center;
   overflow-wrap: anywhere;
   word-break: break-word;
+
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Tamaños */

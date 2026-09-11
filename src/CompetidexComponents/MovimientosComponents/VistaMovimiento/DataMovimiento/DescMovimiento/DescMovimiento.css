@@ -29,7 +29,6 @@
 /* Texto*/
 .descmov-text {
   font-size: 18px;
-  font-weight: 500;
   line-height: 1.35;
   text-align: center;
   margin:10px;
@@ -41,6 +40,10 @@
   background: var(--panel, #1f2227);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+
+  font-weight: bold !important;
+  color: #ffffff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .marginArriba {

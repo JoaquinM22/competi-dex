@@ -1,0 +1,216 @@
+/** src\CompetidexComponents\BuscadorAvanzadoComponents\BuscadorAvanzadoPkmComponents\ListaPkmPaginada\ResumenPkmModal\HabilidadResumenPkm\HabilidadResumenPkm.css */
+
+/* Contenedor de habilidades */
+.habilidadesResumenPkmComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Título */
+.habilidadesResumenPkmComponent-titulo {
+  font-size: 22px;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.habilidadesResumenPkmComponent-titulo .habilidadesResumenPkmComponent-tituloTexto {
+  text-decoration: underline;
+}
+
+/* Contenedor de la lista */
+.habilidadesResumenPkmComponent-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Cada habilidad */
+.habilidadesResumenPkmComponent-item {
+  background-color: #414345;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  position: relative;
+}
+
+/* Tamaños */
+.habilidadesResumenPkmComponent-small {
+  font-size: 14px;
+  padding: 6px 12px;
+  width: 100%;
+}
+
+.habilidadesResumenPkmComponent-normal {
+  font-size: 18px;
+  padding: 12px 22px;
+  width: 100%;
+}
+
+.habilidadesResumenPkmComponent-medium {
+  font-size: 16px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.habilidadesResumenPkmComponent-large {
+  font-size: 22px;
+  padding: 18px 35px;
+  width: 100%;
+}
+
+/* Tooltip */
+.habilidadesResumenPkmComponent-item.has-tooltip .habilidadesResumenPkmComponent-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, -10px);
+
+  width: calc(100% - 16px);
+  max-width: 100%;
+  padding: 14px 16px;
+  font-size: 1.05em;
+  line-height: 1.35;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 20;
+  white-space: normal;
+}
+
+/* flechita del tooltip */
+.habilidadesResumenPkmComponent-item.has-tooltip .habilidadesResumenPkmComponent-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #0f1116;
+}
+
+/* mostrar en hover/focus */
+.habilidadesResumenPkmComponent-item.has-tooltip:hover .habilidadesResumenPkmComponent-tooltip,
+.habilidadesResumenPkmComponent-item.has-tooltip:focus .habilidadesResumenPkmComponent-tooltip,
+.habilidadesResumenPkmComponent-item.has-tooltip:focus-within .habilidadesResumenPkmComponent-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -14px);
+}
+
+.habilidadesResumenPkmComponent-medium .habilidadesResumenPkmComponent-titulo {
+  margin-bottom: 10px;
+}
+
+.habilidadesResumenPkmComponent-medium .habilidadesResumenPkmComponent-lista {
+  margin-top: 2px;
+}
+
+/* Link */
+.habilidadesResumenPkmComponent-link {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 3px 5px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.habilidadesResumenPkmComponent-link:hover:not(:disabled) {
+  filter: brightness(1.08);
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
+  padding: 3px 5px;
+}
+
+.habilidadesResumenPkmComponent-link:focus {
+  outline: none;
+}
+
+.habilidadesResumenPkmComponent-link:focus-visible {
+  outline: 2px solid rgba(255, 215, 92, 0.55);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.habilidadesResumenPkmComponent-link:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+
+  .habilidadesResumenPkmComponent-item.has-tooltip .habilidadesResumenPkmComponent-tooltip {
+    transform: translate(-50%, -8px);
+    font-size: 1em;
+    padding: 12px 14px;
+    max-width: 94vw;
+  }
+
+  .habilidadesResumenPkmComponent-item.has-tooltip:hover .habilidadesResumenPkmComponent-tooltip,
+  .habilidadesResumenPkmComponent-item.has-tooltip:focus .habilidadesResumenPkmComponent-tooltip,
+  .habilidadesResumenPkmComponent-item.has-tooltip:focus-within .habilidadesResumenPkmComponent-tooltip {
+    transform: translate(-50%, -12px);
+  }
+
+  .habilidadesResumenPkmComponent {
+    padding: 8px 12px;
+  }
+
+  .habilidadesResumenPkmComponent-titulo {
+    font-size: 18px;
+  }
+
+  .habilidadesResumenPkmComponent-lista {
+    font-size: 16px;
+  }
+
+  .habilidadesResumenPkmComponent-item {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .habilidadesResumenPkmComponent-item.has-tooltip .habilidadesResumenPkmComponent-tooltip {
+    width: calc(100% - 16px);
+    max-width: 100%;
+  }
+
+}

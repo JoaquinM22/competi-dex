@@ -44,6 +44,10 @@ export function createMoveMapper()
 
       if(!s) return true;
 
+      if(s === "dummy data") return true;
+
+      if(s.indexOf("este movimiento no se puede usar") !== -1) return true;
+
       if(l.indexOf("es") === 0)
       {
         return s.indexOf("este movimiento no se puede usar") === 0;
@@ -62,7 +66,7 @@ export function createMoveMapper()
       for(let i = 0; i < arrRev.length; i++)
       {
         const f = arrRev[i];
-        if (!f || !f.language || !f.language.name) continue;
+        if(!f || !f.language || !f.language.name) continue;
 
         const lang = String(f.language.name).trim().toLowerCase();
         if(lang.indexOf(prefijoIdioma) !== 0) continue;
@@ -83,7 +87,7 @@ export function createMoveMapper()
     const ultimaEn = buscarPorIdioma("en");
     if(ultimaEn) return ultimaEn;
 
-    return "";
+    return "-";
   }
 
   function isNum(n)
@@ -104,6 +108,36 @@ export function createMoveMapper()
   {
     const p = normalizeChancePct(v);
     return isNum(p) ? p : null;
+  }
+
+  function pickNumberField(source, field)
+  {
+    if(!source || source[field] === null || source[field] === undefined) return null;
+
+    const numericValue = Number(source[field]);
+
+    return Number.isFinite(numericValue) ? numericValue : null;
+  }
+
+  function getIndiceCritico(mvJson)
+  {
+    const potenciaMov = pickNumberField(mvJson, "power");
+
+    if(potenciaMov === null || potenciaMov <= 0)
+    {
+      return null;
+    }
+
+    const critRate = mvJson && mvJson.meta ? mvJson.meta.crit_rate : null;
+
+    if(critRate === null || critRate === undefined)
+    {
+      return null;
+    }
+
+    const indiceCritico = Number(critRate);
+
+    return Number.isFinite(indiceCritico) ? indiceCritico : null;
   }
 
   function fmtPct(pct)
@@ -695,8 +729,6 @@ export function createMoveMapper()
       console.log("[moveMapper] RAW move:", key, raw);
     }
 
-    console.log("raw move data: ", raw);
-
     const blancoRaw = raw && raw.target ? raw.target.name : null;
 
     const tieneSec = raw && raw.effect_chance !== null && raw.effect_chance !== undefined;
@@ -705,12 +737,7 @@ export function createMoveMapper()
     const resumenEfectos = tieneSec ? buildSecondarySummary(efectosSec) : null;
     const statsCambiosPack = buildStatsCambios(raw, blancoRaw);
 
-    let indiceCritico = null;
-    if(raw && raw.meta && raw.meta.crit_rate !== null && raw.meta.crit_rate !== undefined)
-    {
-      const nCrit = Number(raw.meta.crit_rate);
-      indiceCritico = isFinite(nCrit) ? nCrit : null;
-    }
+    const indiceCritico = getIndiceCritico(raw);
 
     let flags = Object.assign({}, EMPTY_MOVE_FLAGS);
     if(typeof getMoveFlagsByKey === "function")
@@ -737,10 +764,10 @@ export function createMoveMapper()
       indiceCritico: indiceCritico,
       flags: flags,
 
-      potenciaMov: (raw && raw.power !== undefined && raw.power !== null) ? raw.power : -1,
-      precisionMov: (raw && raw.accuracy !== undefined && raw.accuracy !== null) ? raw.accuracy : -1,
-      ppMov: (raw && raw.pp !== undefined && raw.pp !== null) ? raw.pp : -1,
-      prioridadMov: (raw && raw.priority !== undefined && raw.priority !== null) ? raw.priority : -1,
+      potenciaMov: (raw && raw.power !== undefined && raw.power !== null) ? raw.power : null,
+      precisionMov: (raw && raw.accuracy !== undefined && raw.accuracy !== null) ? raw.accuracy : null,
+      ppMov: (raw && raw.pp !== undefined && raw.pp !== null) ? raw.pp : null,
+      prioridadMov: (raw && raw.priority !== undefined && raw.priority !== null) ? raw.priority : null,
 
       blancoMov: blancoRaw,
       descMov: descEs(raw),
@@ -763,8 +790,6 @@ export function createMoveMapper()
     {
       console.log("[moveMapper] MAPPED move:", key, mov);
     }
-
-    console.log("Mov: ", mov);
 
     return mov;
   }

@@ -38,8 +38,9 @@
   font-size: 30px;  
   line-height: 1;
   min-width: 44px;
-  text-align: right;
+  text-align: center;
   overflow-wrap: anywhere;
+  font-weight: bold;
 }
 
 /* Tamaños */
@@ -92,6 +93,39 @@
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 6px);
+}
+
+.blmov-label {
+  font-weight: bold !important;
+  color: #ffffff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.blmov-value {
+  font-weight: bold !important;
+  color: #FFD700 !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.blmov-valueAction{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 8px;
+  padding: 2px 6px;
+  transition: color .18s ease, background-color .18s ease, transform .18s ease;
+}
+
+.blmov-valueAction-clickable{
+  cursor: pointer;
+}
+
+.blmov-valueAction-clickable:hover,
+.blmov-valueAction-clickable:focus-visible{
+  color: #ffffff;
+  background-color: rgba(255, 215, 0, 0.16);
+  outline: 1px solid rgba(255, 215, 0, 0.5);
+  transform: translateY(-1px);
 }
 
 /* Responsive */

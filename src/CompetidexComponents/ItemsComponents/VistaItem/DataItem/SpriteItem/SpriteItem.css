@@ -54,21 +54,32 @@
 .itemSpriteModalBody {
   padding: 14px 18px 18px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .itemSpriteModalImg {
   width: 350px;
   height: 350px;
+  max-width: 100%;
   image-rendering: pixelated;
   border-radius: 14px;
   padding: 14px;
+  box-sizing: border-box;
   object-fit: contain;
 }
 
 .itemSpriteFallback {
   width: 100%;
+  min-width: 0;
   padding: 18px;
+  box-sizing: border-box;
+  display: grid;
+  justify-items: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -83,6 +94,35 @@
   margin-top: 6px;
   opacity: 0.75;
   color: #d9dee7;
+}
+
+.itemSpriteModalImg--fallback {
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 420px) {
+
+  .itemSpriteModalOverlay {
+    padding: 12px;
+  }
+
+  .itemSpriteModalBody {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .itemSpriteFallback {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .itemSpriteModalImg {
+    width: min(350px, 100%);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
 }
 
 .itemSpriteThumb {
@@ -161,7 +201,7 @@
   justify-content: center;
   margin: 0 auto;
 
-  background-color: #2a2a2a;
+  background-color: var(--item-sprite-bg, #2a2a2a);
   border-radius: 18px;
   padding: 14px;
   box-sizing: border-box;
@@ -171,7 +211,7 @@
 }
 
 .itemSpriteThumbWrap:hover {
-  background-color: #3a3a3a;
+  background-color: #585858;
 }
 
 .itemSpriteThumbWrap:active {

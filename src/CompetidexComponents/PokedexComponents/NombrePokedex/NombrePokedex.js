@@ -49,6 +49,8 @@ export default function NombrePokedex({ nombre, gen })
             generacion={genBase}
             size="normal"
             showLabel={showGenLabel}
+            enableAdvancedSearchLink={true}
+            advancedSearchTabKey="pokemon"
           />
         </div>
       ) : null}

@@ -2,8 +2,21 @@
 
 import React, { useEffect, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { getDefaultPokedexDataMetaPath, POKEBALL_BACKGROUND } from "./utils/competidexMeta";
-import { ROUTES, itemRoute, abilityRoute, moveRoute, pokemonRoute, pokedexRoute } from "./utils/competidexRoutes";
+import { ADVANCED_SEARCH_SESSION_STORAGE_KEY, getDefaultPokedexDataMetaPath, POKEBALL_BACKGROUND } from "./utils/competidexMeta";
+import {
+  ROUTES,
+  
+  pokemonRoute,
+  moveRoute,
+  abilityRoute,
+  itemRoute,
+  pokedexRoute,
+
+  advancedPokemonSearchRoute,
+  advancedMovesSearchRoute,
+  advancedAbilitiesSearchRoute,
+  advancedItemsSearchRoute
+} from "./utils/competidexRoutes";
 
 import { PokedexProvider } from "./CompetidexComponents/PokedexComponents/PokedexProvider";
 import { PokemonProvider } from "./CompetidexComponents/PokemonComponents/PokemonProvider";
@@ -12,6 +25,7 @@ import { AbilitiesProvider } from "./CompetidexComponents/HabilidadesComponents/
 import { MovesProvider } from "./CompetidexComponents/MovimientosComponents/MovesProvider";
 import { ItemsProvider } from "./CompetidexComponents/ItemsComponents/ItemsProvider";
 import { ToastrProvider } from "./services/ToastrService";
+import { FiltroPkmProvider } from "./CompetidexComponents/BuscadorAvanzadoComponents/FiltroPkmProvider";
 
 import VistaItem from "./CompetidexComponents/ItemsComponents/VistaItem/VistaItem";
 import VistaHabilidad from "./CompetidexComponents/HabilidadesComponents/VistaHabilidad/VistaHabilidad";
@@ -20,7 +34,7 @@ import VistaPokemon from "./CompetidexComponents/PokemonComponents/VistaPokemon/
 import VistaPokedex from "./CompetidexComponents/PokedexComponents/VistaPokedex/VistaPokedex";
 import CalculadoraDebilidades from "./CompetidexComponents/CalculadoraDebilidadesComponent/CalculadoraDebilidades";
 import VistaCalculadoraCaracteristicas from "./CompetidexComponents/CalculadoraDeCaracteristicasComponents/VistaCalculadoraCaracteristicas";
-import VistaBuscadorAvanzadoPkm from "./CompetidexComponents/BuscadorAvanzadoPkmComponents/VistaBuscadorAvanzadoPkm";
+import VistaBuscadorAvanzado from "./CompetidexComponents/BuscadorAvanzadoComponents/VistaBuscadorAvanzado";
 
 import NavBarPkm from "./CompetidexComponents/NavBarPkm/NavBarPkm";
 import ScrollToTopButton from "./CompetidexComponents/ScrollToTopButton/ScrollToTopButton";
@@ -28,6 +42,29 @@ import Footer from "./CompetidexComponents/Footer/Footer";
 import "./App.css";
 
 const DEFAULT_POKEDEX_PATH = getDefaultPokedexDataMetaPath();
+
+function getInitialAdvancedSearchRoute()
+{
+  const fallbackRoute = advancedPokemonSearchRoute();
+
+  if(typeof window === "undefined" || !window.sessionStorage)
+  {
+    return fallbackRoute;
+  }
+
+  try
+  {
+    const rawValue = window.sessionStorage.getItem(ADVANCED_SEARCH_SESSION_STORAGE_KEY);
+    const parsedValue = rawValue ? JSON.parse(rawValue) : {};
+    const storedPokemonRoute = String(parsedValue?.pokemon || "");
+
+    return storedPokemonRoute.startsWith(fallbackRoute) ? storedPokemonRoute : fallbackRoute;
+
+  }catch(e)
+  {
+    return fallbackRoute;
+  }
+}
 
 export default function App()
 {
@@ -91,60 +128,66 @@ export default function App()
               <AbilitiesProvider>
                 <MovesProvider preloadCount={0} warmConcurrency={5}>
                   <ItemsProvider preloadCount={0} warmConcurrency={5}>
+                    <FiltroPkmProvider>
 
-                  {/* Header */}
-                  <div className="headerWrapper">
-                    <NavBarPkm />
-                  </div>
+                      {/* Header */}
+                      <div className="headerWrapper">
+                        <NavBarPkm />
+                      </div>
 
-                  {/* App */}
-                  <div className="contenidoApp">
-                    
-                    <Routes>
+                      {/* App */}
+                      <div className="contenidoApp">
+                        
+                        <Routes>
 
-                      {/* Cualquier Ruta rara -> Cae en Pokemon por default */}
-                      <Route path="/" element={<Navigate to={pokemonRoute()} replace />} />
-                      <Route path="*" element={<Navigate to={pokemonRoute()} replace />} />
+                          {/* Cualquier Ruta rara -> Cae en Pokemon por default */}
+                          <Route path="/" element={<Navigate to={pokemonRoute()} replace />} />
+                          <Route path="*" element={<Navigate to={pokemonRoute()} replace />} />
 
-                      {/* Item/Objeto */}
-                      <Route path={itemRoute()} element={<VistaItem />} />
-                      <Route path={itemRoute(":nombreItem")} element={<VistaItem />} />
+                          {/* Item/Objeto */}
+                          <Route path={itemRoute()} element={<VistaItem />} />
+                          <Route path={itemRoute(":nombreItem")} element={<VistaItem />} />
 
-                      {/* Habilidad */}
-                      <Route path={abilityRoute()} element={<VistaHabilidad />} />
-                      <Route path={abilityRoute(":nombreHabilidad")} element={<VistaHabilidad />} />
+                          {/* Habilidad */}
+                          <Route path={abilityRoute()} element={<VistaHabilidad />} />
+                          <Route path={abilityRoute(":nombreHabilidad")} element={<VistaHabilidad />} />
 
-                      {/* Movimiento */}
-                      <Route path={moveRoute()} element={<VistaMovimiento />} />
-                      <Route path={moveRoute(":nombreMovimiento")} element={<VistaMovimiento />} />
+                          {/* Movimiento */}
+                          <Route path={moveRoute()} element={<VistaMovimiento />} />
+                          <Route path={moveRoute(":nombreMovimiento")} element={<VistaMovimiento />} />
 
-                      {/* Pokémon */}
-                      <Route path={pokemonRoute()} element={<VistaPokemon />} />
-                      <Route path={pokemonRoute(":nombre")} element={<VistaPokemon />} />
+                          {/* Pokémon */}
+                          <Route path={pokemonRoute()} element={<VistaPokemon />} />
+                          <Route path={pokemonRoute(":nombre")} element={<VistaPokemon />} />
 
-                      {/* Pokedex */}
-                      <Route path={pokedexRoute()} element={<Navigate to={pokedexRoute(DEFAULT_POKEDEX_PATH)} replace />} />
-                      <Route path={pokedexRoute(":gameSlug?")} element={<VistaPokedex />} />
+                          {/* Pokedex */}
+                          <Route path={pokedexRoute()} element={<Navigate to={pokedexRoute(DEFAULT_POKEDEX_PATH)} replace />} />
+                          <Route path={pokedexRoute(":gameSlug?")} element={<VistaPokedex />} />
 
-                      {/* Calculadora de Debilidades */}
-                      <Route path={ROUTES.DYR_CALCULATOR} element={<CalculadoraDebilidades />} />
+                          {/* Calculadora de Debilidades */}
+                          <Route path={ROUTES.DYR_CALCULATOR} element={<CalculadoraDebilidades />} />
 
-                      {/* Calculadora de Caracteristicas */}
-                      <Route path={ROUTES.STATS_PKM_CALCULATOR} element={<VistaCalculadoraCaracteristicas />} />
+                          {/* Calculadora de Caracteristicas */}
+                          <Route path={ROUTES.STATS_PKM_CALCULATOR} element={<VistaCalculadoraCaracteristicas />} />
 
-                      {/* Buscador Avanzado */}
-                      <Route path={ROUTES.ADVANCED_PKM_SEARCH} element={<VistaBuscadorAvanzadoPkm />} />
+                          {/* Buscador Avanzado */}
+                          <Route path={ROUTES.ADVANCED_SEARCH} element={<Navigate to={getInitialAdvancedSearchRoute()} replace />} />
+                          <Route path={advancedPokemonSearchRoute()} element={<VistaBuscadorAvanzado />} />
+                          <Route path={advancedMovesSearchRoute()} element={<VistaBuscadorAvanzado />} />
+                          <Route path={advancedAbilitiesSearchRoute()} element={<VistaBuscadorAvanzado />} />
+                          <Route path={advancedItemsSearchRoute()} element={<VistaBuscadorAvanzado />} />
 
-                    </Routes>
+                        </Routes>
 
-                  </div>
+                      </div>
 
-                  {/* Pie de Pagina */}
-                  <Footer />
+                      {/* Pie de Pagina */}
+                      <Footer />
 
-                  {/* Volver arriba */}
-                  <ScrollToTopButton />
+                      {/* Volver arriba */}
+                      <ScrollToTopButton />
 
+                    </FiltroPkmProvider>
                   </ItemsProvider>
                 </MovesProvider>
               </AbilitiesProvider>

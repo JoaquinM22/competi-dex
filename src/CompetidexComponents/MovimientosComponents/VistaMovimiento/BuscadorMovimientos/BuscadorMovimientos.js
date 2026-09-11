@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useMoves } from "../../MovesProvider";
 import { CACHE_VERSION } from "../../moveCache";
-import { getMoveClassMeta } from "../../../../utils/competidexMeta";
+import { getMoveClassMeta, formatNumberWithDots } from "../../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../../utils/competidexImgCache";
 import { showToastr } from "../../../../services/ToastrService";
 import Tipo from "../../../SharedComponents/Tipo/Tipo";
@@ -259,7 +259,7 @@ export default function BuscadorMovimientos({ onSearch, titulo = "Movimiento" })
                   >
                     <div className="sug-mov-left">
                       {(it.id !== null && it.id !== undefined) && (
-                        <span className="sug-mov-id">#{it.id}</span>
+                        <span className="sug-mov-id">#{formatNumberWithDots(it.id)}</span>
                       )}
 
                       <div className="sug-mov-meta">
@@ -270,7 +270,7 @@ export default function BuscadorMovimientos({ onSearch, titulo = "Movimiento" })
                         <div className="sug-mov-types-inline">
                           {it.type && (
                             <div className="sug-mov-type-wrap">
-                              <Tipo tipo={it.type} size="mini" />
+                              <Tipo tipo={it.type} size="mini"/>
                             </div>
                           )}
 

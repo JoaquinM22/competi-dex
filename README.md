@@ -14,7 +14,7 @@ La idea del proyecto es crecer con el tiempo. Esta primera versión ya deja una 
 
 ## Componentes principales
 
-La web está organizada en 7 componentes principales:
+La web está organizada en 8 componentes principales:
 
 1. **Objetos**
    - Consulta y búsqueda de ítems del universo Pokémon.
@@ -30,7 +30,7 @@ La web está organizada en 7 componentes principales:
 
 4. **Pokémon**
    - Es el núcleo principal de la aplicación.
-   - Muestra estadísticas, tipos, habilidades, evoluciones, formas, movimientos y más.
+   - Muestra características, tipos, habilidades, evoluciones, formas, movimientos y más.
    - Se relaciona con gran parte del resto de la aplicación.
 
 5. **Pokédex**
@@ -47,6 +47,11 @@ La web está organizada en 7 componentes principales:
    - Incluye dos modos de cálculo: lógica de la 9na generación y anteriores, y lógica de Pokémon Champions.
    - Muestra en tiempo real el impacto de cada ajuste sobre las características.
    - Permite exportar el resultado final en una imagen PNG.
+
+8. **Buscador Avanzado**
+   - Permite ver por separado en tabs Pokémon, Movimientos, Habilidades y Objetos.
+   - Cada sección cuenta con listados paginados, datos básicos y tarjetas con información resumida.
+   - Incluye filtros por diversos atributos y permite combinarlos con ordenamientos.
 
 ## Características
 

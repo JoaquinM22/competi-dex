@@ -55,6 +55,33 @@
     0.5px  0.5px 1px rgba(0, 0, 0, 0.55);
 }
 
+.tipo-nombre-clickable {
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow:
+    0 0 8px rgba(255, 229, 138, 0.8),
+    -0.5px -0.5px 1px rgba(0, 0, 0, 0.55),
+    0.5px -0.5px 1px rgba(0, 0, 0, 0.55),
+    -0.5px  0.5px 1px rgba(0, 0, 0, 0.55),
+    0.5px  0.5px 1px rgba(0, 0, 0, 0.55);
+  border-radius: 6px;
+  transition: text-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.tipo-nombre-clickable:hover {
+  filter: brightness(1.15);
+}
+
+.tipo-nombre-clickable:focus {
+  outline: none;
+}
+
+.tipo-nombre-clickable:focus-visible {
+  outline: 2px solid rgba(255, 215, 92, 0.55);
+  outline-offset: 3px;
+}
+
 /* Tamaño Mini */
 .tipo-boton.tipo-boton-mini {
   font-size: 11px;

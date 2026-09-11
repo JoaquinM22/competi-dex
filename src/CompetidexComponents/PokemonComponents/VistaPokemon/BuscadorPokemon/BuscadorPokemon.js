@@ -6,7 +6,7 @@ import { FiSearch } from "react-icons/fi";
 import { usePokemon } from "../../PokemonProvider";
 import { spriteUrl } from "../../../../config/endpoints";
 import { preloadCachedImage } from "../../../../utils/competidexImgCache";
-import { isPokemonBlocked, isPokemonBlockedAbilities } from "../../../../utils/competidexMeta";
+import { isPokemonBlocked, isPokemonBlockedAbilities, formatNumberWithDots } from "../../../../utils/competidexMeta";
 import { showToastr } from "../../../../services/ToastrService";
 import Tipo from "../../../SharedComponents/Tipo/Tipo";
 import "./BuscadorPokemon.css";
@@ -332,7 +332,7 @@ export default function BuscadorPokemon({
                     onMouseDown={() => chooseSuggestion(it)}
                   >
                     <div className="sug-left">
-                      <span className="sug-id">#{it.id}</span>
+                      <span className="sug-id">#{formatNumberWithDots(it.id)}</span>
                       <img
                         className="sug-sprite"
                         src={sprite}

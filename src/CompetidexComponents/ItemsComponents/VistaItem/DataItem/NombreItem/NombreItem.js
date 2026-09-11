@@ -1,6 +1,7 @@
 //** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\NombreItem\NombreItem.js
 
 import React from "react";
+import { formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import "./NombreItem.css";
 
 export default function NombreItem({ id, nombre })
@@ -12,7 +13,7 @@ export default function NombreItem({ id, nombre })
 
       {/* ID Objeto */}
       <div className="idItem">
-        <h3>#{(id !== null && id !== undefined) ? id : "—"}</h3>
+        <h3>#{(id !== null && id !== undefined) ? formatNumberWithDots(id) : "—"}</h3>
       </div>
 
       {/* Nobre Objeto */}

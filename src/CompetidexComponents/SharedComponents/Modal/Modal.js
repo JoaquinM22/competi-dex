@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { IoMdClose } from "react-icons/io";
 import "./Modal.css";
 
-export default function Modal({ open, title, onClose, children })
+export default function Modal({ open, title, onClose, children, modalStyle })
 {
     useEffect(() =>
     {
@@ -36,11 +36,31 @@ export default function Modal({ open, title, onClose, children })
     if (!open) return null;
 
     return createPortal(
-        <div className="appModalBackdrop" onMouseDown={onClose} role="dialog" aria-modal="true">
-            <div className="appModal" onMouseDown={(e) => e.stopPropagation()}>
+        <div
+            className="appModalBackdrop"
+            onMouseDown={(e) => {
+                e.stopPropagation();
+                onClose && onClose();
+            }}
+            role="dialog"
+            aria-modal="true"
+        >
+            <div
+                className="appModal"
+                onMouseDown={(e) => e.stopPropagation()}
+                style={modalStyle || undefined}
+            >
                 <div className="appModalHeader">
                     <div className="appModalTitle">{title || "Modal"}</div>
-                    <button type="button" className="appModalClose" onClick={onClose} aria-label="Cerrar">
+                    <button
+                        type="button"
+                        className="appModalClose"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClose && onClose();
+                        }}
+                        aria-label="Cerrar"
+                    >
                         <IoMdClose />
                     </button>
                 </div>

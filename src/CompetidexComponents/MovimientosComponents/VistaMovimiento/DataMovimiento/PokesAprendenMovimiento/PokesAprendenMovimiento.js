@@ -8,7 +8,7 @@ import { BiExpandAlt } from "react-icons/bi";
 import { usePokemon } from "../../../../../CompetidexComponents/PokemonComponents/PokemonProvider";
 import { spriteUrl, spriteShinyUrl } from "../../../../../config/endpoints";
 import { pokemonRoute } from "../../../../../utils/competidexRoutes";
-import { getTypeLabelEs, isPokemonBlocked, PIKACHU_RUNING_GIF, toPokemonDisplayName } from "../../../../../utils/competidexMeta";
+import { getTypeLabelEs, isPokemonBlocked, PIKACHU_RUNING_GIF, toPokemonDisplayName, formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../../../utils/competidexImgCache";
 import Modal from "../../../../SharedComponents/Modal/Modal";
 import SpriteModal from "../../../../SharedComponents/SpriteModal/SpriteModal";
@@ -425,7 +425,7 @@ export default function PokesAprendenMovimiento({ pokesAprenden = [], title = "P
               <>
                 <div className="pam-modalTopMeta">
                   <span className="pam-totalCount">
-                    Total: {items.length} Pokémon
+                    Total: {formatNumberWithDots(items.length)} Pokémon
                   </span>
                 </div>
 
@@ -617,7 +617,7 @@ export default function PokesAprendenMovimiento({ pokesAprenden = [], title = "P
                             {it.typesEN && it.typesEN.length ? (
                               it.typesEN.map(function(t)
                               {
-                                return <Tipo key={t} tipo={t} size={tipoSize} />;
+                                return <Tipo key={t} tipo={t} size={tipoSize} enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" />;
                               })
                             ) : (
                               <span className="pam-typesEmpty">—</span>

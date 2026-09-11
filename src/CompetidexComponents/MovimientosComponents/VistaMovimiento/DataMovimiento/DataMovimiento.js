@@ -177,6 +177,8 @@ export default function DataMovimiento({ movimiento, loading, error })
                     <GeneracionPkm
                       generacion={genMov}
                       size="normal"
+                      enableAdvancedSearchLink={true}
+                      advancedSearchTabKey="movimientos"
                     />
 
                     <StatsMovimiento
@@ -185,31 +187,40 @@ export default function DataMovimiento({ movimiento, loading, error })
                       precisionMov={precisionMov}
                       tipoMov={tipoMov}
                       size="normal"
+                      enableAdvancedSearchClassMovLink={true}
+                      enableAdvancedSearchTypeLink={true}
+                      enableAdvancedSearchPowerMovLink={true}
+                      enableAdvancedSearchAccurancyMovLink={true}
                     />
 
                     <PpMovimiento
                       ppMov={ppMov}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <EfectosSecundariosMov
                       efectos={(efectoSecundario && Array.isArray(efectoSecundario.lista)) ? efectoSecundario.lista : []}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <PrioridadMovimiento
                       prioridadMov={prioridadMov}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <EsDeContacto
                       isContact={flags.isContact}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <BlancoMovimiento
                       blancoMov={blancoMov}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <CambiosStatsMov
@@ -226,26 +237,18 @@ export default function DataMovimiento({ movimiento, loading, error })
                       size="normal"
                     />
 
-                    {
-                      (isDamage && (potenciaMov !== -1)) ?
-                      (
-
-                        <CriticoMovimiento
-                          indice={indiceCritico}
-                          size="normal"
-                        />
-
-                      ) : 
-
-                      null
-
-                    }
+                    <CriticoMovimiento
+                      indice={indiceCritico}
+                      size="normal"
+                      enableAdvancedSearchLink={true}
+                    />
 
                     <BanderasMovimiento
                       titulo="Afectado Por"
                       groupKey="afectadoPor"
                       flags={flags}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <BanderasMovimiento
@@ -253,6 +256,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                       groupKey="inmuneAMovimiento"
                       flags={flags}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <BanderasMovimiento
@@ -260,6 +264,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                       groupKey="typeMove"
                       flags={flags}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <BanderasMovimiento
@@ -267,6 +272,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                       groupKey="other"
                       flags={flags}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                   </div>

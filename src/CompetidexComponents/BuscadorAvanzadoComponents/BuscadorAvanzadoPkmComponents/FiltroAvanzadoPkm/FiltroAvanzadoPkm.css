@@ -1,0 +1,2912 @@
+/** src\CompetidexComponents\BuscadorAvanzadoComponents\BuscadorAvanzadoPkmComponents\FiltroAvanzadoPkm\FiltroAvanzadoPkm.css */
+
+.filtroAvanzadoPkmComponent {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.filtroAvanzadoPkmComponent-loadingContainer {
+  background-color:inherit !important;
+}
+
+.filtroAvanzadoPkmComponent-loadingText {
+  font-size: 22px !important;
+}
+
+.filtroAvanzadoPkmComponent-loadingIcon {
+  width: 50px !important;
+  height: auto !important;
+}
+
+.filtroAvanzadoPkmComponent-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  min-height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #2a2f39;
+  color: #ffd75c;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  transition: background-color .16s ease, color .16s ease, transform .16s ease;
+}
+
+.filtroAvanzadoPkmComponent-toggleText {
+
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.filtroAvanzadoPkmComponent-toggle:hover {
+  background: #343944;
+  color: #ffe38a;
+  transform: translateY(-1px);
+}
+
+.filtroAvanzadoPkmComponent-toggleIcon {
+  font-size: 18px;
+  flex: 0 0 auto;
+  color: #FFD700;
+  fill: #FFD700;;
+}
+
+.filtroAvanzadoPkmComponent-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1499;
+  transition: opacity .18s ease;
+}
+
+.filtroAvanzadoPkmComponent-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.filtroAvanzadoPkmComponent-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1498;
+  overflow: clip;
+}
+
+.filtroAvanzadoPkmComponent-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(92vw, 380px);
+  max-width: 100%;
+
+  height: auto;
+  max-height: calc(100% - 24px);
+  
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .22s ease;
+  background: #282c34;
+  border-radius: 18px;
+  border: 2px solid rgb(68, 68, 68);
+  z-index: 1499;
+  padding: 16px 18px 18px;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  scrollbar-gutter: stable;
+}
+
+.filtroAvanzadoPkmComponent-drawerBody {
+  display: grid;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #5f6675 #232730;
+}
+
+.filtroAvanzadoPkmComponent-drawerBody::-webkit-scrollbar {
+  width: 10px;
+}
+
+.filtroAvanzadoPkmComponent-drawerBody::-webkit-scrollbar-track {
+  background: #232730;
+  border-radius: 999px;
+  margin: 10px 0;
+}
+
+.filtroAvanzadoPkmComponent-drawerBody::-webkit-scrollbar-thumb {
+  background: #5f6675;
+  border-radius: 999px;
+  border: 2px solid #232730;
+}
+
+.filtroAvanzadoPkmComponent-drawerBody::-webkit-scrollbar-thumb:hover {
+  background: #737b8d;
+}
+
+.filtroAvanzadoPkmComponent-drawer.open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.filtroAvanzadoPkmComponent-drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.filtroAvanzadoPkmComponent-drawerHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-drawerTitle {
+  color: #ffd75c;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.filtroAvanzadoPkmComponent-drawerSubtitle {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filtroAvanzadoPkmComponent-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #2a2f39;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.filtroAvanzadoPkmComponent-close:hover {
+  background: #3a3f49;
+  color: #ffe58a;
+}
+
+.filtroAvanzadoPkmComponent-closeIcon {
+  font-size: 22px;
+}
+
+.filtroAvanzadoPkmComponent-summary {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filtroAvanzadoPkmComponent-summaryTitle {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.filtroAvanzadoPkmComponent-summaryMeta {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filtroAvanzadoPkmComponent-schemaList {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  align-content: start;
+  width: 100%;
+  padding: 10px;
+}
+
+.filtroAvanzadoPkmComponent-filtersContent {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  align-content: start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-filterBlock {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filtroAvanzadoPkmComponent-filterBlockTitle {
+  color: #ffd75c;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.filtroAvanzadoPkmComponent-filterBlockHint {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filtroAvanzadoPkmComponent-idFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-idFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-idFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-idFilterRowOperator,
+.filtroAvanzadoPkmComponent-idFilterRowValue,
+.filtroAvanzadoPkmComponent-idFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-idFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-idFilterActionsRow{
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterRowOperator,
+.filtroAvanzadoPkmComponent-statsNumericFilterRowValue,
+.filtroAvanzadoPkmComponent-statsNumericFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-statsNumericFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterRowOperator,
+.filtroAvanzadoPkmComponent-WeightFilterRowValue,
+.filtroAvanzadoPkmComponent-WeightFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-WeightFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterRowOperator,
+.filtroAvanzadoPkmComponent-GenerationFilterRowValue,
+.filtroAvanzadoPkmComponent-GenerationFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-GenerationFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRowOperator,
+.filtroAvanzadoPkmComponent-SinSexoFilterRowValue,
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRowOperator,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRowValue,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRowOperator,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRowValue,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRowOperator,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRowValue,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterBlock,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterBlock,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterBlock,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterBlock,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterBlock,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterBlock,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterBlock,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterBlock,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRow,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRow,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRow,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRow,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterRow,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterRow,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterRow,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterRow,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRow > *,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRow > *,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRow > *,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRow > *,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterRow > *,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterRow > *,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterRow > *,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterRow > *,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterRowOperator,
+.filtroAvanzadoPkmComponent-SinSexoFilterRowValue,
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRowOperator,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterRowValue,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRowOperator,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterRowValue,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRowOperator,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterRowValue,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterRowOperator,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterRowValue,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterRowOperator,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterRowValue,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterRowOperator,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterRowValue,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterRowOperator,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterRowValue,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterRowOperator,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterRowValue,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterActionsRow,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-SinSexoFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-PuedeCriarFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-HasMegaFormsFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-HasGigaFormFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-IsBabyPkmFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-IsMythicalPkmFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-IsLegendaryPkmFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-IsMegaFormFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions,
+.filtroAvanzadoPkmComponent-IsGigaFormFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsBabyPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMythicalPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsLegendaryPkm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMegaForm,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsGigaForm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsBabyPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMythicalPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsLegendaryPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMegaForm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsGigaForm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasMegaFormsPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-HasGigaFormPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsBabyPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMythicalPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsLegendaryPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsMegaForm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode,
+.filtroAvanzadoPkmComponent-fieldSelectPopper-IsGigaForm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-PuedeCriarPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 75px;
+  min-width: 75px;
+  max-width: 75px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-SinSexoPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterRowOperator,
+.filtroAvanzadoPkmComponent-HeightFilterRowValue,
+.filtroAvanzadoPkmComponent-HeightFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-HeightFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterRowOperator,
+.filtroAvanzadoPkmComponent-captureRateFilterRowValue,
+.filtroAvanzadoPkmComponent-captureRateFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-captureRateFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterRowOperator,
+.filtroAvanzadoPkmComponent-MalePercentageFilterRowValue,
+.filtroAvanzadoPkmComponent-MalePercentageFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-MalePercentageFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterRowOperator,
+.filtroAvanzadoPkmComponent-FemalePercentageFilterRowValue,
+.filtroAvanzadoPkmComponent-FemalePercentageFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-FemalePercentageFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  justify-content: stretch;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterRowOperator,
+.filtroAvanzadoPkmComponent-TypesFilterRowValue,
+.filtroAvanzadoPkmComponent-TypesFilterActionsRow {
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-TypesFilterSeparator {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  padding-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  justify-content: stretch;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterRowOperator,
+.filtroAvanzadoPkmComponent-EggGroupsFilterRowValue,
+.filtroAvanzadoPkmComponent-EggGroupsFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-EggGroupsFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterRowOperator,
+.filtroAvanzadoPkmComponent-AbilitiesFilterRowValue,
+.filtroAvanzadoPkmComponent-AbilitiesFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-AbilitiesFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityScopePkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  align-self: stretch;
+  justify-self: start;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityScopePkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityScopePkm .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityScopePkm .filtroAvanzadoPkmComponent-fieldSelectMenu {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityScopePkm .filtroAvanzadoPkmComponent-fieldSelectMenuBody {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityValuePkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityValuePkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityValuePkm .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityValuePkm .filtroAvanzadoPkmComponent-fieldSelectMenu {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-AbilityValuePkm .filtroAvanzadoPkmComponent-fieldSelectMenuBody {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  justify-content: stretch;
+  width: 100%;
+
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterRowOperator,
+.filtroAvanzadoPkmComponent-CategoryFilterRowValue,
+.filtroAvanzadoPkmComponent-CategoryFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-CategoryFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+  align-items: start;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterRow > * {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterRowOperator,
+.filtroAvanzadoPkmComponent-DisplayFilterRowValue,
+.filtroAvanzadoPkmComponent-DisplayFilterActionsRow {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterActionsRow {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-DisplayFilterActionsRow .filtroAvanzadoPkmComponent-FilterActions {
+  justify-content: center;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-FilterActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-ApplyClearActions {
+  align-self: stretch;
+  justify-self: stretch;
+}
+
+.filtroAvanzadoPkmComponent-sortFilterBlock {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  justify-items: stretch;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+
+}
+
+.filtroAvanzadoPkmComponent-sortFilterBlock .filtroAvanzadoPkmComponent-optionSearchRow {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-sortFilterSearchRow {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-sortFilterSearchRow .filtroAvanzadoPkmComponent-optionSearchRow {
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-sortFilterControlsRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-sortFieldSelectPopper {
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-sortFieldSelectButton .filtroAvanzadoPkmComponent-fieldSelectButtonText {
+  font-size: 18px;
+  text-align: left;
+}
+
+.filtroAvanzadoPkmComponent-sortDirectionButton {
+  width: 100%;
+  height: 42px;
+  min-height: 42px;
+  min-width: 0;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #ffd75c;
+  color: #323741;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.filtroAvanzadoPkmComponent-sortDirectionButton:hover {
+  background: #d5b041;
+  border-color: rgba(255, 215, 92, 0.55);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.filtroAvanzadoPkmComponent-sortDirectionIcon {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-idFilterActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-idFilterRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-idFilterSeparator {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  padding-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterApply { 
+  color: #ffd75c;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterApply:not(:disabled) {
+  background: #ffd75c;
+  border-color: rgba(255, 215, 92, 0.75);
+  color: #323741;
+  text-shadow: none;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterAdd {
+  color: #ffd75c;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterAdd:not(:disabled) {
+  background: #ffd75c;
+  border-color: rgba(255, 215, 92, 0.75);
+  color: #323741;
+  text-shadow: none;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterAddFullWidth {
+  grid-column: 1 / -1;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterClear { 
+  color: #ffffff;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterApply,
+.filtroAvanzadoPkmComponent-ActionFilterAdd,
+.filtroAvanzadoPkmComponent-ActionFilterClear {
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #323741;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.05;
+  white-space: normal;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterClear:hover {
+  background: #676767;
+  border-color: rgba(255, 215, 92, 0.55);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterApply:not(:disabled):hover,
+.filtroAvanzadoPkmComponent-ActionFilterAdd:not(:disabled):hover {
+  background: #d5b041;
+  border-color: rgba(255, 215, 92, 0.55);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.filtroAvanzadoPkmComponent-ActionFilterApply:disabled,
+.filtroAvanzadoPkmComponent-ActionFilterAdd:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+/* Chips de filtros aplicados */
+.filtroAvanzadoPkmComponent-appliedFiltersBlock {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-appliedFiltersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #ffd75c;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.filtroAvanzadoPkmComponent-clearChipsButton {
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 92, 0.24);
+  background: #323741;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  padding: 9px 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-clearChipsButton:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.filtroAvanzadoPkmComponent-clearChipsButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.filtroAvanzadoPkmComponent-clearChipsButton:disabled:hover {
+  background: #323741;
+}
+
+.filtroAvanzadoPkmComponent-appliedFiltersGrid {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-appliedFiltersList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-NoChips {
+
+  color: #bbb;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  min-height: 42px;
+  width: 100%;
+
+}
+
+.filtroAvanzadoPkmComponent-sortInfoChip {
+  display: grid;
+  grid-template-rows: auto auto;
+  place-items: center;
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 215, 0, 0.92);
+  background: #FFD700;
+  color: #151515;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  cursor: default;
+  gap: 4px;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-sortInfoChipDirection {
+  color: #323741;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.filtroAvanzadoPkmComponent-sortInfoChipTooltip {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 8px);
+  width: min(230px, calc(100vw - 32px));
+  max-width: 230px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #0f1116;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 9999;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-shadow: none;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.filtroAvanzadoPkmComponent-sortInfoChipTooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: #0f1116;
+}
+
+.filtroAvanzadoPkmComponent-sortInfoChipHasTooltip:hover .filtroAvanzadoPkmComponent-sortInfoChipTooltip,
+.filtroAvanzadoPkmComponent-sortInfoChipHasTooltip:focus .filtroAvanzadoPkmComponent-sortInfoChipTooltip,
+.filtroAvanzadoPkmComponent-sortInfoChipHasTooltip:focus-within .filtroAvanzadoPkmComponent-sortInfoChipTooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 6px);
+}
+
+.filtroAvanzadoPkmComponent-filterChip {
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 14px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 92, 0.24);
+  background: #323741;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-filterChipContent {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-filterChipField {
+
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.filtroAvanzadoPkmComponent-filterChipOperator {
+
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.filtroAvanzadoPkmComponent-filterChipValue {
+
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.filtroAvanzadoPkmComponent-filterChipField,
+.filtroAvanzadoPkmComponent-filterChipOperator,
+.filtroAvanzadoPkmComponent-filterChipValue {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  padding: 1px 0;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+.filtroAvanzadoPkmComponent-filterChipValueType {
+  display: inline-flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenderPercentField {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #FFD700;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenderPercentIcon {
+  font-size: 15px;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.45));
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenderPercentIcon.isMale {
+  color: #3498db;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenderPercentIcon.isFemale {
+  color: #e74c3c;
+}
+
+.filtroAvanzadoPkmComponent-filterChipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background-color .16s ease, color .16s ease, transform .16s ease;
+}
+
+.filtroAvanzadoPkmComponent-filterChipRemove:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.filtroAvanzadoPkmComponent-filterChipRemoveIcon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.filtroAvanzadoPkmComponent-idFilterApply {
+  width: fit-content;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #323741;
+  color: #ffd75c;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.filtroAvanzadoPkmComponent-idFilterApply:not(:disabled):hover {
+  background: #676767;
+  border-color: rgba(255, 215, 92, 0.55);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.filtroAvanzadoPkmComponent-idFilterApply:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.filtroAvanzadoPkmComponent-idFilterClear {
+  width: fit-content;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #2f3440;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.filtroAvanzadoPkmComponent-idFilterClear:hover {
+  background: #383d48;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.filtroAvanzadoPkmComponent-fieldNotReady {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filtroAvanzadoPkmComponent-fieldNotReadyTitle {
+  color: #ffd75c;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.filtroAvanzadoPkmComponent-fieldNotReadyText {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectWrap {
+  display: grid;
+  gap: 8px;
+}
+
+.filtroAvanzadoPkmComponent-numberFilterRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldContainer {
+  padding: 10px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectPopper {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 8px;
+  z-index: 2;
+  container-type: inline-size;
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectPopper.isOpen {
+  z-index: 30;
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectButton {
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectButtonText {
+  min-width: 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@container (max-width: 165px) {
+
+  .filtroAvanzadoPkmComponent-fieldGroupSelectButton {
+    padding-left: 10px;
+    padding-right: 8px;
+    gap: 6px;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldGroupSelectButtonText {
+    font-size: 14px;
+  }
+
+}
+
+@container (max-width: 140px) {
+
+  .filtroAvanzadoPkmComponent-fieldGroupSelectButton {
+    padding-left: 8px;
+    padding-right: 6px;
+    gap: 4px;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldGroupSelectButtonText {
+    font-size: 13px;
+  }
+
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  display: grid;
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.28);
+  background: #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 31;
+  overflow: hidden;
+}
+
+.filtroAvanzadoPkmComponent-fieldGroupSelectOption {
+  min-height: 34px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 150px;
+  min-width: 140px;
+  max-width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm .filtroAvanzadoPkmComponent-fieldSelectOption {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm .filtroAvanzadoPkmComponent-fieldSelectButton {
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-GenerationPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+
+  width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-CategoryPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-CategoryPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-CategoryPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectTitle {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  padding: 0 0 0 2px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-ValueSelectTitle {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  padding: 0 0 0 2px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButton {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #323741;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButton:hover {
+  background: #383d48;
+  border-color: rgba(255, 215, 92, 0.55);
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButton.isOpen {
+  border-color: #f7c948;
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.12);
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButtonText {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectGenderOptionNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectGenderOptionText {
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectGenderOptionIcon {
+  font-size: 18px;
+  line-height: 1;
+  flex: 0 0 auto;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.45));
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectGenderOptionIcon.isMale {
+  color: #3498db;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectGenderOptionIcon.isFemale {
+  color: #e74c3c;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  justify-content: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  margin: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectCaret {
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-GenerationPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  justify-content: space-between;
+  gap: 14px;
+  padding-left: 14px;
+  padding-right: 12px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-GenerationPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-GenerationPkm .filtroAvanzadoPkmComponent-fieldSelectOptionNode {
+  gap: 10px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-ColorPkm {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+  height: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-ColorPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered {
+  justify-content: space-between;
+  gap: 14px;
+  padding-left: 14px;
+  padding-right: 12px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-ColorPkm .filtroAvanzadoPkmComponent-fieldSelectButtonTypeCentered .filtroAvanzadoPkmComponent-fieldSelectButtonNode {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectPopper-ColorPkm .filtroAvanzadoPkmComponent-fieldSelectOptionNode {
+  gap: 10px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectColorNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectColorText {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectColorDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-filterChipValueColor {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-filterChipColorNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-filterChipColorText {
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: anywhere;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.filtroAvanzadoPkmComponent-filterChipColorDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-filterChipValueGeneration {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenerationNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenerationText {
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.filtroAvanzadoPkmComponent-filterChipGenerationIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectCaret {
+  color: #ffd75c;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectCaret.isOpen {
+  transform: rotate(180deg);
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  transform: none;
+  width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  display: grid;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.28);
+  background: #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 12;
+  overflow: hidden;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenuBody {
+  display: grid;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+  scroll-padding: 6px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #5f6675 #232730;
+}
+
+.filtroAvanzadoPkmComponent-emptySearchResults {
+  min-height: 38px;
+  padding: 8px;
+  color: #bbb;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenuBody::-webkit-scrollbar {
+  width: 10px;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenuBody::-webkit-scrollbar-track {
+  background: #232730;
+  border-radius: 999px;
+  margin: 10px 0;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenuBody::-webkit-scrollbar-thumb {
+  background: #5f6675;
+  border-radius: 999px;
+  border: 2px solid #232730;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectMenuBody::-webkit-scrollbar-thumb:hover {
+  background: #737b8d;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOption {
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #50596a;
+  background: #383b3f;
+  color: #f5f7fa;
+  cursor: pointer;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOption:hover {
+  border-color: #798295;
+  background: #3f4350;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOption.selected {
+  border-color: #f7c948;
+  color: #FFD700;
+  box-shadow: inset 0 0 0 1px rgba(247, 201, 72, 0.25);
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOptionText {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOptionNode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-fieldSelectOptionIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectLabel {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectPopper {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  align-items: start;
+  gap: 4px;
+  width: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectTitle {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  padding: 0 0 0 2px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-TextSelectTitle {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  padding: 0 0 0 2px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectButton {
+  width: 75px;
+  min-height: 42px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #323741;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectButton:hover {
+  background: #383d48;
+  border-color: rgba(255, 215, 92, 0.55);
+}
+
+.filtroAvanzadoPkmComponent-numberSelectButton.isOpen {
+  border-color: #f7c948;
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.12);
+}
+
+.filtroAvanzadoPkmComponent-numberSelectButtonText {
+  color: #ffd75c;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectCaret {
+  color: #ffd75c;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectCaret.isOpen {
+  transform: rotate(180deg);
+}
+
+.filtroAvanzadoPkmComponent-numberSelectMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  padding: 6px;
+  display: grid;
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.28);
+  background: #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 12;
+  overflow: hidden;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectOption {
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 10px;
+  border: 1px solid #50596a;
+  background: #383b3f;
+  color: #f5f7fa;
+  cursor: pointer;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectOption:hover {
+  border-color: #798295;
+  background: #3f4350;
+}
+
+.filtroAvanzadoPkmComponent-numberSelectOption.selected {
+  border-color: #f7c948;
+  color: #FFD700;
+  box-shadow: inset 0 0 0 1px rgba(247, 201, 72, 0.25);
+}
+
+.filtroAvanzadoPkmComponent-numberSelectOptionLabel {
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffd75c;
+}
+
+.filtroAvanzadoPkmComponent-numberInputPopper {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 4px;
+  align-items: start;
+  justify-items: stretch;
+  width: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-numberInputTitle {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  padding: 0 0 0 2px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 0 !important;
+}
+
+.filtroAvanzadoPkmComponent-numberInputWrap {
+  position: relative;
+  width: fit-content;
+}
+
+.filtroAvanzadoPkmComponent-numberInputLabel {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.filtroAvanzadoPkmComponent-numberInput {
+  width: 200px;
+  min-width: 78px;
+  height: 42px;
+  padding: 10px 30px 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 92, 0.35);
+  background: #323741;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  outline: none;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.filtroAvanzadoPkmComponent-textInput {
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-textInputPopper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-textInputPopper .filtroAvanzadoPkmComponent-numberInputWrap {
+  width: 100%;
+}
+
+.filtroAvanzadoPkmComponent-textInputPopper .filtroAvanzadoPkmComponent-numberInput {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.filtroAvanzadoPkmComponent-numberInput[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.filtroAvanzadoPkmComponent-numberInput[type="search"]::-webkit-search-cancel-button,
+.filtroAvanzadoPkmComponent-numberInput[type="search"]::-webkit-search-decoration,
+.filtroAvanzadoPkmComponent-numberInput[type="search"]::-webkit-search-results-button,
+.filtroAvanzadoPkmComponent-numberInput[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.filtroAvanzadoPkmComponent-numberInput::-webkit-outer-spin-button,
+.filtroAvanzadoPkmComponent-numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filtroAvanzadoPkmComponent-numberInput:focus {
+  border-color: #f7c948;
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.12);
+}
+
+.filtroAvanzadoPkmComponent-numberInput::placeholder {
+  color: rgba(255, 215, 92, 0.5);
+}
+
+.filtroAvanzadoPkmComponent-numberInputPlaceholderVisible::placeholder {
+  color: rgb(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 1;
+}
+
+.filtroAvanzadoPkmComponent-numberInputClear {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.95;
+}
+
+.filtroAvanzadoPkmComponent-numberInputClear:hover {
+  opacity: 1;
+  color: #ffffff;
+}
+
+.filtroAvanzadoPkmComponent-numberInputClearIcon {
+  font-size: 16px;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.filtroAvanzadoPkmComponent-optionSearchRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+.filtroAvanzadoPkmComponent-optionSearchPopper {
+  width: 100%;
+  min-width: 0;
+}
+
+.filtroAvanzadoPkmComponent-schemaItem {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filtroAvanzadoPkmComponent-schemaItemTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.filtroAvanzadoPkmComponent-schemaLabel {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.filtroAvanzadoPkmComponent-schemaKind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 215, 92, 0.12);
+  color: #ffd75c;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.filtroAvanzadoPkmComponent-schemaPath,
+.filtroAvanzadoPkmComponent-schemaOptions {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.filtroAvanzadoPkmComponent-empty {
+  padding: 14px;
+  border-radius: 14px;
+  background: #2c313b;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+
+  .filtroAvanzadoPkmComponent-toggle {
+    min-height: 40px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .filtroAvanzadoPkmComponent-drawer {
+    width: min(94vw, 305px);
+    padding: 14px 14px 16px;
+  }
+
+  .filtroAvanzadoPkmComponent-drawerBody {
+    padding-right: 2px;
+  }
+
+  .filtroAvanzadoPkmComponent-numberSelectMenu {
+    width: 65px;
+  }
+
+  .filtroAvanzadoPkmComponent-ActionFilterApply,
+  .filtroAvanzadoPkmComponent-ActionFilterAdd,
+  .filtroAvanzadoPkmComponent-ActionFilterClear {
+    height: 48px;
+    min-height: 48px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm {
+    width: 176px;
+    min-width: 176px;
+    max-width: 100%;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm .filtroAvanzadoPkmComponent-fieldSelectButton,
+  .filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm .filtroAvanzadoPkmComponent-fieldSelectMenu {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldSelectMenu {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldSelectMenuBody {
+    max-height: 220px;
+  }
+
+  .filtroAvanzadoPkmComponent-fieldSelectPopper-TypesPkm .tipo-boton {
+    width: 120px;
+    min-width: 120px;
+    max-width: 100%;
+  }
+
+  .filtroAvanzadoPkmComponent-numberInputClear {
+    right: 6px;
+  }
+  
+}
+
+.listaPokemonPaginada {
+  position: relative;
+  overflow: visible;
+}

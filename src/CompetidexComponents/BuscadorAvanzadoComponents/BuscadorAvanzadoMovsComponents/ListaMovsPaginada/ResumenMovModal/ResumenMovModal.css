@@ -1,0 +1,281 @@
+/** src\CompetidexComponents\BuscadorAvanzadoComponents\BuscadorAvanzadoMovsComponents\ListaMovsPaginada\ResumenMovModal\ResumenMovModal.css */
+
+.resumenMovModalComponent {
+    display: grid;
+    gap: 14px;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.resumenMovModalComponent-mainRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+.resumenMovModalComponent-classYMeta {
+    flex: 0 1 380px;
+    min-width: 280px;
+    max-width: 420px;
+    gap: 12px;
+    box-sizing: border-box;
+
+    display: grid;
+    align-content: start;
+    justify-items: center;
+
+    background-color: #282c34;
+    padding: 10px;
+    border-radius: 14px;
+}
+
+.resumenMovModalComponent-classIcon {
+    background-color: #323741;
+    border-radius: 14px;
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.36));
+}
+
+.resumenMovModalComponent-NoclassIcon {
+    color: #bbb;
+    font-style: italic;
+    font-size: 22px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.resumenMovModalComponent-types {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    padding-inline: 6px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #6b6b6b #2f2f2f;
+    margin: 5px;
+}
+
+.resumenMovModalComponent-types::-webkit-scrollbar {
+    height: 10px;
+}
+
+.resumenMovModalComponent-types::-webkit-scrollbar-track {
+    background: #2f2f2f;
+    border-radius: 8px;
+}
+
+.resumenMovModalComponent-types::-webkit-scrollbar-thumb {
+    background: #6b6b6b;
+    border-radius: 8px;
+    border: 2px solid #2f2f2f;
+}
+
+.resumenMovModalComponent-types::-webkit-scrollbar-thumb:hover {
+    background: #8a8a8a;
+}
+
+.resumenMovModalComponent-tipoWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: fit-content;
+    min-width: fit-content;
+    height: 56px;
+    border-radius: 16px;
+    line-height: 1;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.resumenMovModalComponent-tipoWrap .tipo-boton {
+    pointer-events: none;
+    flex: 0 0 auto;
+}
+
+.resumenMovModalComponent-tipoWrap .tipo-boton.tipo-boton-mini,
+.resumenMovModalComponent-tipoWrap .tipo-boton.tipo-boton-medium,
+.resumenMovModalComponent-tipoWrap .tipo-boton.tipo-boton-normal {
+    white-space: nowrap;
+}
+
+.resumenMovModalComponent-dataWrapper-wrapper {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    flex: 1 1 560px;
+    min-width: 0;
+    max-width: 100%;
+    color: white;
+    padding: 10px;
+    border-radius: 18px;
+    box-sizing: border-box;
+
+}
+
+.resumenMovModalComponent-dataWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-content: start;
+    flex: 1 1 560px;
+    min-width: 0;
+    max-width: 100%;
+    color: white;
+    padding: 10px;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+.resumenMovModalComponent-flagsWrapper > .banderasMovesComponent-container:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+}
+
+.resumenMovModalComponent-dataWrapper-dos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 560px;
+    min-width: 0;
+    max-width: 100%;
+    color: white;
+    padding: 10px;
+    border-radius: 18px;
+    box-sizing: border-box;
+
+    /* background-color: #2a2a2a; */
+}
+
+.resumenMovModalComponent-dataWrapper-dos > .tituloMasValorPkmComponent {
+    flex: 1 1 calc(50% - 7px);
+    min-width: 260px;
+}
+
+.resumenMovModalComponent-dataItemFull {
+    flex: 1 1 100%;
+    min-width: 0;
+}
+
+.resumenMovModalComponent-placeholder {
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+.resumenMovModalComponent-descMovWraper {
+    background-color: #323741;
+    padding: 5px;
+    border-radius: 14px;
+}
+
+@media (max-width: 1160px) {
+    
+    .resumenMovModalComponent-mainRow {
+        justify-content: center;
+    }
+
+    .resumenMovModalComponent-classYMeta {
+        flex: 1 1 100%;
+        max-width: 450px;
+    }
+
+    .resumenMovModalComponent-dataWrapper {
+        flex: 1 1 100%;
+        max-width: 450px;
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 804px) {
+
+    .resumenMovModalComponent-dataWrapper-dos {
+  
+        flex-wrap: wrap;
+
+    }
+
+}
+
+@media (max-width: 500px) {
+    
+    .resumenMovModalComponent {
+        padding: 6px;
+        gap: 10px;
+    }
+
+    .resumenMovModalComponent-name {
+        font-size: 1.2rem;
+    }
+
+    .resumenMovModalComponent-mainRow {
+        padding: 6px;
+        gap: 10px;
+        max-width: 300px;
+    }
+
+    .resumenMovModalComponent-classYMeta {
+        flex: 1 1 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .resumenMovModalComponent-classIcon {
+        width: 200px;
+        height: 200px;
+    }
+
+    .resumenMovModalComponent-types {
+        gap: 6px;
+        padding-inline: 2px;
+        margin: 2px 0 0;
+    }
+
+    .resumenMovModalComponent-dataWrapper {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        justify-content: center;
+        justify-items: center;
+        padding: 8px;
+    }
+
+    .resumenMovModalComponent-NoclassIcon {
+  
+        font-size: 18px;
+    }
+
+}
+
+@media (max-width: 375px) {
+    
+    .resumenMovModalComponent-classIcon {
+        width: 200px;
+        height: 200px;
+    }
+
+}

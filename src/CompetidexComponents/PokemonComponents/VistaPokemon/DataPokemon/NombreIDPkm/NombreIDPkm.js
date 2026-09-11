@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import { IoMdMale, IoMdFemale } from "react-icons/io";
 import { spriteUrl, spriteShinyUrl } from "../../../../../config/endpoints";
-import { getTypeColor } from "../../../../../utils/competidexMeta";
+import { getTypeColor, formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import SpriteModal from "../../../../SharedComponents/SpriteModal/SpriteModal";
 import "./NombreIDPkm.css";
 
@@ -54,7 +54,7 @@ export default function NombreIDPkm({ id, nombre, tipos })
             
             {/* ID Pokémon */}
             <div className="idPkm">
-                <h3>#{id}</h3>
+                <h3>#{formatNumberWithDots(id)}</h3>
             </div>
 
             {/* Nombre Pokémon */}

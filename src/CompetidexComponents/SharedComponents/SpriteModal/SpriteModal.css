@@ -103,10 +103,21 @@
 
 .pokedexSpriteThumb {
   image-rendering: pixelated;
-  cursor: pointer;
-  transition: transform 0.12s ease, filter 0.12s ease;
   transform-origin: center center;
   will-change: transform;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 3px;
+
+  border-radius: 18px;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  transition: background-color 0.14s ease, filter 0.14s ease;
+
 }
 
 .pokedexSpriteThumb:hover {

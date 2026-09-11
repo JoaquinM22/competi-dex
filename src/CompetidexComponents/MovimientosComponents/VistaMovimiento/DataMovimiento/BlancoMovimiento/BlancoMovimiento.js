@@ -1,7 +1,12 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\BlancoMovimiento\BlancoMovimiento.js
 
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { getMoveTargetMeta } from "../../../../../utils/competidexMeta";
+import {
+  advancedMovesSearchRouteWithFilters,
+  getAdvancedSearchTabConfig
+} from "../../../../../utils/competidexRoutes";
 import "./BlancoMovimiento.css";
 
 function toDash(v)
@@ -23,10 +28,48 @@ function cleanText(v)
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export default function BlancoMovimiento({ blancoMov, size = "normal" })
+export default function BlancoMovimiento({ blancoMov, size = "normal", enableAdvancedSearchLink = false })
 {
+  const navigate = useNavigate();
   const txt = useMemo(() => cleanText(blancoMov), [blancoMov]);
+  const blancoMovKey = useMemo(() => {
+    if(blancoMov === null || blancoMov === undefined) return "";
+
+    return String(blancoMov).trim();
+  }, [blancoMov]);
+  const movsAdvancedSearchTabData = getAdvancedSearchTabConfig("movimientos");
+  const movsAdvancedSearchDescription = movsAdvancedSearchTabData?.description || "Movimientos";
+  const canNavigateToBlancoMov = !!enableAdvancedSearchLink && !!blancoMovKey;
   const sizeClass = `blmov-container-${size}`;
+  const blancoMovSearchLabel = "Buscar " + movsAdvancedSearchDescription + " con Blanco = " + txt;
+
+  function handleBlancoMovClick()
+  {
+    if(!canNavigateToBlancoMov) return;
+
+    navigate(advancedMovesSearchRouteWithFilters({
+      filters: [
+        {
+          field: "blancoMov",
+          operator: "eq",
+          value: blancoMovKey
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+  }
+
+  function handleBlancoMovKeyDown(event)
+  {
+    if(!canNavigateToBlancoMov) return;
+    if(event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    handleBlancoMovClick();
+  }
 
   return (
     <div className={`blmov-container ${sizeClass}`}>
@@ -41,7 +84,17 @@ export default function BlancoMovimiento({ blancoMov, size = "normal" })
         </div>
 
         <div className="blmov-value">
-          {txt}
+          <span
+            className={"blmov-valueAction" + (canNavigateToBlancoMov ? " blmov-valueAction-clickable" : "")}
+            onClick={canNavigateToBlancoMov ? handleBlancoMovClick : undefined}
+            role={canNavigateToBlancoMov ? "button" : undefined}
+            tabIndex={canNavigateToBlancoMov ? 0 : undefined}
+            onKeyDown={handleBlancoMovKeyDown}
+            aria-label={canNavigateToBlancoMov ? blancoMovSearchLabel : undefined}
+            title={canNavigateToBlancoMov ? blancoMovSearchLabel : undefined}
+          >
+            {txt}
+          </span>
         </div>
 
         <div className="blmov-tooltip" role="tooltip">

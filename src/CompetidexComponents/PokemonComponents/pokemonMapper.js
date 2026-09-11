@@ -479,7 +479,7 @@ function returnEmptyAbility()
 }
 
 
-// Estadisticas de Combate
+// Características de Combate
 function returnEmptyStats()
 {
   return {
@@ -590,6 +590,13 @@ function returnEmptyPkm()
     "sinSexo": false,
     "captureRate": null,
     "categoriaPkm": "",
+    "isBabyPkm": false,
+    "isMythicalPkm": false,
+    "isLegendaryPkm": false,
+    "hasMegaForms": false,
+    "hasGigaForm": false,
+    "isMegaForm": false,
+    "isGigaForm": false,
     "gruposHuevo": [] //returnEmptyEggGroup()
   };
 
@@ -604,6 +611,7 @@ export function createPokemonMapper(opts)
   const getPokemonSpeciesRaw = opts.getPokemonSpeciesRaw;
   const getUrlRaw = opts.getUrlRaw;
   const getPokemonIdByKey = opts.getPokemonIdByKey;
+  const getPokemonCompleteDataByApiName = opts.getPokemonCompleteDataByApiName;
   const translatePokemonAbilities = opts.translatePokemonAbilities;
   const translateAbilitiesByKeys = opts.translateAbilitiesByKeys;
   const translatePokemonItems = opts.translatePokemonItems;
@@ -928,7 +936,7 @@ export function createPokemonMapper(opts)
 
     giga.idGiga = idGiga; // ID
     giga.apiNameGiga = apiNameGiga; // Nombre API
-    giga.displayGiga = safeText(gigaMeta?.display) || toPokemonDisplayName(apiNameGiga); // Display
+    giga.displayGiga = toPokemonDisplayName(apiNameGiga) || safeText(gigaMeta?.display); // Display
     giga.fotosGiga = [officialArtworkUrl(idGiga), shinyArtworkUrl(idGiga)].filter(Boolean); // Fotos
     giga.heightGiga = formatHeight(dataGigaRaw?.height); // Altura
     giga.movGiga = safeText(gigaMeta?.displayMov) || ""; // Movimiento Gigamax
@@ -1252,13 +1260,16 @@ export function createPokemonMapper(opts)
     const raw = await getPokemonRaw(key);
     const speciesRaw = await getPokemonSpeciesRaw(raw?.species?.url);
 
+    // Creo Objeto Pokémon Vacio
+    const pokemon = returnEmptyPkm();
+    pokemon.apiName = safeText(raw?.name); // Nombre API
+
+    const dataPkmMapa = await getPokemonCompleteDataByApiName(pokemon.apiName);
+
     if(DEBUG_POKEMON && typeof console !== "undefined" && console.log)
     {
       console.log("[pokemonMapper] RAW pokemon:", key, raw);
     }
-
-    // Creo Objeto Pokémon Vacio
-    const pokemon = returnEmptyPkm();
 
     pokemon.id = safeNumber(raw?.id); // ID
     pokemon.apiName = safeText(raw?.name); // Nombre API
@@ -1356,6 +1367,27 @@ export function createPokemonMapper(opts)
     // Grupos Huevo
     pokemon.gruposHuevo = getPkmEggsGroups(speciesRaw?.egg_groups);
 
+    // Es Pokemon Bebe
+    pokemon.isBabyPkm = dataPkmMapa?.isBabyPkm || false;
+    
+    // Es Pokemon Mítico/Singular
+    pokemon.isMythicalPkm = dataPkmMapa?.isMythicalPkm || false;
+    
+    // Es Pokemon Legendario
+    pokemon.isLegendaryPkm = dataPkmMapa?.isLegendaryPkm || false;
+
+    // Posee Mega Evoluciones
+    pokemon.hasMegaForms = dataPkmMapa?.hasMegaForms || false;
+
+    // Posee Gigamax
+    pokemon.hasGigaForm = dataPkmMapa?.hasGigaForm || false;
+
+    // Es una Mega Evolucion
+    pokemon.isMegaForm = dataPkmMapa?.isMegaForm || false;
+
+    // Es una forma Gigamax
+    pokemon.isGigaForm = dataPkmMapa?.isGigaForm || false;
+
     // Data Cruda de Movimientos que aprende el Pokémon
     const movesRawData = Array.isArray(raw?.moves) ? raw.moves : [];
 
@@ -1363,10 +1395,6 @@ export function createPokemonMapper(opts)
     {
       console.log("[pokemonMapper] MAPPED pokemon:", key, pokemon);
     }
-
-    console.log("Raw pokemon data: ", raw);
-    console.log("Species raw pokemon data: ", speciesRaw);
-    console.log("Data Pokemon: ", pokemon);
 
     // Retorno el Objeto Pokémon normalizado y el rawData de los Movimientos que aprende
     return {

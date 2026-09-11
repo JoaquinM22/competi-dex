@@ -25,19 +25,24 @@
 
 .parteArriba {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 20px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 #arribaIzq {
   flex:1 1 640px;
   min-width:320px;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: start;
 }
 
 #arribaDer {
   flex:0 1 410px;
   min-width:280px;
+  display: flex;
+  flex-direction: column;
 }
 
 .nombreID-desktop {
@@ -48,6 +53,11 @@
   display: none;
 }
 
+.tituloSeccion {
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
 .contenedorTituloSeccion,
 .subContenedorTituloSeccion {
@@ -62,6 +72,24 @@
 .contenedorTituloSeccion {
   padding: 10px 15px;
   margin-top: 10px;
+}
+
+.tituloSeccionAdvancedSearch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 3px 5px;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.tituloSeccionAdvancedSearch:hover,
+.tituloSeccionAdvancedSearch:focus-visible {
+  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  outline: none;
 }
 
 .subContenedorTituloSeccion {
@@ -228,6 +256,16 @@
   border-collapse: collapse;
 }
 
+.dataPokemonStatsArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dataPokemonStatsArea #contenedorStats {
+  width: 100%;
+}
+
 /* CADENA EVOLUTIVA */
 #cadenaEvo {
   overflow-x: hidden;
@@ -306,12 +344,11 @@
   border-radius: 25px;
   box-shadow: 0 6px 24px rgba(0,0,0,.25);
   overflow: hidden;
-  height: clamp(560px, 75vh, 760px);
-  max-height: clamp(560px, 75vh, 760px);
+  max-height: 750px;
 }
 
 .tarjetaInicial {
-  height: 100%;
+  max-height: 750px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 16px;
@@ -533,7 +570,12 @@
   margin-bottom: 10px;
 }
 
-@media (max-width:1402px) {
+@media (max-width: 1260px) {
+
+  .parteArriba {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
 
   #arribaDer {
     order: 1;
@@ -543,6 +585,12 @@
   #arribaIzq {
     order: 2;
     flex-basis: 100%;
+    display: block;
+    min-height: 0;
+  }
+
+  #arribaDer {
+    display: block;
   }
 
   .nombreID-desktop {
@@ -556,6 +604,10 @@
   #arribaDer, #arribaIzq {
     max-width: 100%;
     align-self: stretch;
+  }
+
+  .dataPokemonStatsArea {
+    display: block;
   }
 
 }

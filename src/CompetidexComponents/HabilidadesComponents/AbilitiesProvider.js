@@ -90,6 +90,11 @@ function normalizeInputForLookup(s)
   return t;
 }
 
+function getAbilityDisplayFromMapEntry(apiKey, entry)
+{
+  return String(entry?.display || entry?.display_es || apiKey || "").trim();
+}
+
 function summarizeAbility(json)
 {
   function esTextoValido(txt)
@@ -171,7 +176,7 @@ function buildReverseMaps(abilityMap)
   {
     const apiKey = keys[i];
     const entry = abilityMap[apiKey] || {};
-    const display = String(entry.display || entry.display_es || "").trim();
+    const display = getAbilityDisplayFromMapEntry(apiKey, entry);
 
     if(display)
     {
@@ -198,6 +203,62 @@ function buildReverseMaps(abilityMap)
   return { esToKey, slugToKey, keyToSlug };
 }
 
+function buildAbilityOptionsFromMap(abilityMap)
+{
+  const keys = Object.keys(abilityMap || {});
+  const out = [];
+
+  for(let i = 0; i < keys.length; i++)
+  {
+    const apiKey = keys[i];
+    const entry = abilityMap[apiKey] || {};
+    const description = getAbilityDisplayFromMapEntry(apiKey, entry);
+
+    if(!apiKey || !description) continue;
+
+    out.push({
+      key: String(apiKey).trim(),
+      description: description
+    });
+  }
+
+  out.sort(function(a, b)
+  {
+    return String(a.description || "").localeCompare(String(b.description || ""), "es");
+  });
+
+  return out;
+}
+
+function buildAdvancedAbilitiesItemsFromMap(abilityMap)
+{
+  const keys = Object.keys(abilityMap || {});
+  keys.sort(function(a, b)
+  {
+    return a.localeCompare(b);
+  });
+
+  return keys.map(function(apiName)
+  {
+    const entry = abilityMap[apiName] || {};
+
+    const rawId = Number(entry.id);
+    const id = Number.isFinite(rawId) ? rawId : null;
+    const display = getAbilityDisplayFromMapEntry(apiName, entry);
+    const generation = String(entry.gen || "").trim();
+    const desc = entry?.descES || "-";
+
+    return {
+      id: id,
+      apiName: apiName,
+      display: display,
+      generation: generation,
+      descES: desc
+    };
+  });
+}
+
+
 function manifestUrlNoCache()
 {
   return COMPETIDEX_DATA.abilitiesManifest + "?v=" + Date.now();
@@ -207,6 +268,7 @@ export function AbilitiesProvider({ children })
 {
   const warmCache = useRef(new Map());
   const rawCache = useRef(new Map());
+  const rawInFlightCache = useRef(new Map());
   const refreshResolverRef = useRef(null);
   const forceManifestRefreshRef = useRef(false);
   const esToKeyRef = useRef(new Map());
@@ -357,6 +419,18 @@ export function AbilitiesProvider({ children })
 
   }, [abilityMap]);
 
+  const abilityOptions = useMemo(() =>
+  {
+    return buildAbilityOptionsFromMap(abilityMap || {});
+
+  }, [abilityMap]);
+
+  const advancedAbilitiesItems = useMemo(() =>
+  {
+    return buildAdvancedAbilitiesItemsFromMap(abilityMap || {});
+
+  }, [abilityMap]);
+
   const suggestAbilities = useCallback((query, limit = 8) =>
   {
     const q = normText(query);
@@ -369,7 +443,7 @@ export function AbilitiesProvider({ children })
     {
       const key = keys[i];
       const it = abilityMap[key] || {};
-      const display = String(it.display || it.display_es || key).trim();
+      const display = getAbilityDisplayFromMapEntry(key, it);
       const gen = String(it.gen || it.generation || "").trim();
 
       const nKey = normText(key);
@@ -402,25 +476,33 @@ export function AbilitiesProvider({ children })
 
     if(abilityMap && abilityMap[low])
     {
-      return { key: low, slug: keyToSlugRef.current.get(low) || slugifyForUrl(low) };
+      const entry = abilityMap[low] || {};
+      const display = getAbilityDisplayFromMapEntry(low, entry);
+      return { key: low, slug: keyToSlugRef.current.get(low) || slugifyForUrl(display || low), display };
     }
 
     const slug = slugifyForUrl(low);
     if(slug && slugToKeyRef.current && slugToKeyRef.current.has(slug))
     {
       const k = slugToKeyRef.current.get(slug);
-      return { key: k, slug: keyToSlugRef.current.get(k) || slug };
+      const entry = (abilityMap && abilityMap[k]) ? abilityMap[k] : {};
+      const display = getAbilityDisplayFromMapEntry(k, entry);
+      return { key: k, slug: keyToSlugRef.current.get(k) || slugifyForUrl(display || k) || slug, display };
     }
 
     const norm = normalizeInputForLookup(raw);
     if(norm && esToKeyRef.current && esToKeyRef.current.has(norm))
     {
       const k2 = esToKeyRef.current.get(norm);
-      return { key: k2, slug: keyToSlugRef.current.get(k2) || slugifyForUrl(k2) };
+      const entry = (abilityMap && abilityMap[k2]) ? abilityMap[k2] : {};
+      const display = getAbilityDisplayFromMapEntry(k2, entry);
+      return { key: k2, slug: keyToSlugRef.current.get(k2) || slugifyForUrl(display || k2), display };
     }
 
     const asKeyDash = low.replace(/[._\s]+/g, "-");
-    return { key: asKeyDash, slug: keyToSlugRef.current.get(asKeyDash) || slugifyForUrl(asKeyDash) };
+    const entry = (abilityMap && abilityMap[asKeyDash]) ? abilityMap[asKeyDash] : {};
+    const display = getAbilityDisplayFromMapEntry(asKeyDash, entry);
+    return { key: asKeyDash, slug: keyToSlugRef.current.get(asKeyDash) || slugifyForUrl(display || asKeyDash), display };
 
   }, [abilityMap]);
 
@@ -475,14 +557,34 @@ export function AbilitiesProvider({ children })
       return rawCache.current.get(key);
     }
 
-    const res = await fetch(POKEAPI.ability(key), { headers: { accept: "application/json" } });
-    if (!res.ok) throw new Error("No se encontro habilidad: " + key);
+    if(rawInFlightCache.current.has(key))
+    {
+      return rawInFlightCache.current.get(key);
+    }
 
-    const json = await res.json();
-    rawCache.current.set(key, json);
-    saveAbilitiesRawCache(rawCache.current);
+    const request = (async() =>
+    {
+      const res = await fetch(POKEAPI.ability(key), { headers: { accept: "application/json" } });
+      if (!res.ok) throw new Error("No se encontro habilidad: " + key);
 
-    return json;
+      const json = await res.json();
+      rawCache.current.set(key, json);
+      saveAbilitiesRawCache(rawCache.current);
+
+      return json;
+
+    })();
+
+    rawInFlightCache.current.set(key, request);
+
+    try
+    {
+      return await request;
+
+    }finally
+    {
+      rawInFlightCache.current.delete(key);
+    }
 
   }, [resolveAbilityKey]);
 
@@ -650,6 +752,7 @@ export function AbilitiesProvider({ children })
     try { slugToKeyRef.current = new Map(); } catch (e) {}
     try { keyToSlugRef.current = new Map(); } catch (e) {}
     try { rawCache.current = new Map(); } catch (e) {}
+    try { rawInFlightCache.current = new Map(); } catch (e) {}
 
   }, []);
 
@@ -668,6 +771,8 @@ export function AbilitiesProvider({ children })
     loadingIndex,
     esMapReadyAbilities,
     mapVersion,
+    abilityOptions,
+    advancedAbilitiesItems,
 
     suggestAbilities,
     resolveAbilityInput,
@@ -686,6 +791,8 @@ export function AbilitiesProvider({ children })
     loadingIndex,
     esMapReadyAbilities,
     mapVersion,
+    abilityOptions,
+    advancedAbilitiesItems,
     suggestAbilities,
     resolveAbilityInput,
     resolveAbilityKey,

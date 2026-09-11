@@ -3,6 +3,7 @@
 import React from "react";
 import { spriteUrl, spriteShinyUrl } from "../../../../../config/endpoints";
 import ImgPokemon from "../ImgPokemon/ImgPokemon";
+import PesoYAlturaPkm from "../PesoYAlturaPkm/PesoYAlturaPkm";
 import SpriteModal from "../../../../SharedComponents/SpriteModal/SpriteModal";
 import "./GigaPkm.css";
 
@@ -79,10 +80,25 @@ export default function GigaPkm({ giga })
 
           {/* Altura */}
           {alturaGiga !== null && alturaGiga !== undefined && (
-            <p className="altura-giga">
+            
+            <>
+
+            {/* <p className="altura-giga">
               <strong className="subrayadoGiga">Altura</strong>: Más de{" "}
               <strong>{alturaGiga}m</strong>
-            </p>
+            </p> */}
+
+              <div  className="altura-giga">
+            <PesoYAlturaPkm
+              altura={alturaGiga}
+              peso={null}
+              size={"normal"}
+              isGigaForm={true}
+              noBackGroundAlturaGigaPkm={true}
+            />
+            </div>
+
+            </>
           )}
 
           {/* Movimiento Gigamax (subrayado por palabra) */}

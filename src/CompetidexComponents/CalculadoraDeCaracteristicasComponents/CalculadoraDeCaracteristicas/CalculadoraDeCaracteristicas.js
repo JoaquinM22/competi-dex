@@ -36,6 +36,8 @@ const IV_MIN = 0;
 const IV_MAX = 31;
 const LEVEL_MIN = 1;
 const LEVEL_MAX = 100;
+const MAX_BAR_BASE_STAT = 200;
+const MAX_BAR_PERCENT = 95;
 const KEY_CALC_SETTINGS = `calc:settings:${CACHE_VERSION}:active`;
 const NATURE_OPTIONS = Object.entries(NATURE_PKM_META)
   .filter(([key]) => key !== "unknown")
@@ -160,15 +162,31 @@ function calcularStatPSChampions(psBase, statPoints, pokemonApiName)
   return Math.floor(Number(psBase || 0) + Number(statPoints || 0) + 75);
 }
 
-function getBarWidth(value, totalValue, ev, iv, natureKey, statKey)
+function getBarWidth(value, maxValue)
 {
-  const safeTotal = Math.max(1, totalValue);
-  const valueRatio = Math.max(0, Math.min(value / safeTotal, 1));
-  const minWidth = 45;
-  const maxWidth = 99;
-  const width = Math.max(minWidth, Math.min(Math.round(minWidth + (valueRatio * (maxWidth - minWidth))), maxWidth));
+  const safeMax = Math.max(1, maxValue);
+  const valueRatio = Math.max(0, Math.min(value / safeMax, 1));
+  const width = valueRatio * MAX_BAR_PERCENT;
 
   return `${width}%`;
+}
+
+function getMaxBaseModeBarValue(level = LEVEL_MAX)
+{
+  const maxHpValue = calcularStat(MAX_BAR_BASE_STAT, IV_MAX, EV_MAX_PER_STAT, level, true, "");
+  const maxStatValue = Math.floor(
+    calcularStat(MAX_BAR_BASE_STAT, IV_MAX, EV_MAX_PER_STAT, level, false, "") * 1.1
+  );
+
+  return Math.max(maxHpValue, maxStatValue, 1);
+}
+
+function getMaxChampionsModeBarValue()
+{
+  const maxHpValue = calcularStatPSChampions(MAX_BAR_BASE_STAT, CHAMPIONS_EV_MAX_PER_STAT, "");
+  const maxStatValue = calcularStatChampions(MAX_BAR_BASE_STAT, CHAMPIONS_EV_MAX_PER_STAT, 1.1);
+
+  return Math.max(maxHpValue, maxStatValue, 1);
 }
 
 function getBarColor(base)
@@ -514,11 +532,13 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
       };
     });
 
-    const totalValue = calcRows.reduce((acc, row) => acc + row.result, 0);
+    const maxValue = isChampionsMode
+      ? getMaxChampionsModeBarValue()
+      : getMaxBaseModeBarValue(currentNivel);
 
     return calcRows.map((row) => ({
       ...row,
-      barWidth: getBarWidth(row.result, totalValue, row.ev, row.iv, currentNature, row.key),
+      barWidth: getBarWidth(row.result, maxValue),
     }));
   }, [pokemon, currentEvs, currentIvs, currentNivel, currentNature, currentEvMaxPerStat, isChampionsMode]);
 
@@ -694,37 +714,43 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
       {openNature && (
         <div className="calcStatsPkm-natureList" role="listbox" aria-label="Naturaleza">
           <div className="calcStatsPkm-natureListInner">
-            {filteredNatureOptions.map((opt) =>
-            {
-              const selected = opt.key === currentNature;
-              const isNeutral = !opt.up && !opt.down;
+            {filteredNatureOptions.length > 0 ? (
+              filteredNatureOptions.map((opt) =>
+              {
+                const selected = opt.key === currentNature;
+                const isNeutral = !opt.up && !opt.down;
 
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  className={"calcStatsPkm-natureOpt" + (selected ? " selected" : "")}
-                  onClick={() =>
-                  {
-                    setCurrentNatureValue(opt.key);
-                    setOpenNature(false);
-                  }}
-                  role="option"
-                  aria-selected={selected}
-                  data-selected={selected ? "1" : "0"}
-                >
-                  <span className="calcStatsPkm-natureOptMain">
-                    <span className="calcStatsPkm-natureOptName">{opt.labelEs}</span>
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    className={"calcStatsPkm-natureOpt" + (selected ? " selected" : "")}
+                    onClick={() =>
+                    {
+                      setCurrentNatureValue(opt.key);
+                      setOpenNature(false);
+                    }}
+                    role="option"
+                    aria-selected={selected}
+                    data-selected={selected ? "1" : "0"}
+                  >
+                    <span className="calcStatsPkm-natureOptMain">
+                      <span className="calcStatsPkm-natureOptName">{opt.labelEs}</span>
 
-                    {isNeutral ? (
-                      <span className="calcStatsPkm-natureSelector-neutral">(Neutro)</span>
-                    ) : (
-                      renderNatureDetails(opt.key)
-                    )}
-                  </span>
-                </button>
-              );
-            })}
+                      {isNeutral ? (
+                        <span className="calcStatsPkm-natureSelector-neutral">(Neutro)</span>
+                      ) : (
+                        renderNatureDetails(opt.key)
+                      )}
+                    </span>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="calcStatsPkm-natureNoResults">
+                No se encontraron coincidencias
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -1275,6 +1301,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                 <Tipo
                   tipo={typesPkm[0]}
                   size="normal"
+                  enableAdvancedSearchLink={true}
+                  advancedSearchTabKey="pokemon"
                 />
               </div>
             </div>
@@ -1296,6 +1324,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                   <Tipo
                     tipo={tipo}
                     size="normal"
+                    enableAdvancedSearchLink={true}
+                    advancedSearchTabKey="pokemon"
                   />
                 </div>
               ))}
@@ -1318,6 +1348,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                   <Tipo
                     tipo={tipo}
                     size="normal"
+                    enableAdvancedSearchLink={true}
+                    advancedSearchTabKey="pokemon"
                   />
                 </div>
               ))}
@@ -1468,6 +1500,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                     <Tipo
                       tipo={typesPkm[0]}
                       size="normal"
+                      enableAdvancedSearchLink={true}
+                      advancedSearchTabKey="pokemon"
                     />
                   </div>
                 </div>
@@ -1489,6 +1523,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                     <Tipo
                       tipo={tipo}
                       size={isCompactTypesViewport ? "medium" : "normal"}
+                      enableAdvancedSearchLink={true}
+                      advancedSearchTabKey="pokemon"
                     />
                   </div>
                 ))}
@@ -1511,6 +1547,8 @@ export default function CalculadoraDeCaracteristicas({ pokemon = null, className
                       <Tipo
                         tipo={tipo}
                         size="normal"
+                        enableAdvancedSearchLink={true}
+                        advancedSearchTabKey="pokemon"
                       />
                     </div>
                   ))}

@@ -4,6 +4,44 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoMdPlay, IoMdPause, IoMdVolumeHigh } from "react-icons/io";
 import "./GritoPkm.css";
 
+const GRITO_PKM_VOLUME_STORAGE_KEY = "competidex:gritoPkm:volume";
+
+function normalizeVolumeValue(value, fallback = 100)
+{
+    const numericValue = Number(value);
+
+    if(!Number.isFinite(numericValue))
+    {
+        return fallback;
+    }
+
+    return Math.min(100, Math.max(0, numericValue));
+}
+
+function getStoredGritoVolume()
+{
+    if(typeof window === "undefined" || !window.localStorage)
+    {
+        return 100;
+    }
+
+    try
+    {
+        const storedVolume = window.localStorage.getItem(GRITO_PKM_VOLUME_STORAGE_KEY);
+
+        if(storedVolume === null)
+        {
+            return 100;
+        }
+
+        return normalizeVolumeValue(storedVolume, 100);
+
+    }catch(e)
+    {
+        return 100;
+    }
+}
+
 export default function GritoPkm({ gritoUrl = null, size = "normal" })
 {
     const url = typeof gritoUrl === "string" ? gritoUrl.trim() : "";
@@ -13,7 +51,7 @@ export default function GritoPkm({ gritoUrl = null, size = "normal" })
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [volume, setVolume] = useState(100);
+    const [volume, setVolume] = useState(getStoredGritoVolume);
     const [volumeOpen, setVolumeOpen] = useState(false);
 
     const normalizedSize = ["small", "medium", "normal", "large"].includes(String(size).trim().toLowerCase())
@@ -74,6 +112,21 @@ export default function GritoPkm({ gritoUrl = null, size = "normal" })
         {
             audio.volume = Math.min(1, Math.max(0, volume / 100));
         }
+
+    }, [volume]);
+
+    useEffect(() =>
+    {
+        if(typeof window === "undefined" || !window.localStorage)
+        {
+            return;
+        }
+
+        try
+        {
+            window.localStorage.setItem(GRITO_PKM_VOLUME_STORAGE_KEY, String(volume));
+        
+        }catch(e){}
 
     }, [volume]);
 
@@ -175,8 +228,7 @@ export default function GritoPkm({ gritoUrl = null, size = "normal" })
 
     function handleVolumeChange(event)
     {
-        const nextVolume = Number(event.target.value);
-        setVolume(Number.isFinite(nextVolume) ? Math.min(100, Math.max(0, nextVolume)) : 100);
+        setVolume(normalizeVolumeValue(event.target.value, 100));
     }
 
     function toggleVolumeOpen()

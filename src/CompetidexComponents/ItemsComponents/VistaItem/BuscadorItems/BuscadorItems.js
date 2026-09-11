@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { useItems } from "../../ItemsProvider";
 import { CACHE_VERSION } from "../../itemCache";
 import { itemSpriteUrl } from "../../../../config/endpoints";
-import { ERROR_404_SPRITE_IMG } from "../../../../utils/competidexMeta";
+import { ERROR_404_SPRITE_IMG, formatNumberWithDots } from "../../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../../utils/competidexImgCache";
 import { showToastr } from "../../../../services/ToastrService";
 import "./BuscadorItems.css";
@@ -266,7 +266,7 @@ export default function BuscadorItems({ onSearch, titulo = "Objeto" })
                 >
                   <div className="sug-item-left">
                     {(it.id !== null && it.id !== undefined) && (
-                      <span className="sug-item-id">#{it.id}</span>
+                      <span className="sug-item-id">#{formatNumberWithDots(it.id)}</span>
                     )}
 
                     <img

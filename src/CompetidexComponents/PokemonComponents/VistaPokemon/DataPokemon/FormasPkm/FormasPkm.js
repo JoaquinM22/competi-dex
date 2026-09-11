@@ -209,6 +209,7 @@ export default function FormasPkm({ formas, apiKey = "" })
                     <ColorPkm
                       color={mix.color}
                       size="small"
+                      enableAdvancedSearchLink={true}
                     />
                   </div>
                 </div>
@@ -386,6 +387,7 @@ export default function FormasPkm({ formas, apiKey = "" })
                           <Tipo
                             tipo={tipo}
                             size="medium"
+                            enableAdvancedSearchLink={true}
                           />
                         </div>
                       ))}
@@ -397,10 +399,10 @@ export default function FormasPkm({ formas, apiKey = "" })
                 {hasPesoAltura && (
                   <div className="slot">
                     <PesoYAlturaPkm
-                      altura={forma.heightForma !== -1 && forma.heightForma !== null && forma.heightForma !== undefined ? `${forma.heightForma}m` : undefined}
-                      peso={forma.weightForma !== -1 && forma.weightForma !== null && forma.weightForma !== undefined ? `${forma.weightForma}Kg` : undefined}
+                      altura={forma.heightForma !== -1 && forma.heightForma !== null && forma.heightForma !== undefined ? forma.heightForma : undefined}
+                      peso={forma.weightForma !== -1 && forma.weightForma !== null && forma.weightForma !== undefined ? forma.weightForma : undefined}
                       size="medium"
-                      mostrarTexto={false}
+                      enableAdvancedSearchLink={true}
                     />
                   </div>
                 )}
@@ -412,6 +414,7 @@ export default function FormasPkm({ formas, apiKey = "" })
                       <ColorPkm
                         color={forma.colorForma}
                         size="medium"
+                        enableAdvancedSearchLink={true}
                       />
                     </div>
                   </div>

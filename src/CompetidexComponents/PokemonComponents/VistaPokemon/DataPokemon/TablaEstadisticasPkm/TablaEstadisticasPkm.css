@@ -22,8 +22,8 @@
 .tabla-tabs-wrapper {
   margin-top: 10px;
   background: #2a2a2a;
-  border: 1px solid #4c4c4c;
-  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.26);
+  border-radius: 25px;
   padding: 14px;
   color: #e8ecf1;
   box-sizing: border-box;
@@ -39,24 +39,25 @@
 
 .tabla-tab {
   background: transparent;
-  color: #b7c3d7;
+  color: #FFD700;
   padding: 8px 12px;
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   border-radius: 8px 8px 0 0;
-  font-weight: 700;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(12, 14, 18, 0.304);
 }
 
 .tabla-tab:hover {
-  color: #ffffff;
-  background: #181c24;
+  background: rgba(12, 14, 18, 0.872);
 }
 
 .tabla-tab.active {
-  color: #ffffff;
-  border-bottom-color: #ffffff;
-  background: #161b22;
+  color: #FFD700;
+  border-bottom-color: #FFD700;
+  background: rgba(12, 14, 18);
 }
 
 .tabla-tabs-content {

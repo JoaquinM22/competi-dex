@@ -159,6 +159,10 @@
 
 .tituloSeccion-Movimiento {
   padding-left: 10px;
+
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width:1402px) {

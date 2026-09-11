@@ -81,7 +81,13 @@ const MANIFEST_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 dias
         "monster",
         "dragon"
       ],
-      "categoryPkm": "Pokémon Llama"
+      "categoryPkm": "Pokémon Llama",
+      "isBabyPkm": false,
+      "isMythicalPkm": false,
+      "isLegendaryPkm": false,
+      "isMegaForm": false,
+      "isGigaForm": false,
+      "specieName": "charizard"
     },
     ...
   }
@@ -109,6 +115,39 @@ function buildIndexFromPokemonMap(pokemonMapObj)
     };
 
   }).filter(Boolean);
+}
+
+function buildCategoryPkmOptionsFromPokemonMap(pokemonMapObj)
+{
+  const seen = new Set();
+  const out = [];
+
+  const keys = Object.keys(pokemonMapObj || {});
+  for(let i = 0; i < keys.length; i++)
+  {
+    const apiKey = String(keys[i] || "").trim().toLowerCase();
+    if(!apiKey || isPokemonBlocked(apiKey)) continue;
+
+    const entry = pokemonMapObj[apiKey] || {};
+    const category = String(entry.categoryPkm || "").trim();
+    if(!category) continue;
+
+    const norm = category.toLowerCase();
+    if(seen.has(norm)) continue;
+
+    seen.add(norm);
+    out.push({
+      key: category,
+      description: category
+    });
+  }
+
+  out.sort(function(a, b)
+  {
+    return String(a.description || "").localeCompare(String(b.description || ""), "es");
+  });
+
+  return out;
 }
 
 function manifestUrlNoCache()
@@ -155,6 +194,12 @@ export function PokemonProvider({ children })
   const keyToSlugRef = useRef(new Map());
   const pokemonIdByKeyRef = useRef(new Map());
   const pokemonKeyByIdRef = useRef(new Map());
+
+  const categoryPkmOptions = useMemo(function()
+  {
+    return buildCategoryPkmOptionsFromPokemonMap(pokemonMapRef.current || {});
+
+  }, [pokemonMapReady, refreshTick]);
 
   useEffect(function()
   {
@@ -457,6 +502,21 @@ export function PokemonProvider({ children })
 
   }, [resolvePokemonMapKey]);
 
+  const getPokemonCompleteDataByApiName = useCallback(function(apiName)
+  {
+    const key = resolvePokemonMapKey(apiName);
+    const m = pokemonMapRef.current || {};
+    const entry = m[key] || null;
+
+    if(!entry) return null;
+
+    return {
+      apiName: key,
+      ...entry
+    };
+
+  }, [resolvePokemonMapKey]);
+
   const getPokemonIdByKey = useCallback(function(apiName)
   {
     const key = resolvePokemonMapKey(apiName);
@@ -696,7 +756,9 @@ export function PokemonProvider({ children })
       pokemonMapReady: pokemonMapReady,
 
       pokemonMap: pokemonMapRef.current || {},
+      categoryPkmOptions: categoryPkmOptions,
       getPokemonMapEntry: getPokemonMapEntry,
+      getPokemonCompleteDataByApiName: getPokemonCompleteDataByApiName,
       getPokemonIdByKey: getPokemonIdByKey,
       getPokemonKeyById: getPokemonKeyById,
 
@@ -727,7 +789,9 @@ export function PokemonProvider({ children })
     index,
     loadingIndex,
     pokemonMapReady,
+    categoryPkmOptions,
     getPokemonMapEntry,
+    getPokemonCompleteDataByApiName,
     getPokemonIdByKey,
     getPokemonKeyById,
     getUrl,

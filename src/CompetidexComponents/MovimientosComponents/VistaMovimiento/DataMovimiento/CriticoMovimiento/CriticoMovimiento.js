@@ -1,6 +1,11 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\CriticoMovimiento\CriticoMovimiento.js
 
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  advancedMovesSearchRouteWithFilters,
+  getAdvancedSearchTabConfig
+} from "../../../../../utils/competidexRoutes";
 import "./CriticoMovimiento.css";
 
 function toIntOrNull(v)
@@ -40,8 +45,10 @@ function critPctGen7Plus(stage)
 
 function critLabelGen7Plus(stage)
 {
-  const s = clamp(stage, 0, 4);
-  return CRIT_META_BY_STAGE[s]?.label ?? "+3";
+  if(stage >= 3) return "+" + stage;
+
+  const s = clamp(stage, 0, 3);
+  return CRIT_META_BY_STAGE[s]?.label ?? "+0";
 }
 
 function fmtPct(p)
@@ -62,14 +69,58 @@ function fmtPct(p)
   return s + "%";
 }
 
-export default function CriticoMovimiento({ indice = null, size = "normal" })
+function getCriticalIndexFilterValue(value)
 {
+  if(value === null) return "null";
+  if(value >= 3) return 3;
+
+  return value;
+}
+
+export default function CriticoMovimiento({ indice = null, size = "normal", enableAdvancedSearchLink = false })
+{
+  const navigate = useNavigate();
   const base = useMemo(() => toIntOrNull(indice), [indice]);
   const pct = useMemo(() => (base !== null ? critPctGen7Plus(base) : null), [base]);
   const critLabel = useMemo(() => (base !== null ? critLabelGen7Plus(base) : "-"), [base]);
+  const criticalIndexFilterValue = getCriticalIndexFilterValue(base);
+  const movsAdvancedSearchTabData = getAdvancedSearchTabConfig("movimientos");
+  const movsAdvancedSearchDescription = movsAdvancedSearchTabData?.description || "Movimientos";
+  const canNavigateToCriticalIndex = !!enableAdvancedSearchLink;
 
   const sizeClass = `critmov-container-${size}`;
-  const tooltipText = base !== null ? `Índice: ${critLabel}` : "Índice de crítico no disponible.";
+  const tooltipText = base !== null ? `Índice: ${critLabel}` : "No posee índice";
+  const criticalIndexSearchLabel = base !== null
+    ? "Buscar " + movsAdvancedSearchDescription + " con Índice de Crítico = " + fmtPct(pct)
+    : "Buscar " + movsAdvancedSearchDescription + " sin Índice de Crítico";
+
+  function handleCriticalIndexClick()
+  {
+    if(!canNavigateToCriticalIndex) return;
+
+    navigate(advancedMovesSearchRouteWithFilters({
+      filters: [
+        {
+          field: "indiceCritico",
+          operator: "eq",
+          value: criticalIndexFilterValue
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+  }
+
+  function handleCriticalIndexKeyDown(event)
+  {
+    if(!canNavigateToCriticalIndex) return;
+    if(event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    handleCriticalIndexClick();
+  }
 
   return (
     <div className={`critmov-container ${sizeClass}`}>
@@ -91,15 +142,25 @@ export default function CriticoMovimiento({ indice = null, size = "normal" })
 
         {/* Valor */}
         <div className="critmov-value">
-          {
-            (pct !== null) ?
-            (
-              <span className="critmov-pct">{fmtPct(pct)}</span>
-            ) :
-            (
-              "-"
-            )
-          }
+          <span
+            className={"critmov-valueAction" + (canNavigateToCriticalIndex ? " critmov-valueAction-clickable" : "")}
+            onClick={canNavigateToCriticalIndex ? handleCriticalIndexClick : undefined}
+            role={canNavigateToCriticalIndex ? "button" : undefined}
+            tabIndex={canNavigateToCriticalIndex ? 0 : undefined}
+            onKeyDown={handleCriticalIndexKeyDown}
+            aria-label={canNavigateToCriticalIndex ? criticalIndexSearchLabel : undefined}
+            title={canNavigateToCriticalIndex ? criticalIndexSearchLabel : undefined}
+          >
+            {
+              (pct !== null) ?
+              (
+                <span className="critmov-pct">{fmtPct(pct)}</span>
+              ) :
+              (
+                "-"
+              )
+            }
+          </span>
         </div>
 
         {/* Tooltip */}

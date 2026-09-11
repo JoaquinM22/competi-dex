@@ -123,7 +123,7 @@
 /* Tarjeta del Pokémon*/
 .mega-card {
   background: var(--panel, #1f2227);
-  border-radius: 12px;
+  border-radius: 25px !important;
   padding: 15px;
   color: #ffffff;
   box-shadow: 0 6px 24px rgba(0,0,0,.25);
@@ -131,6 +131,7 @@
   flex-direction: column;
   align-items: center;
   width: clamp(300px, 30vw, 460px);
+  border: 1px solid rgba(255, 215, 0, 0.26);
 }
 
 /* Imagen */
@@ -221,11 +222,16 @@
 .mega-stats-col,
 .mega-stats {
   flex: 1 1 680px;
-  background-color: rgb(56, 56, 56);
+  background: var(--panel, #1f2227);
   border-radius: 12px;
   padding: 15px;
   display: grid;
   place-items: center;
+}
+
+.mega-stats-col {
+  border-radius: 25px !important;
+  border: 1px solid rgba(255, 215, 0, 0.26);
 }
 
 .stats-scroll {
@@ -283,10 +289,11 @@
   gap: 12px;
   background: var(--panel, #1f2227);
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 25px;
   padding: 10px 15px;
   margin-top: 16px;
   box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  border: 1px solid rgba(255, 215, 0, 0.26);
 }
 
 .contenedorTituloSeccionCMegaEvo h2 {

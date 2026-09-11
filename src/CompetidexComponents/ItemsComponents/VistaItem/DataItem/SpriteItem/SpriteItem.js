@@ -37,7 +37,14 @@ function resolveThumbSize(size)
 
 }
 
-export default function SpriteItem({ apiName, size = "medium", altText })
+export default function SpriteItem({
+  apiName,
+  size = "medium",
+  thumbSize,
+  altText,
+  disabledModal = false,
+  backGroundColorItemContainer = "#2a2a2a"
+})
 {
   const [open, setOpen] = useState(false);
   const [dlOpen, setDlOpen] = useState(false);
@@ -46,7 +53,9 @@ export default function SpriteItem({ apiName, size = "medium", altText })
 
   const probeCacheRef = useRef(new Map());
 
-  const thumbSize = resolveThumbSize(size);
+  const resolvedThumbSize = (typeof thumbSize === "number" && isFinite(thumbSize) && thumbSize > 0)
+    ? thumbSize
+    : resolveThumbSize(size);
   const spriteUrl = itemSpriteUrl(apiName || "");
   const finalAlt = altText || apiName || "Item";
 
@@ -55,6 +64,16 @@ export default function SpriteItem({ apiName, size = "medium", altText })
     if(spriteUrl) preloadCachedImage(spriteUrl);
 
   }, [spriteUrl]);
+
+  useEffect(function()
+  {
+    if(disabledModal)
+    {
+      setOpen(false);
+      setDlOpen(false);
+    }
+
+  }, [disabledModal]);
 
   useEffect(function()
   {
@@ -67,7 +86,7 @@ export default function SpriteItem({ apiName, size = "medium", altText })
       }
     }
 
-    if(open)
+    if(open && !disabledModal)
     {
       document.addEventListener("keydown", onEsc);
       if(document.body.dataset.prevOverflowItem == null)
@@ -92,17 +111,19 @@ export default function SpriteItem({ apiName, size = "medium", altText })
       document.body.classList.remove("modal-open");
     };
 
-  }, [open]);
+  }, [open, disabledModal]);
 
   useEffect(function()
   {
     setOk(true);
     setDlOpen(false);
 
-  }, [apiName, altText, size]);
+  }, [apiName, altText, size, thumbSize]);
 
   async function abrir()
   {
+    if(disabledModal) return;
+
     setOpen(true);
     const exists = await probeCachedImage(spriteUrl || "");
     setOk(!!exists);
@@ -212,12 +233,14 @@ export default function SpriteItem({ apiName, size = "medium", altText })
       {/* Sprite del Objeto */}
       <div
         className="itemSpriteThumbWrap"
-        onClick={abrir}
-        title="Abrir sprite"
-        role="button"
-        tabIndex={0}
+        onClick={disabledModal ? undefined : abrir}
+        title={!disabledModal ? "Abrir sprite" : undefined}
+        role={disabledModal ? undefined : "button"}
+        tabIndex={disabledModal ? undefined : 0}
         onKeyDown={function(e)
         {
+          if(disabledModal) return;
+
           if(e.key === "Enter" || e.key === " ")
           {
             e.preventDefault();
@@ -226,16 +249,18 @@ export default function SpriteItem({ apiName, size = "medium", altText })
 
         }}
         style={{
-          width: thumbSize + 28 + "px",
-          height: thumbSize + 28 + "px"
+          width: resolvedThumbSize + 28 + "px",
+          height: resolvedThumbSize + 28 + "px",
+          "--item-sprite-bg": backGroundColorItemContainer,
+          cursor: "pointer"
         }}
       >
         <img
           className="itemSpriteThumb"
           src={spriteUrl || ERROR_404_SPRITE_IMG}
           alt={finalAlt}
-          width={thumbSize}
-          height={thumbSize}
+          width={resolvedThumbSize}
+          height={resolvedThumbSize}
           loading="lazy"
           decoding="async"
           onError={function(e)
@@ -243,8 +268,8 @@ export default function SpriteItem({ apiName, size = "medium", altText })
             e.currentTarget.src = ERROR_404_SPRITE_IMG;
           }}
           style={{
-            width: thumbSize + "px",
-            height: thumbSize + "px",
+            width: resolvedThumbSize + "px",
+            height: resolvedThumbSize + "px",
             imageRendering: "pixelated",
             display: "block",
             margin: "0 auto"
@@ -253,7 +278,7 @@ export default function SpriteItem({ apiName, size = "medium", altText })
       </div>
 
       {/* Modal abierto: Sprite en grande con boton de descarga */}
-      {open && createPortal(
+      {!disabledModal && open && createPortal(
         <div
           className="itemSpriteModalOverlay"
           onClick={function()

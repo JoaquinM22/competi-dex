@@ -114,15 +114,12 @@ export function createItemMapper(opts)
     {
       const a = attrs[i];
       const key = (a && a.name) ? String(a.name).trim().toLowerCase() : "";
-      if (!key) continue;
+      if(!key) continue;
 
-      const mapped = getAttributeItemLabelEs(key);
-      if (!mapped) continue;
-
-      if(!seen[mapped])
+      if(!seen[key])
       {
-        seen[mapped] = true;
-        out.push(mapped);
+        seen[key] = true;
+        out.push(key);
       }
     }
 

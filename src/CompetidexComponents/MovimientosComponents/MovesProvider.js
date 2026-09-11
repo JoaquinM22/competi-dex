@@ -68,6 +68,11 @@ const KEY_RAW = `moves:raw:${CACHE_VERSION}`;
       "power": 80,
       "accuracy": 85,
       "pp": 20,
+      "hasSecondaryEffect": false,
+      "priorityLevel": 0,
+      "indiceCritico": 0,
+      "generation": "generation-i",
+      "blancoMov": "selected-pokemon",
       "machinesByGroup": {
         "red-blue": {
           "machine": "tm01",
@@ -363,6 +368,26 @@ function buildIndexFromEsMap(esMapObj)
   keys.sort((a, b) => a.localeCompare(b));
 
   return keys.map((name) => ({ name, url: POKEAPI.move(name) }));
+}
+
+function buildAdvancedMovesItemsFromMap(esMapObj)
+{
+  const keys = Object.keys(esMapObj || {});
+  keys.sort(function(a, b)
+  {
+    return a.localeCompare(b);
+  });
+
+  return keys.map(function(apiName)
+  {
+    const entry = esMapObj[apiName] || {};
+
+    return {
+      apiName: apiName,
+      ...entry
+    };
+
+  });
 }
 
 // Resumen del movimiento (incluye URLs de machines por versión)
@@ -1233,6 +1258,27 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
 
   }, []);
 
+  const getMoveCompleteDataByApiName = useCallback(function(apiName)
+  {
+    const key = moveKey(apiName);
+    const map = esMapRef.current || {};
+    const entry = map[key] || null;
+
+    if(!entry) return null;
+
+    return {
+      apiName: key,
+      ...entry
+    };
+
+  }, []);
+
+  const advancedMovesItems = useMemo(function()
+  {
+    return buildAdvancedMovesItemsFromMap(esMapRef.current || {});
+
+  }, [esMapReady, refreshTick]);
+
   // Suggest para Buscador: 100% desde index + esMap
   const suggestMoves = useCallback((query, limit = 8) =>
   {
@@ -1443,10 +1489,13 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
     index,
     loadingIndex,
     esMapReady,
+    movesMap: esMapRef.current || {},
+    advancedMovesItems,
 
     getMove,
     getMoveRaw,
     getMoveSummaryByKey,
+    getMoveCompleteDataByApiName,
     getMoveFlagsByKey,
     getMany,
     getManyEsNamesMoves,
@@ -1472,10 +1521,12 @@ export function MovesProvider({ children, preloadCount = 0, warmConcurrency = 6,
     index,
     loadingIndex,
     esMapReady,
+    advancedMovesItems,
 
     getMove,
     getMoveRaw,
     getMoveSummaryByKey,
+    getMoveCompleteDataByApiName,
     getMoveFlagsByKey,
     getMany,
     getManyEsNamesMoves,

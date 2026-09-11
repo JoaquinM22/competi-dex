@@ -17,8 +17,22 @@ export const ERROR_404_SPRITE_IMG = "/assets/error_404_Pkm_pixelArt.png";
 export const POKE_DOLLAR_IMG = "/assets/poke_dollar.png";
 export const SHINY_ICON_IMG = "/assets/shiny_icon.png";
 export const PIKACHU_RUNING_GIF = "/assets/gif-pikachu-runing.webp";
+export const ADVANCED_SEARCH_SESSION_STORAGE_KEY = "competidex:advancedSearch:lastUrlByTab";
 
 // -------------- UBICACIONES DE FOTOS - FIN -------------- 
+
+
+// -------------- FUNCIONES AUXILIARES - INICIO -------------- 
+
+export function formatNumberWithDots(value)
+{
+  const raw = Number(value);
+  if(!Number.isFinite(raw)) return "0";
+
+  return Math.trunc(raw).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// -------------- FUNCIONES AUXILIARES - FIN -------------- 
 
 
 // -------------- DATOS META DE CLASE MOVIMIENTOS - INICIO -------------- 
@@ -28,21 +42,25 @@ export const PIKACHU_RUNING_GIF = "/assets/gif-pikachu-runing.webp";
 export const MOVE_CLASS_META =
 {
   "unknown": {
+    "order": -1,
     "apiKey": null,
     "labelEs": "Clase Desconocida",
     "icon": null
   },
   "physical": {
+    "order": 1,
     "apiKey": "physical",
     "labelEs": "Físico",
     "icon": "/assets/movsIcons/fisico_logo.png"
   },
   "special": {
+    "order": 2,
     "apiKey": "special",
     "labelEs": "Especial",
     "icon": "/assets/movsIcons/especial_logo.png"
   },
   "status": {
+    "order": 3,
     "apiKey": "status",
     "labelEs": "Estado",
     "icon": "/assets/movsIcons/estado_logo.png"
@@ -95,7 +113,7 @@ export const TARGET_MOVES_META =
   },
   "selected-pokemon-me-first": {
     "apiKey": "selected-pokemon-me-first",
-    "labelEs": "Elegido con Prioridad",
+    "labelEs": "Pokémon Elegido con Prioridad",
     "icon": null
   },
   "ally": {
@@ -130,12 +148,12 @@ export const TARGET_MOVES_META =
   },
   "all-other-pokemon": {
     "apiKey": "all-other-pokemon",
-    "labelEs": "Pokémon adyacentes",
+    "labelEs": "Todos los demas Pokémon",
     "icon": null
   },
   "selected-pokemon": {
     "apiKey": "selected-pokemon",
-    "labelEs": "Elegido",
+    "labelEs": "Pokémon Elegido",
     "icon": null
   },
   "all-opponents": {
@@ -144,13 +162,13 @@ export const TARGET_MOVES_META =
     "icon": null
   },
   "entire-field": {
-    "apiKey": "all-other-pokemon",
-    "labelEs": "Todos los Pokémon",
+    "apiKey": "entire-field",
+    "labelEs": "Todo el Campo de Combate",
     "icon": null
   },
   "user-and-allies": {
     "apiKey": "user-and-allies",
-    "labelEs": "Todos los aliados",
+    "labelEs": "Usuario y Pokémon aliados",
     "icon": null
   },
   "all-pokemon": {
@@ -160,7 +178,7 @@ export const TARGET_MOVES_META =
   },
   "all-allies": {
     "apiKey": "all-allies",
-    "labelEs": "Todos los aliados",
+    "labelEs": "Todos los Pokémon aliados",
     "icon": null
   },
   "fainting-pokemon": {
@@ -201,7 +219,7 @@ export function getMoveTargetLabelEs(input)
 // -------------- DATOS META DE CARACTERÍSTICAS - INICIO --------------
 // #region STATS
 
-//https://pokeapi.co/api/v2/stat?limit=9999
+// https://pokeapi.co/api/v2/stat?limit=9999
 export const STATS_META =
 {
   "unknown": {
@@ -539,6 +557,18 @@ export const BLOCKED_CONTAINS =
   "-gmax"
 ];
 
+export const BLOCKED_CONTAINS_FILTRO_PKM =
+[
+  "totem",
+  "-starter",
+  "-belle",
+  "-phd",
+  "-libre",
+  "-rock-star",
+  "-pop-star",
+  "-cosplay"
+];
+
 export function isPokemonBlocked(apiName)
 {
   const n = String(apiName || "").toLowerCase();
@@ -627,6 +657,22 @@ export function isPokemonBlockedAbilities(apiName)
 
   return false;
 }
+
+export function isPokemonBlockedFiltroAvanzadoPkm(apiName)
+{
+  const n = String(apiName || "").toLowerCase();
+  if (!n) return true;
+
+  if (BLOCKED_EXACT.includes(n)) return true;
+
+  for(let i = 0; i < BLOCKED_CONTAINS_FILTRO_PKM.length; i++)
+  {
+    if (n.indexOf(BLOCKED_CONTAINS_FILTRO_PKM[i]) !== -1) return true;
+  }
+
+  return false;
+}
+
 // -------------- DATOS META DE POKÉMON BLOQUEADOS - FIN -------------- 
 
 
@@ -637,120 +683,140 @@ export function isPokemonBlockedAbilities(apiName)
 export const TYPES_META =
 {
   "unknown": {
+    "order": -2,
     "apiKey": null,
     "labelEs": "Tipo Desconocido",
     "color": "#68A090",
     "icon": null
   },
   "ninguno": {
+    "order": -1,
     "apiKey": null,
     "labelEs": "Ninguno",
     "color": "rgba(255,255,255,0.14)",
     "icon": null
   },
   "normal": {
+    "order": 1,
     "apiKey": "normal",
     "labelEs": "Normal",
     "color": "#A1A1A1",
     "icon": "/assets/typesIcons/normal.svg"
   },
   "fire": {
+    "order": 2,
     "apiKey": "fire",
     "labelEs": "Fuego",
     "color": "#F08030",
     "icon": "/assets/typesIcons/fire.svg"
   },
   "water": {
+    "order": 3,
     "apiKey": "water",
     "labelEs": "Agua",
     "color": "#1C7CBD",
     "icon": "/assets/typesIcons/water.svg"
   },
   "electric": {
+    "order": 4,
     "apiKey": "electric",
     "labelEs": "Eléctrico",
     "color": "#F8D030",
     "icon": "/assets/typesIcons/electric.svg"
   },
   "grass": {
+    "order": 5,
     "apiKey": "grass",
     "labelEs": "Planta",
     "color": "#4ABB3A",
     "icon": "/assets/typesIcons/grass.svg"
   },
   "ice": {
+    "order": 6,
     "apiKey": "ice",
     "labelEs": "Hielo",
     "color": "#68D1D1",
     "icon": "/assets/typesIcons/ice.svg"
   },
   "fighting": {
+    "order": 7,
     "apiKey": "fighting",
     "labelEs": "Lucha",
     "color": "#AD3116",
     "icon": "/assets/typesIcons/fighting.svg"
   },
   "poison": {
+    "order": 8,
     "apiKey": "poison",
     "labelEs": "Veneno",
     "color": "#6B33E4",
     "icon": "/assets/typesIcons/poison.svg"
   },
   "ground": {
+    "order": 9,
     "apiKey": "ground",
     "labelEs": "Tierra",
     "color": "#9D5B11",
     "icon": "/assets/typesIcons/ground.svg"
   },
   "flying": {
+    "order": 10,
     "apiKey": "flying",
     "labelEs": "Volador",
     "color": "#7491D0",
     "icon": "/assets/typesIcons/flying.svg"
   },
   "psychic": {
+    "order": 11,
     "apiKey": "psychic",
     "labelEs": "Psíquico",
     "color": "#DF3E68",
     "icon": "/assets/typesIcons/psychic.svg"
   },
   "bug": {
+    "order": 12,
     "apiKey": "bug",
     "labelEs": "Bicho",
     "color": "#898700",
     "icon": "/assets/typesIcons/bug.svg"
   },
   "rock": {
+    "order": 13,
     "apiKey": "rock",
     "labelEs": "Roca",
     "color": "#B2AD74",
     "icon": "/assets/typesIcons/rock.svg"
   },
   "ghost": {
+    "order": 14,
     "apiKey": "ghost",
     "labelEs": "Fantasma",
     "color": "#554570",
     "icon": "/assets/typesIcons/ghost.svg"
   },
   "dragon": {
+    "order": 15,
     "apiKey": "dragon",
     "labelEs": "Dragón",
     "color": "#3444AF",
     "icon": "/assets/typesIcons/dragon.svg"
   },
   "dark": {
+    "order": 16,
     "apiKey": "dark",
     "labelEs": "Siniestro",
     "color": "#322B2B",
     "icon": "/assets/typesIcons/dark.svg"
   },
   "steel": {
+    "order": 17,
     "apiKey": "steel",
     "labelEs": "Acero",
     "color": "#549EBF",
     "icon": "/assets/typesIcons/steel.svg"
   },
   "fairy": {
+    "order": 18,
     "apiKey": "fairy",
     "labelEs": "Hada",
     "color": "#DD65DD",
@@ -805,6 +871,11 @@ export function getTypeIcon(input)
 export function getTypeLabelEs(input)
 {
   return getTypeMeta(input)?.labelEs || "Tipo Desconocido";
+}
+
+export function getTypeOrder(input)
+{
+  return getTypeMeta(input)?.order || null;
 }
 
 export function getTypeColor(input)
@@ -1038,6 +1109,11 @@ export function getPokemonGenByKey(apiKey, fallback = "")
   if(!key) return fallback;
 
   return PKM_GEN_BY_KEY[key] || fallback;
+}
+
+export function getGenerationOrder(input)
+{
+  return getGenerationMeta(input)?.order || null;
 }
 
 export function hasPokemonGenByKey(apiKey)
@@ -2613,7 +2689,7 @@ export const CATEGORY_ITEM_META =
   },
   "stat-boosts": {
     "apiKey": "stat-boosts",
-    "labelEs": "Aumento de estadísticas",
+    "labelEs": "Aumento de Características",
     "isAllowed": true
   },
   "effort-drop": {
@@ -2638,7 +2714,7 @@ export const CATEGORY_ITEM_META =
   },
   "picky-healing": {
     "apiKey": "picky-healing",
-    "labelEs": "Bayas curativas",
+    "labelEs": "Bayas curativas (Pueden Confundir)",
     "isAllowed": true
   },
   "type-protection": {
@@ -3234,7 +3310,7 @@ export const DAMAGE_MATRIX =
       { "triggerType": "ground", "mult": 0.5 },
       { "triggerType": "ice", "mult": 0.5 }
     ],
-    "statBoosts": [                                                         //** 8) Arreglo de estadísticas que se aumentan al recibir un ataque de un tipo específico, junto con la cantidad de niveles que se aumentan (+1, +2, etc).
+    "statBoosts": [                                                         //** 8) Arreglo de características que se aumentan al recibir un ataque de un tipo específico, junto con la cantidad de niveles que se aumentan (+1, +2, etc).
       { "triggerType": "grass", "stat": "defense", "stages": 2 },
       { "triggerType": "electric", "stat": "special-attack", "stages": 1 }
     ],
@@ -3888,6 +3964,107 @@ export function normalizePokemonText(input)
     .trim();
 }
 
+const MEGA_DISPLAY_BY_KEY =
+{
+  "venusaur-mega": "Mega-Venusaur",
+  "charizard-mega-x": "Mega-Charizard X",
+  "charizard-mega-y": "Mega-Charizard Y",
+  "blastoise-mega": "Mega-Blastoise",
+  "alakazam-mega": "Mega-Alakazam",
+  "gengar-mega": "Mega-Gengar",
+  "kangaskhan-mega": "Mega-Kangaskhan",
+  "pinsir-mega": "Mega-Pinsir",
+  "gyarados-mega": "Mega-Gyarados",
+  "aerodactyl-mega": "Mega-Aerodactyl",
+  "mewtwo-mega-x": "Mega-Mewtwo X",
+  "mewtwo-mega-y": "Mega-Mewtwo Y",
+  "ampharos-mega": "Mega-Ampharos",
+  "scizor-mega": "Mega-Scizor",
+  "heracross-mega": "Mega-Heracross",
+  "houndoom-mega": "Mega-Houndoom",
+  "tyranitar-mega": "Mega-Tyranitar",
+  "blaziken-mega": "Mega-Blaziken",
+  "gardevoir-mega": "Mega-Gardevoir",
+  "mawile-mega": "Mega-Mawile",
+  "aggron-mega": "Mega-Aggron",
+  "medicham-mega": "Mega-Medicham",
+  "manectric-mega": "Mega-Manectric",
+  "banette-mega": "Mega-Banette",
+  "abomasnow-mega": "Mega-Abomasnow",
+  "beedrill-mega": "Mega-Beedrill",
+  "pidgeot-mega": "Mega-Pidgeot",
+  "slowbro-mega": "Mega-Slowbro",
+  "steelix-mega": "Mega-Steelix",
+  "sceptile-mega": "Mega-Sceptile",
+  "swampert-mega": "Mega-Swampert",
+  "sableye-mega": "Mega-Sableye",
+  "sharpedo-mega": "Mega-Sharpedo",
+  "camerupt-mega": "Mega-Camerupt",
+  "altaria-mega": "Mega-Altaria",
+  "glalie-mega": "Mega-Glalie",
+  "salamence-mega": "Mega-Salamence",
+  "metagross-mega": "Mega-Metagross",
+  "latias-mega": "Mega-Latias",
+  "latios-mega": "Mega-Latios",
+  "rayquaza-mega": "Mega-Rayquaza",
+  "lopunny-mega": "Mega-Lopunny",
+  "gallade-mega": "Mega-Gallade",
+  "audino-mega": "Mega-Audino",
+  "diancie-mega": "Mega-Diancie",
+  "dragonite-mega": "Mega-Dragonite",
+  "victreebel-mega": "Mega-Victreebel",
+  "hawlucha-mega": "Mega-Hawlucha",
+  "malamar-mega": "Mega-Malamar",
+  "greninja-mega": "Mega-Greninja",
+  "delphox-mega": "Mega-Delphox",
+  "chesnaught-mega": "Mega-Chesnaught",
+  "drampa-mega": "Mega-Drampa",
+  "excadrill-mega": "Mega-Excadrill",
+  "eelektross-mega": "Mega-Eelektross",
+  "chandelure-mega": "Mega-Chandelure",
+  "falinks-mega": "Mega-Falinks",
+  "barbaracle-mega": "Mega-Barbaracle",
+  "skarmory-mega": "Mega-Skarmory",
+  "scolipede-mega": "Mega-Scolipede",
+  "froslass-mega": "Mega-Froslass",
+  "dragalge-mega": "Mega-Dragalge",
+  "clefable-mega": "Mega-Clefable",
+  "scrafty-mega": "Mega-Scrafty",
+  "starmie-mega": "Mega-Starmie",
+  "pyroar-mega": "Mega-Pyroar",
+  "meganium-mega": "Mega-Meganium",
+  "feraligatr-mega": "Mega-Feraligatr",
+  "emboar-mega": "Mega-Emboar",
+  "floette-mega": "Mega-Floette Flor Eterna",
+  "zygarde-mega": "Mega-Zygarde Forma Completa",
+  "zeraora-mega": "Mega-Zeraora",
+  "golisopod-mega": "Mega-Golisopod",
+  "magearna-mega": "Mega-Magearna",
+  "magearna-original-mega": "Mega-Magearna Color Vetusto",
+  "chimecho-mega": "Mega-Chimecho",
+  "staraptor-mega": "Mega-Staraptor",
+  "heatran-mega": "Mega-Heatran",
+  "darkrai-mega": "Mega-Darkrai",
+  "golurk-mega": "Mega-Golurk",
+  "meowstic-male-mega": "Mega-Meowstic ♂",
+  "meowstic-female-mega": "Mega-Meowstic ♀",
+  "crabominable-mega": "Mega-Crabominable",
+  "scovillain-mega": "Mega-Scovillain",
+  "glimmora-mega": "Mega-Glimmora",
+  "tatsugiri-curly-mega": "Mega-Tatsugiri Forma Curvada",
+  "tatsugiri-droopy-mega": "Mega-Tatsugiri Forma Lánguida",
+  "tatsugiri-stretchy-mega": "Mega-Tatsugiri Forma Recta",
+  "baxcalibur-mega": "Mega-Baxcalibur",
+  "lucario-mega": "Mega-Lucario",
+  "lucario-mega-z": "Mega-Lucario Z",
+  "garchomp-mega": "Mega-Garchomp",
+  "garchomp-mega-z": "Mega-Garchomp Z",
+  "absol-mega": "Mega-Absol",
+  "absol-mega-z": "Mega-Absol Z",
+  "raichu-mega-x": "Mega-Raichu X",
+  "raichu-mega-y": "Mega-Raichu Y"
+}
+
 export const DISPLAY_ES_NAME_SPECIAL_PKM_BY_KEY =
 {
   // Formas Paradoja
@@ -4205,6 +4382,45 @@ export const POKEMON_ENDPOINT_FIX_META =
   "rockruff-own-tempo": "rockruff"
 };
 
+const GIGA_DISPLAY_BY_KEY =
+{
+  "charizard-gmax": "Charizard Gigamax",
+  "butterfree-gmax": "Butterfree Gigamax",
+  "pikachu-gmax": "Pikachu Gigamax",
+  "meowth-gmax": "Meowth Gigamax",
+  "machamp-gmax": "Machamp Gigamax",
+  "gengar-gmax": "Gengar Gigamax",
+  "kingler-gmax": "Kingler Gigamax",
+  "lapras-gmax": "Lapras Gigamax",
+  "eevee-gmax": "Eevee Gigamax",
+  "snorlax-gmax": "Snorlax Gigamax",
+  "garbodor-gmax": "Garbodor Gigamax",
+  "melmetal-gmax": "Melmetal Gigamax",
+  "corviknight-gmax": "Corviknight Gigamax",
+  "orbeetle-gmax": "Orbeetle Gigamax",
+  "drednaw-gmax": "Drednaw Gigamax",
+  "coalossal-gmax": "Coalossal Gigamax",
+  "flapple-gmax": "Flapple Gigamax",
+  "appletun-gmax": "Appletun Gigamax",
+  "sandaconda-gmax": "Sandaconda Gigamax",
+  "toxtricity-amped-gmax": "Toxtricity Forma Aguda Gigamax",
+  "toxtricity-low-key-gmax": "Toxtricity Forma Grave Gigamax",
+  "centiskorch-gmax": "Centiskorch Gigamax",
+  "hatterene-gmax": "Hatterene Gigamax",
+  "grimmsnarl-gmax": "Grimmsnarl Gigamax",
+  "alcremie-gmax": "Alcremie Gigamax",
+  "copperajah-gmax": "Copperajah Gigamax",
+  "duraludon-gmax": "Duraludon Gigamax",
+  "venusaur-gmax": "Venusaur Gigamax",
+  "blastoise-gmax": "Blastoise Gigamax",
+  "rillaboom-gmax": "Rillaboom Gigamax",
+  "cinderace-gmax": "Cinderace Gigamax",
+  "inteleon-gmax": "Inteleon Gigamax",
+  "urshifu-single-strike-gmax": "Urshifu Estilo Brusco Gigamax",
+  "urshifu-rapid-strike-gmax": "Urshifu Estilo Fluido Gigamax",
+  "eternatus-eternamax": "Eternatus Eternamax"
+};
+
 function escapePokemonRegExp(text)
 {
   return String(text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -4230,6 +4446,12 @@ function fallbackPokemonDisplayForKey(key)
   if (megaDisplay)
   {
     return megaDisplay;
+  }
+
+  const gigaDisplay = GIGA_DISPLAY_BY_KEY[rawKey];
+  if(gigaDisplay)
+  {
+    return gigaDisplay;
   }
 
   const regionKeys = Object.keys(REGION_DISPLAY_META || {});
@@ -5169,19 +5391,6 @@ export const MEGAS_PKM_META =
   }
 };
 
-export const MEGA_DISPLAY_BY_KEY = Object.fromEntries(
-  Object.values(MEGAS_PKM_META || {})
-    .flatMap((entry) =>
-      Array.isArray(entry?.megaForms)
-        ? entry.megaForms.map((mega) => [
-            String(mega?.apiKey || "").toLowerCase().trim(),
-            String(mega?.display || "").trim(),
-          ])
-        : []
-    )
-    .filter(([apiKey, display]) => apiKey && display)
-);
-
 export const MEGA_APIKEY_TO_BASE_APIKEY =
 {
   "venusaur-mega": "venusaur",
@@ -5581,6 +5790,53 @@ export const GIGAS_PKM_META =
     "desc": "Esta es la forma Gigamax que posee Eternatus. No es posible obtenerla en el juego; únicamente aparece durante la batalla final en Pokémon Espada y Escudo."
   }
 };
+
+export const GIGA_APIKEY_TO_BASE_APIKEY =
+{
+  "charizard-gmax": "charizard",
+  "butterfree-gmax": "butterfree",
+  "pikachu-gmax": "pikachu",
+  "meowth-gmax": "meowth",
+  "machamp-gmax": "machamp",
+  "gengar-gmax": "gengar",
+  "kingler-gmax": "kingler",
+  "lapras-gmax": "lapras",
+  "eevee-gmax": "eevee",
+  "snorlax-gmax": "snorlax",
+  "garbodor-gmax": "garbodor",
+  "melmetal-gmax": "melmetal",
+  "corviknight-gmax": "corviknight",
+  "orbeetle-gmax": "orbeetle",
+  "drednaw-gmax": "drednaw",
+  "coalossal-gmax": "coalossal",
+  "flapple-gmax": "flapple",
+  "appletun-gmax": "appletun",
+  "sandaconda-gmax": "sandaconda",
+  "toxtricity-amped-gmax": "toxtricity-amped",
+  "toxtricity-low-key-gmax": "toxtricity-low-key",
+  "centiskorch-gmax": "centiskorch",
+  "hatterene-gmax": "hatterene",
+  "grimmsnarl-gmax": "grimmsnarl",
+  "alcremie-gmax": "alcremie",
+  "copperajah-gmax": "copperajah",
+  "duraludon-gmax": "duraludon",
+  "venusaur-gmax": "venusaur",
+  "blastoise-gmax": "blastoise",
+  "rillaboom-gmax": "rillaboom",
+  "cinderace-gmax": "cinderace",
+  "inteleon-gmax": "inteleon",
+  "urshifu-single-strike-gmax": "urshifu-single-strike",
+  "urshifu-rapid-strike-gmax": "urshifu-rapid-strike",
+  "eternatus-eternamax": "eternatus"
+};
+
+export function getBaseApiKeyFromGiga(apiKey)
+{
+  const key = String(apiKey || "").trim().toLowerCase();
+  if(!key) return "";
+
+  return GIGA_APIKEY_TO_BASE_APIKEY[key] || key;
+}
 
 export function normalizePkmBaseGigaKey(input)
 {
@@ -8786,7 +9042,7 @@ export const FORMAS_PKM_META =
         "apiKey": "aegislash-shield",
         "desc": (
           "Adopta esta forma al utilizar su movimiento característico Escudo Real. En esta " +
-          "forma sus estadísticas defensivas son muy altas y es inmune a los movimientos de " +
+          "forma sus características defensivas son muy altas y es inmune a los movimientos de " +
           "cambio de estados."
         ),
         "needFetch": true,
@@ -8796,7 +9052,7 @@ export const FORMAS_PKM_META =
         "apiKey": "aegislash-blade",
         "desc": (
           "Adopta esta forma al utilizar un movimiento ofensivo físico o especial. En esta " +
-          "forma sus estadísticas ofensivas son muy altas."
+          "forma sus características ofensivas son muy altas."
         ),
         "needFetch": true,
         "enableNavigation": true
@@ -8810,7 +9066,7 @@ export const FORMAS_PKM_META =
         "apiKey": "aegislash-shield",
         "desc": (
           "Adopta esta forma al utilizar su movimiento característico Escudo Real. En esta " +
-          "forma sus estadísticas defensivas son muy altas y es inmune a los movimientos de " +
+          "forma sus características defensivas son muy altas y es inmune a los movimientos de " +
           "cambio de estados."
         ),
         "needFetch": true,
@@ -8820,7 +9076,7 @@ export const FORMAS_PKM_META =
         "apiKey": "aegislash-blade",
         "desc": (
           "Adopta esta forma al utilizar un movimiento ofensivo físico o especial. En esta " +
-          "forma sus estadísticas ofensivas son muy altas."
+          "forma sus características ofensivas son muy altas."
         ),
         "needFetch": true,
         "enableNavigation": true
@@ -9058,7 +9314,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9074,7 +9330,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9090,7 +9346,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9106,7 +9362,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9122,7 +9378,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9138,7 +9394,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9154,7 +9410,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9190,7 +9446,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9206,7 +9462,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9222,7 +9478,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9238,7 +9494,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9254,7 +9510,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9270,7 +9526,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9286,7 +9542,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9322,7 +9578,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9338,7 +9594,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9354,7 +9610,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9370,7 +9626,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9386,7 +9642,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9402,7 +9658,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9418,7 +9674,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9454,7 +9710,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9470,7 +9726,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9486,7 +9742,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9502,7 +9758,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9518,7 +9774,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9534,7 +9790,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9550,7 +9806,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9586,7 +9842,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9602,7 +9858,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9618,7 +9874,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9634,7 +9890,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9650,7 +9906,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9666,7 +9922,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9682,7 +9938,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9718,7 +9974,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9734,7 +9990,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9750,7 +10006,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9766,7 +10022,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9782,7 +10038,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9798,7 +10054,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9814,7 +10070,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9850,7 +10106,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9866,7 +10122,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -9882,7 +10138,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -9898,7 +10154,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -9914,7 +10170,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -9930,7 +10186,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -9946,7 +10202,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -9982,7 +10238,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Rojo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10136,
@@ -9998,7 +10254,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Naranja",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10137,
@@ -10014,7 +10270,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Amarillo",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10138,
@@ -10030,7 +10286,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Verde",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10139,
@@ -10046,7 +10302,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Azul",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10140,
@@ -10062,7 +10318,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Añil",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10141,
@@ -10078,7 +10334,7 @@ export const FORMAS_PKM_META =
         "display": "Minior Núcleo Violeta",
         "desc": (
           "Minior puede adoptar esta forma en combate si sus PS están por debajo del 50% de sus PS " +
-          "máximos. En esta forma bajan sus estadísticas de defensas, pero aumentan " +
+          "máximos. En esta forma bajan sus características de defensas, pero aumentan " +
           "sus ataques y su velocidad."
         ),
         "id": 10142,
@@ -13736,7 +13992,7 @@ export const FORMAS_PKM_META =
         "apiKey": "floette-eternal",
         "desc": (
           "Esta es la forma que posee Floette Flor Eterna. Es incapaz de evolucionar ni ciriar, el " +
-          "objeto mineral evolutivo no tiene efecto sobre el y sus estadisticas son superiores a las " +
+          "objeto mineral evolutivo no tiene efecto sobre el y sus características son superiores a las " +
           "de un Floette normal."
         ),
         "needFetch": true,
@@ -13807,7 +14063,7 @@ export const FORMAS_PKM_META =
         "apiKey": "floette-eternal",
         "desc": (
           "Esta es la forma que posee Floette Flor Eterna. Es incapaz de evolucionar ni ciriar, el " +
-          "objeto mineral evolutivo no tiene efecto sobre el y sus estadisticas son superiores a las " +
+          "objeto mineral evolutivo no tiene efecto sobre el y sus características son superiores a las " +
           "de un Floette normal."
         ),
         "needFetch": true,
@@ -16774,14 +17030,14 @@ export const EVOLUTION_PATCH_PKM_META =
       }
     ]
   },
-  "terapagos-terastal":
+  "terapagos-stellar":
   {
     "replace": true,
     "region": "",
     "evolutionChain": [
       {
-        "nombreEvolucion": toPokemonDisplayName("terapagos-terastal"),
-        "nombreEvoApi": "terapagos-terastal",
+        "nombreEvolucion": toPokemonDisplayName("terapagos-stellar"),
+        "nombreEvoApi": "terapagos-stellar",
         "nombrePreEvo": "",
         "fotos": [officialArtworkUrl(10277), shinyArtworkUrl(10277)],  
         "metodoEvo": "",
@@ -20699,32 +20955,32 @@ export const FLAGS_MOVES_PKM =
   'isBiteMove': {
     'groupKey': 'typeMove',
     'title': 'Mordisco',
-    'tooltipDescTRUE': 'Es un movimiento basado en el mordisco. Los movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"',
-    'tooltipDescFALSE': 'No es un movimiento basado en el mordisco. Los movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"'
+    'tooltipDescTRUE': 'Es un movimiento basado en el mordisco. Los Pokémon que usan movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"',
+    'tooltipDescFALSE': 'No es un movimiento basado en el mordisco. Los Pokémon que usan movimientos que son Mordiscos aumentan su potencia en un 50% si el Pokémon posee la habilidad "Mandíbula Fuerte"'
   },
   'isPulseMove': {
     'groupKey': 'typeMove',
     'title': 'Pulso/Aura',
-    'tooltipDescTRUE': 'Es un movimiento de Pulso/Aura. Los movimientos que son Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"',
-    'tooltipDescFALSE': 'No es un movimiento de Pulso/Aura. Los movimientos que son Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"'
+    'tooltipDescTRUE': 'Es un movimiento de Pulso/Aura. Los Pokémon que usan movimientos de Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"',
+    'tooltipDescFALSE': 'No es un movimiento de Pulso/Aura. Los Pokémon que usan movimientos de Pulsos/Auras aumentan su potencia en un 50% si el Pokémon posee la habilidad "Megadisparador"'
   },
   'isPunchMove': {
     'groupKey': 'typeMove',
     'title': 'Puño',
-    'tooltipDescTRUE': 'Es un movimiento basado en los Puños. Los movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"',
-    'tooltipDescFALSE': 'No es un movimiento basado en los Puños. Los movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"'
+    'tooltipDescTRUE': 'Es un movimiento basado en los Puños. Los Pokémon que usan movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"',
+    'tooltipDescFALSE': 'No es un movimiento basado en los Puños. Los Pokémon que usan movimientos que son Puños aumentan su potencia en un 20% si el Pokémon posee la habilidad "Puño Férreo"'
   },
   'isSharpMove': {
     'groupKey': 'typeMove',
     'title': 'Corte',
-    'tooltipDescTRUE': 'Es un movimiento basado en los Cortes. Los movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"',
-    'tooltipDescFALSE': 'No es un movimiento basado en los Cortes. Los movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"'
+    'tooltipDescTRUE': 'Es un movimiento basado en los Cortes. Los Pokémon que usan movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"',
+    'tooltipDescFALSE': 'No es un movimiento basado en los Cortes. Los Pokémon que usan movimientos que son Cortes aumentan su potencia en un 50% si el Pokémon posee la habilidad "Cortante"'
   },
   'isDanceMove': {
     'groupKey': 'typeMove',
-    'title': 'Danza',
-    'tooltipDescTRUE': 'Es un movimiento de Danza. Al usar un movimiento de Danza, activa la habilidad "Pareja de Baile"',
-    'tooltipDescFALSE': 'No es un movimiento de Danza. Al usar un movimiento de Danza, activa la habilidad "Pareja de Baile"'
+    'title': 'Danza/Baile',
+    'tooltipDescTRUE': 'Es un movimiento de Danza/Baile. Al usar un movimiento de Danza/Baile, activa la habilidad "Pareja de Baile"',
+    'tooltipDescFALSE': 'No es un movimiento de Danza/Baile. Al usar un movimiento de Danza/Baile, activa la habilidad "Pareja de Baile"'
   },
 
   // Otros datos
@@ -20775,3 +21031,1042 @@ export function getFlagsByGroupKey(groupKey)
 }
 
 // ---------------- DATOS META BANDERAS MOVIMIENTOS - FIN ---------------- 
+
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO POKÉMON - INICIO ---------------- 
+//#region FILTRO PKM
+
+// Forma que posee cada objeto de item que le llegara al componente de filtro Pokemon
+/*
+
+{
+  "apiName": "charizard"
+  "id": 6,
+  "types": [
+    "fire",
+    "flying"
+  ],
+  "generation": "generation-i",
+  "abilities": [
+    {
+      "name": "blaze",
+      "slot": 1
+    },
+    {
+      "name": "solar-power",
+      "slot": 3
+    }
+  ],
+  "weight": 90.5,
+  "height": 1.7,
+  "stats": {
+    "hp": 78,
+    "effort_hp": 0,
+    "atk": 84,
+    "effort_atk": 0,
+    "def": 78,
+    "effort_def": 0,
+    "spe_atk": 109,
+    "effort_spe_atk": 3,
+    "spe_def": 85,
+    "effort_spe_def": 0,
+    "speed": 100,
+    "effort_speed": 0
+  },
+  "malePercentage": 87.5,
+  "femalePercentage": 12.5,
+  "sinSexo": false,
+  "captureRate": 45,
+  "puedeCriar": true,
+  "color": "red",
+  "display": "Charizard",
+  "hasMegaForms": true, 
+  "hasGigaForm": true,
+  "eggGroups": [
+    "monster",
+    "dragon"
+  ],
+  "categoryPkm": "Pokémon Llama",
+  "isBabyPkm": false,
+  "isMythicalPkm": false,
+  "isLegendaryPkm": false,
+  "isMegaForm": false,
+  "isGigaForm": false,
+  "specieName": "charizard"
+}
+
+*/
+
+// Funcion para armar las opciones
+function buildOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim()
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Colores
+function buildFilterColorOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim(),
+      color: getColorColor(String(entry.apiKey || key).trim())
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Tipos
+function buildFilterTypesOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim(),
+      order: getTypeOrder(String(entry.apiKey || key).trim())
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Generacion
+function buildFilterGenerationOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim(),
+      iconRoute: getGenerationIcon(String(entry.apiKey || key).trim()),
+      order: getGenerationOrder(String(entry.apiKey || key).trim())
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Grupo Huevo
+function buildOptionsFromRecord(record, excludeKeys = [])
+{
+  return Object.entries(record || {})
+    .filter(([key, value]) =>
+      !!key &&
+      !!value &&
+      !excludeKeys.includes(key)
+    )
+    .map(([key, value]) => ({
+      key: String(key).trim(),
+      description: String(value).trim()
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+export function buildPkmFiltersMeta({ abilityOptions = [], categoryPkmOptions = [] } = {})
+{
+  return [
+
+    // Datos Principales
+    {
+      "field": "id",
+      "path": "id",
+      "description": "ID",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "display",
+      "path": "display",
+      "description": "Nombre",
+      "type": "text",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "generation",
+      "path": "generation",
+      "description": "Generación",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterGenerationOptionsFromMeta(GENERATIONS_META, ["unknown"])
+    },
+    {
+      "field": "types",
+      "path": "types",
+      "description": "Tipo",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterTypesOptionsFromMeta(TYPES_META, ["unknown", "ninguno"])
+    },
+    {
+      "field": "abilities",
+      "path": "abilities",
+      "description": "Habilidad",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": abilityOptions
+    },
+
+
+    // Datos Secundarios
+    {
+      "field": "weight",
+      "path": "weight",
+      "description": "Peso [Kg]",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "height",
+      "path": "height",
+      "description": "Altura [m]",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "color",
+      "path": "color",
+      "description": "Color",
+      "type": "enum",
+      "groupKey": "secondaryData",
+      "options": buildFilterColorOptionsFromMeta(OFFICIAL_COLORS, ["unknown"])
+    },
+    {
+      "field": "malePercentage",
+      "path": "malePercentage",
+      "description": "Porcentaje Macho",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "femalePercentage",
+      "path": "femalePercentage",
+      "description": "Porcentaje Hembra",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "sinSexo",
+      "path": "sinSexo",
+      "description": "Sin Sexo",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "captureRate",
+      "path": "captureRate",
+      "description": "Índice de captura",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "hasMegaForms",
+      "path": "hasMegaForms",
+      "description": "Posee Mega-Evolución/es",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "hasGigaForm",
+      "path": "hasGigaForm",
+      "description": "Posee Gigamax",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "isMythicalPkm",
+      "path": "isMythicalPkm",
+      "description": "Es Pokémon Mítico/Singular",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "isLegendaryPkm",
+      "path": "isLegendaryPkm",
+      "description": "Es Pokémon Legendario",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "isMegaForm",
+      "path": "isMegaForm",
+      "description": "Es Mega Evolución",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "isGigaForm",
+      "path": "isGigaForm",
+      "description": "Es Forma Gigamax",
+      "type": "boolean",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "categoryPkm",
+      "path": "categoryPkm",
+      "description": "Categoría",
+      "type": "enum",
+      "groupKey": "secondaryData",
+      "options": categoryPkmOptions
+    },
+
+
+    // Caracteristicas
+    {
+      "field": "hp",
+      "path": "stats.hp",
+      "description": getStatLabelEs("hp") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_hp",
+      "path": "stats.effort_hp",
+      "description": "PE " + getStatLabelEs("hp"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "atk",
+      "path": "stats.atk",
+      "description": getStatLabelEs("attack") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_atk",
+      "path": "stats.effort_atk",
+      "description": "PE " + getStatLabelEs("attack"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "def",
+      "path": "stats.def",
+      "description": getStatLabelEs("defense") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_def",
+      "path": "stats.effort_def",
+      "description": "PE " + getStatLabelEs("defense"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "spe_atk",
+      "path": "stats.spe_atk",
+      "description": getStatLabelEs("special-attack") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_spe_atk",
+      "path": "stats.effort_spe_atk",
+      "description": "PE " + getStatLabelEs("special-attack"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "spe_def",
+      "path": "stats.spe_def",
+      "description": getStatLabelEs("special-defense") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_spe_def",
+      "path": "stats.effort_spe_def",
+      "description": "PE " + getStatLabelEs("special-defense"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "speed",
+      "path": "stats.speed",
+      "description": getStatLabelEs("speed") + " Base",
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+    {
+      "field": "effort_speed",
+      "path": "stats.effort_speed",
+      "description": "PE " + getStatLabelEs("speed"),
+      "type": "number",
+      "groupKey": "statsData",
+      "options": []
+    },
+
+
+    // Crianza
+    {
+      "field": "puedeCriar",
+      "path": "puedeCriar",
+      "description": "Puede Criar",
+      "type": "boolean",
+      "groupKey": "crianzaData",
+      "options": []
+    },
+    {
+      "field": "eggGroups",
+      "path": "eggGroups",
+      "description": "Grupo Huevo",
+      "type": "enum",
+      "groupKey": "crianzaData",
+      "options": buildOptionsFromRecord(GRUPOS_HUEVO_PKM, [])
+    },
+    {
+      "field": "isBabyPkm",
+      "path": "isBabyPkm",
+      "description": "Es Pokémon Bebé",
+      "type": "boolean",
+      "groupKey": "crianzaData",
+      "options": []
+    }
+  ];
+}
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO POKÉMON - FIN ---------------- 
+
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO MOVIMIENTOS - INICIO ---------------- 
+//#region FILTRO MOVS
+
+// Forma que posee cada objeto de item que le llegara al componente de filtro Movimientos
+
+/*
+
+{
+  "apiName": "mega-punch"
+  "id": 5,
+  "display": "Megapuño",
+  "type": "normal",
+  "damage_class": "physical",
+
+  "isContact": true, // Es de Contacto
+  "reflejaMantoEspejo": true, // Puede reflejarse si rival usa movimiento "Manto Espejo"
+  "elegiblePorMetronomo": true, // Puede realizarse por movimiento "Metronomo"
+  "bloquedByProtect": true, // Es bloqueado por movimientos: proteccion, deteccion, etc
+  "reflejaEspejoMagico": false, // Es afectado por habilidad "Espejo Magico"
+  "afectadoPorRobo": false, // Es afectado por movimiento "Robo"
+  "isSoundMove": false, // Es un movimiento de sonido
+  "isWindMove": false, // Es un movimento de viento (Potenciado por habilidad "Energia Eolica")
+  "isBulletMove": false, // Es un movimiento proyectil (no posee efecto sobre habilidad "Antibalas")
+  "traspasaSustituto": false, // Atraviesa sustituto
+  "isBiteMove": false, // Es un movimiento de mordisco (Se potencia x1.5 con habilidad "strong-jaw")
+  "isPulseMove": false, // Es un movimiento de pulso (Se potencia x1.5 con habilidad "mega-launcher")
+  "isPunchMove": true, // Es un movimiento de puños (Se potencia x1.2 con habilidad "iron-fist")
+  "isSharpMove": false, // Es un movimiento de corte (Se potencia x1.5 con habilidad "sharpness")
+  "isDanceMove": false, // Es un movimiento de danza (Activa la habilidad "dancer")
+  "isDefrostMove": false, // Descongela al usuario luego de usar el movimiento, en caso de estarlo
+  "inmuneACopion": false, // No es afectado por Movimiento "Copion"
+  "inmuneAOtraVez": false, // No es afectado por Movimiento "Otra vez"
+  "inmuneAMandato": false, // No es afectado por Movimiento "Mandato"
+  "inmuneAYoPrimero": false, // No es afectado por Movimiento "Yo Primero"
+  "inmuneAMimetico": false, // No es afectado por Movimiento "Mimetico"
+  "afectadoPorGravedad": false, // No se puede realizar el Movimiento si hay "Gravedad"
+  "afectadoPorAnticuracion": false, // No se puede realizar si hay efecto de "Anticuracion"
+  "duplicaPorReduccion": false, // El movimiento hace el doble de daño si el rival uso "Reduccion"
+  "inmuneAEsquema": false, // No es afectado por Movimiento "Esquema"
+  "noElegiblePorSonambulo": false, // No puede ser seleccionado por "Sonambulo"
+  "afectadoPorRocaDelRey": true, // Si aplica el efecto de Roca del Rey
+  
+  "power": 80, // Si es null no posee potencia: Ej: Movs de Estado o de daño fijo como tinieblas
+  "accuracy": 85, // Si es null no posee precision: Ej: Movs de Estado o movs ineludibles como Esfera Aural
+  "pp": 20, // Puntos de poder base del movimiento
+  "hasSecondaryEffect": false,
+  "priorityLevel": 0, // Puede ser -4, -3, etc
+  "indiceCritico": 0, // Puede ser 0, 1, etc o null
+  "generation": "generation-i",
+  "blancoMov": "selected-pokemon",
+  
+  "machinesByGroup": {
+    "red-blue": {
+      "machine": "tm01",
+      "machine_es": "MT01"
+    },
+    "yellow": {
+      "machine": "tm01",
+      "machine_es": "MT01"
+    },
+    "sword-shield": {
+      "machine": "tm00",
+      "machine_es": "MT00"
+    },
+    "red-green-japan": {
+      "machine": "tm01",
+      "machine_es": "MT01"
+    },
+    "blue-japan": {
+      "machine": "tm01",
+      "machine_es": "MT01"
+    }
+  }
+}
+
+*/
+
+// Funcion para armar las opciones de Clase de Daño Movimiento
+function buildFilterMoveClassOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim(),
+      iconRoute: String(entry.icon).trim(),
+      order: Number(entry.order)
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Clase de Daño Movimiento
+function buildFilterBlancoMovOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) => !!entry && !!entry.apiKey && !ignoreKeys.includes(key))
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim()
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+export function buildMovsFiltersMeta()
+{
+  return [
+
+    // Datos Principales
+    {
+      "field": "id",
+      "path": "id",
+      "description": "ID",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "generation",
+      "path": "generation",
+      "description": "Generación",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterGenerationOptionsFromMeta(GENERATIONS_META, ["unknown"])
+    },
+    {
+      "field": "display",
+      "path": "display",
+      "description": "Nombre",
+      "type": "text",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "type",
+      "path": "type",
+      "description": "Tipo",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterTypesOptionsFromMeta(TYPES_META, ["unknown", "ninguno"])
+    },
+    {
+      "field": "damage_class",
+      "path": "damage_class",
+      "description": "Clase",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterMoveClassOptionsFromMeta(MOVE_CLASS_META, ["unknown"])
+    },
+    {
+      "field": "power",
+      "path": "power",
+      "description": "Potencia",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "accuracy",
+      "path": "accuracy",
+      "description": "Precisión",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "pp",
+      "path": "pp",
+      "description": "PP Base",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "isContact",
+      "path": "isContact",
+      "description": "Es de Contacto",
+      "type": "boolean",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "blancoMov",
+      "path": "blancoMov",
+      "description": "Blanco",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterBlancoMovOptionsFromMeta(TARGET_MOVES_META, ["unknown"])
+    },
+    {
+      "field": "priorityLevel",
+      "path": "priorityLevel",
+      "description": "Prioridad",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "indiceCritico",
+      "path": "indiceCritico",
+      "description": "Índice de Crítico",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": [
+        {
+          "key": null,
+          "description": "No Posee",
+          "order": 1
+        },
+        {
+          "key": 0,
+          "description": "4%",
+          "order": 2
+        },
+        {
+          "key": 1,
+          "description": "12,5%",
+          "order": 3
+        },
+        {
+          "key": 2,
+          "description": "50%",
+          "order": 4
+        },
+        {
+          "key": 3,
+          "description": "100%",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "field": "hasSecondaryEffect",
+      "path": "hasSecondaryEffect",
+      "description": "Posee Efecto Secundario",
+      "type": "boolean",
+      "groupKey": "principalData",
+      "options": []
+    },
+
+    // Afectado Por
+    {
+      "field": "reflejaEspejoMagico",
+      "path": "reflejaEspejoMagico",
+      "description": "Espejo Mágico/Capa Mágica",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "bloquedByProtect",
+      "path": "bloquedByProtect",
+      "description": "Protección/Detección/Etc.",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "afectadoPorRobo",
+      "path": "afectadoPorRobo",
+      "description": "Robo",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "afectadoPorRocaDelRey",
+      "path": "afectadoPorRocaDelRey",
+      "description": "Roca del Rey",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "reflejaMantoEspejo",
+      "path": "reflejaMantoEspejo",
+      "description": "Manto Espejo",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "elegiblePorMetronomo",
+      "path": "elegiblePorMetronomo",
+      "description": "Metrónomo",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "afectadoPorAnticuracion",
+      "path": "afectadoPorAnticuracion",
+      "description": "Anticuración",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+    {
+      "field": "afectadoPorGravedad",
+      "path": "afectadoPorGravedad",
+      "description": "Gravedad",
+      "type": "boolean",
+      "groupKey": "afectadoPor",
+      "options": []
+    },
+
+    // Inmune a Movimiento
+    {
+      "field": "inmuneACopion",
+      "path": "inmuneACopion",
+      "description": "Copión",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+    {
+      "field": "inmuneAOtraVez",
+      "path": "inmuneAOtraVez",
+      "description": "Otra Vez",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+    {
+      "field": "inmuneAMandato",
+      "path": "inmuneAMandato",
+      "description": "Mandato",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+    {
+      "field": "inmuneAYoPrimero",
+      "path": "inmuneAYoPrimero",
+      "description": "Yo Primero",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+    {
+      "field": "inmuneAMimetico",
+      "path": "inmuneAMimetico",
+      "description": "Mimético",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+    {
+      "field": "inmuneAEsquema",
+      "path": "inmuneAEsquema",
+      "description": "Esquema",
+      "type": "boolean",
+      "groupKey": "inmuneAMovimiento",
+      "options": []
+    },
+
+    // Tipo de Movimiento
+    {
+      "field": "isSoundMove",
+      "path": "isSoundMove",
+      "description": "Sonido",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isWindMove",
+      "path": "isWindMove",
+      "description": "Viento",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isBulletMove",
+      "path": "isBulletMove",
+      "description": "Bomba/Proyectil",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isBiteMove",
+      "path": "isBiteMove",
+      "description": "Mordisco",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isPulseMove",
+      "path": "isPulseMove",
+      "description": "Pulso/Aura",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isPunchMove",
+      "path": "isPunchMove",
+      "description": "Puño",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isSharpMove",
+      "path": "isSharpMove",
+      "description": "Corte",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+    {
+      "field": "isDanceMove",
+      "path": "isDanceMove",
+      "description": "Danza/Baile",
+      "type": "boolean",
+      "groupKey": "typeMove",
+      "options": []
+    },
+
+    // Otros datos
+    {
+      "field": "isDefrostMove",
+      "path": "isDefrostMove",
+      "description": "Descongela",
+      "type": "boolean",
+      "groupKey": "other",
+      "options": []
+    },
+    {
+      "field": "traspasaSustituto",
+      "path": "traspasaSustituto",
+      "description": 'Atraviesa "Sustituto"',
+      "type": "boolean",
+      "groupKey": "other",
+      "options": []
+    },
+    {
+      "field": "duplicaPorReduccion",
+      "path": "duplicaPorReduccion",
+      "description": "Reducción",
+      "type": "boolean",
+      "groupKey": "other",
+      "options": []
+    },
+    {
+      "field": "noElegiblePorSonambulo",
+      "path": "noElegiblePorSonambulo",
+      "description": "Sonámbulo",
+      "type": "boolean",
+      "groupKey": "other",
+      "options": []
+    }
+  ];
+}
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO MOVIMIENTOS - FIN ---------------- 
+
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO HABILIDADES - INICIO ---------------- 
+//#region FILTRO HABS
+
+// Forma que posee cada objeto de item que le llegara al componente de filtro Habilidad
+
+/*
+
+{
+  "apiName": "stench"
+  "id": 1,
+  "generation": "generation-iii",
+  "display": "Hedor"
+}
+
+*/
+
+export function buildHabsFiltersMeta()
+{
+  return [
+    
+    // Datos Principales
+    {
+      "field": "id",
+      "path": "id",
+      "description": "ID",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "generation",
+      "path": "generation",
+      "description": "Generación",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterGenerationOptionsFromMeta(GENERATIONS_META, ["unknown"])
+    },
+    {
+      "field": "display",
+      "path": "display",
+      "description": "Nombre",
+      "type": "text",
+      "groupKey": "principalData",
+      "options": []
+    }
+  ];
+}
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO HABILIDADES - FIN ---------------- 
+
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO ITEMS/OBJETOS - INICIO ---------------- 
+//#region FILTRO ITEMS
+
+/*
+
+{
+  "apiName": "master-ball"
+  "id": 1,
+  "display": "Master Ball",
+  "category": "standard-balls",
+  "attributes": [
+    "countable",
+    "consumable",
+    "usable-in-battle",
+    "holdable"
+  ]
+}
+ 
+*/
+
+// Funcion para armar las opciones de Categorias de Items
+function buildFilterCategoryItemOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, entry]) =>
+      !!entry &&
+      !!entry.apiKey &&
+      entry.isAllowed === true &&
+      !ignoreKeys.includes(key)
+    )
+    .map(([key, entry]) =>
+    ({
+      key: String(entry.apiKey || key).trim(),
+      description: String(entry.labelEs || key).trim()
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+// Funcion para armar las opciones de Atributos de Items
+function buildFilterAttributesItemOptionsFromMeta(meta, ignoreKeys = [])
+{
+  return Object.entries(meta || {})
+    .filter(([key, value]) =>
+      !!key &&
+      !!value &&
+      !ignoreKeys.includes(key)
+    )
+    .map(([key, value]) =>
+    ({
+      key: String(key).trim(),
+      description: String(value || key).trim()
+    }))
+    .sort((a, b) => a.description.localeCompare(b.description, "es"));
+}
+
+export function buildItemsFiltersMeta()
+{
+  return [
+    
+    // Datos Principales
+    {
+      "field": "id",
+      "path": "id",
+      "description": "ID",
+      "type": "number",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "display",
+      "path": "display",
+      "description": "Nombre",
+      "type": "text",
+      "groupKey": "principalData",
+      "options": []
+    },
+    {
+      "field": "category",
+      "path": "category",
+      "description": "Categoría",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterCategoryItemOptionsFromMeta(CATEGORY_ITEM_META, ["unknown"])
+    },
+    {
+      "field": "attributes",
+      "path": "attributes",
+      "description": "Atributos",
+      "type": "enum",
+      "groupKey": "principalData",
+      "options": buildFilterAttributesItemOptionsFromMeta(ATTRIBUTES_ITEM_EN_TO_ES_MAP, ["unknown"])
+    },
+  ];
+}
+
+// ---------------- DATOS META FILTROS BUSCADOR AVANZADO ITEMS/OBJETOS - FIN ---------------- 

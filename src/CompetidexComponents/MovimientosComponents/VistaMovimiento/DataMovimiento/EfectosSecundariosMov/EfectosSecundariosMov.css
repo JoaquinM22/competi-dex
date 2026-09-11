@@ -39,6 +39,20 @@
   gap: 6px;
   box-sizing: border-box;
   text-align: center;
+  border-radius: 12px;
+}
+
+.efectosmov-lista-clickable {
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.efectosmov-lista-clickable:hover,
+.efectosmov-lista-clickable:focus-visible {
+  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  outline: none;
 }
 
 .efectomov-item {

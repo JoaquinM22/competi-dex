@@ -317,7 +317,7 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                                 style={{ backgroundColor: getTipoBg(tipo) }}
                                 title={tipo}
                               >
-                                <Tipo tipo={tipo} size="medium" />
+                                <Tipo tipo={tipo} size="medium" enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" />
                               </div>
                             ))}
                           </div>
@@ -330,12 +330,15 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                           <PesoYAlturaPkm
                             altura={
                               mega?.heightMega !== -1
-                                ? mega.heightMega + "m"
+                                ? mega.heightMega
                                 : undefined
                             }
-                            peso={mega?.weightMega !== -1 ? mega.weightMega + "Kg" : undefined}
+                            peso={
+                              mega?.weightMega !== -1
+                                ? mega.weightMega
+                                : undefined}
                             size="medium"
-                            mostrarTexto={false}
+                            enableAdvancedSearchLink={true}
                           />
                         </div>
                       )}
@@ -344,7 +347,11 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                       {mega?.colorMega && (
                         <div className="slot">
                           <div className="contenedorColorFormaPkm">
-                            <ColorPkm color={mega.colorMega} size="medium" />
+                            <ColorPkm
+                              color={mega.colorMega}
+                              size="medium"
+                              enableAdvancedSearchLink={true}
+                              />
                           </div>
                         </div>
                       )}
@@ -492,7 +499,7 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                             style={{ backgroundColor: getTipoBg(tipo) }}
                             title={tipo}
                           >
-                            <Tipo tipo={tipo} size="medium" />
+                            <Tipo tipo={tipo} size="medium" enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" />
                           </div>
                         ))}
                       </div>
@@ -513,7 +520,11 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                   {gigaEternamaxView?.colorGiga && (
                     <div className="slot">
                       <div className="contenedorColorFormaPkm">
-                        <ColorPkm color={gigaEternamaxView.colorGiga} size="medium" />
+                        <ColorPkm
+                          color={gigaEternamaxView.colorGiga}
+                          size="medium"
+                          enableAdvancedSearchLink={true}
+                          />
                       </div>
                     </div>
                   )}

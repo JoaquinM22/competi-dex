@@ -463,7 +463,36 @@ export default function TablaEstadisticasPkm({ statsPoke, nombrePkm = "" })
 
   if(!isChampionsPokemon)
   {
-    return renderTable("base");
+    return (
+
+      <div className="tabla-tabs-wrapper">
+      
+        {/* Tabs para elegir Tabla */}
+        <div className="tabla-tabs">
+        
+          <button
+            key={"base"}
+            type="button"
+            className={`tabla-tab ${activeTab === "base" ? "active" : ""}`}
+            onClick={() => setActiveTab("base")}
+          >
+            {"≤ 9na Gen"}
+          </button>
+         
+        </div>
+
+        {/* Tablas de Stats */}
+        <div className="tabla-tabs-content">
+
+          {/* Stats 9na Gen */}
+          {activeTab === "base" && renderTable("base")}
+
+        </div>
+
+      </div>
+      
+    );
+    //return renderTable("base");
   }
 
   return (

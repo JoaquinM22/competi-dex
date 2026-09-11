@@ -26,7 +26,7 @@ export default function VistaPokemon()
 {
   const { nombre: paramNombre } = useParams();
   const navigate = useNavigate();
-  const { getPokemon, getPokemonSpecies, getUrl, getPokemonIdByKey, getPokemonKeyById, resolvePokemonInput, getPokemonSlug, pokemonMapReady } = usePokemon();
+  const { getPokemon, getPokemonSpecies, getUrl, getPokemonIdByKey, getPokemonKeyById, resolvePokemonInput, getPokemonSlug, getPokemonCompleteDataByApiName, pokemonMapReady } = usePokemon();
   const { buildDexEntriesFromPokedexNumbers } = usePokedex();
   const { translatePokemonAbilities, translateAbilitiesByKeys } = useAbilities();
   const { translatePokemonItems } = useItems();
@@ -44,6 +44,7 @@ export default function VistaPokemon()
       getPokemonSpeciesRaw: getPokemonSpecies,
       getUrlRaw: getUrl,
       getPokemonIdByKey: getPokemonIdByKey,
+      getPokemonCompleteDataByApiName: getPokemonCompleteDataByApiName,
       translatePokemonAbilities: translatePokemonAbilities,
       translateAbilitiesByKeys: translateAbilitiesByKeys,
       translatePokemonItems: translatePokemonItems,
@@ -55,7 +56,7 @@ export default function VistaPokemon()
       DEBUG_POKEMON: false
     });
 
-  }, [getPokemon, getPokemonSpecies, getUrl, getPokemonIdByKey, getPokemonKeyById, translatePokemonAbilities, translateAbilitiesByKeys, translatePokemonItems, translatePokemonMoves, buildDexEntriesFromPokedexNumbers]);
+  }, [getPokemon, getPokemonSpecies, getUrl, getPokemonIdByKey, getPokemonCompleteDataByApiName, getPokemonKeyById, translatePokemonAbilities, translateAbilitiesByKeys, translatePokemonItems, translatePokemonMoves, buildDexEntriesFromPokedexNumbers]);
 
   const obtenerPokemon = useCallback(async function(nameOrId)
   {

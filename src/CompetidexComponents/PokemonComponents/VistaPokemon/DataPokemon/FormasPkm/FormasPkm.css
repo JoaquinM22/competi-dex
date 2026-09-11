@@ -18,14 +18,14 @@
 /* Tarjeta */
 .forma-card {
   background: var(--panel, #1f2227);
-  border-radius: 12px;
+  border-radius: 25px !important;
   padding: 15px;
   width: 360px;
   color: #ffffff;
-  box-shadow: 0 6px 24px rgba(0,0,0,.25);
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid rgba(255, 215, 0, 0.26);
 }
 
 /* Imagen cuadrada */
@@ -243,15 +243,18 @@
 /* Nombre clickeable que navega a la forma/Pokémon correspondiente */
 .nombre-forma-clickable {
   cursor: pointer;
-  color: #ffd75c;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1.5px;
-  text-shadow: 0 0 6px rgba(255, 215, 92, 0.55);
+  padding: 3px 5px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .nombre-forma-clickable:hover {
-  color: #ffe58a;
+  color: #FFD700;
+  filter: brightness(1.08);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
 }
 
 /* Responsive */

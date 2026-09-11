@@ -3,8 +3,13 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import { FaLocationArrow } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { getMoveClassIcon, getMoveClassLabelEs, getTypeMeta } from "../../../../../utils/competidexMeta";
-import { moveRoute, pokemonRoute } from "../../../../../utils/competidexRoutes";
+import { getMoveClassIcon, getMoveClassLabelEs, getMoveClassMeta, getTypeMeta } from "../../../../../utils/competidexMeta";
+import {
+  advancedMovesSearchRouteWithFilters,
+  getAdvancedSearchTabConfig,
+  moveRoute,
+  pokemonRoute
+} from "../../../../../utils/competidexRoutes";
 import { preloadCachedImage } from "../../../../../utils/competidexImgCache";
 import Tipo from "../../../../SharedComponents/Tipo/Tipo";
 import "./ListaMovimientosPkm.css";
@@ -53,6 +58,24 @@ function displayPokemonName(s)
 const getClaseIcon = (c) => getMoveClassIcon(c);
 const fmt = (v) => (v === null || v === undefined || v === "-" ? "—" : v);
 
+function getPositiveNumberFilterData(value)
+{
+  const numericValue = Number(value);
+
+  if(Number.isFinite(numericValue) && numericValue > 0)
+  {
+    return {
+      operator: "eq",
+      value: numericValue
+    };
+  }
+
+  return {
+    operator: "lte",
+    value: 0
+  };
+}
+
 function measureTextWidth(text, fontSize = 12)
 {
   const value = String(text || "");
@@ -92,10 +115,14 @@ export default function ListaMovimientosPkm({
   nombrePokemon,
   puedeCriar = true,
   evolutionChain = [],
-  pokemonApiName = ""
+  pokemonApiName = "",
+  enableAdvancedSearchLink = false
 })
 {
   const navigate = useNavigate();
+  const movsAdvancedSearchTabData = getAdvancedSearchTabConfig("movimientos");
+  const movsAdvancedSearchDescription = movsAdvancedSearchTabData?.description || "Movimientos";
+  const canNavigateToAdvancedSearch = !!enableAdvancedSearchLink;
   const ordered = Array.isArray(grupos) ? grupos : [];
   const bucketKey = modo === "otro" || modo === "otros" ? "otros" : modo;
   const showLevelColumn = bucketKey === "nivel";
@@ -111,6 +138,49 @@ export default function ListaMovimientosPkm({
     navigate(moveRoute(encodeURIComponent(String(nombreMovApi || slug))));
 
   }, [navigate]);
+
+  const navigateToAdvancedMovFilter = useCallback((field, operator, value) =>
+  {
+    navigate(advancedMovesSearchRouteWithFilters({
+      filters: [
+        {
+          field,
+          operator,
+          value
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+
+  }, [navigate]);
+
+  function handleAdvancedSearchKeyDown(event, onClick)
+  {
+    if(event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    onClick();
+  }
+
+  function renderAdvancedValueAction({ canNavigate, label, onClick, children })
+  {
+    return (
+      <span
+        className={"movs-advanced-valueAction" + (canNavigate ? " movs-advanced-valueAction-clickable" : "")}
+        onClick={canNavigate ? onClick : undefined}
+        role={canNavigate ? "button" : undefined}
+        tabIndex={canNavigate ? 0 : undefined}
+        onKeyDown={canNavigate ? (event) => handleAdvancedSearchKeyDown(event, onClick) : undefined}
+        aria-label={canNavigate ? label : undefined}
+        title={canNavigate ? label : undefined}
+      >
+        {children}
+      </span>
+    );
+  }
 
   const defaultIndex = useMemo(() =>
   {
@@ -792,6 +862,23 @@ export default function ListaMovimientosPkm({
                 const findClass =
                   (isHit ? " movsFindHit" : "") +
                   (isActive ? " movsFindActive" : "");
+                const moveClassMeta = getMoveClassMeta(m.categoria);
+                const moveClassKey = String(m.categoria || "").trim();
+                const moveClassLabel = getMoveClassLabelEs(m.categoria);
+                const canNavigateToMoveClass = canNavigateToAdvancedSearch && !!moveClassKey && String(moveClassMeta?.apiKey || "") === moveClassKey;
+                const powerFilterData = getPositiveNumberFilterData(m.potencia);
+                const accuracyFilterData = getPositiveNumberFilterData(m.precision);
+                const ppFilterData = getPositiveNumberFilterData(m.pp);
+                const powerSearchLabel = powerFilterData.operator === "eq"
+                  ? "Buscar " + movsAdvancedSearchDescription + " con Potencia = " + powerFilterData.value
+                  : "Buscar " + movsAdvancedSearchDescription + " sin Potencia";
+                const accuracySearchLabel = accuracyFilterData.operator === "eq"
+                  ? "Buscar " + movsAdvancedSearchDescription + " con Precisión = " + accuracyFilterData.value
+                  : "Buscar " + movsAdvancedSearchDescription + " sin Precisión";
+                const ppSearchLabel = ppFilterData.operator === "eq"
+                  ? "Buscar " + movsAdvancedSearchDescription + " con PP Base = " + ppFilterData.value
+                  : "Buscar " + movsAdvancedSearchDescription + " sin PP";
+                const moveClassSearchLabel = "Buscar " + movsAdvancedSearchDescription + " de Clase " + (moveClassLabel || moveClassKey);
 
                 return (
                   <tr
@@ -816,7 +903,7 @@ export default function ListaMovimientosPkm({
                             goToMove(m.nombreMovApi || m.nombre);
                           }
                         }}
-                        title={"Ver movimiento: " + (m.nombre || m.nombreMovApi || "") }
+                        title={"Ver datos de Movimiento: " + (m.nombre || m.nombreMovApi || "") }
                       >
                         {m.nombre}
                       </button>
@@ -827,20 +914,55 @@ export default function ListaMovimientosPkm({
                         className="tipo-wrap"
                         style={tipoCellWidth ? { "--tipo-cell-width": `${tipoCellWidth}px` } : undefined}
                       >
-                        <Tipo tipo={m.tipo} size="small" />
+                        <Tipo
+                          tipo={m.tipo}
+                          size="small"
+                          enableAdvancedSearchLink={canNavigateToAdvancedSearch}
+                          advancedSearchTabKey="movimientos"
+                        />
                       </div>
                     </td>
 
-                    <td className="col-potencia">{fmt(m.potencia)}</td>
-                    <td className="col-precision">{fmt(m.precision)}</td>
+                    <td className="col-potencia">
+                      {renderAdvancedValueAction({
+                        canNavigate: canNavigateToAdvancedSearch,
+                        label: powerSearchLabel,
+                        onClick: () => navigateToAdvancedMovFilter("power", powerFilterData.operator, powerFilterData.value),
+                        children: fmt(m.potencia)
+                      })}
+                    </td>
+
+                    <td className="col-precision">
+                      {renderAdvancedValueAction({
+                        canNavigate: canNavigateToAdvancedSearch,
+                        label: accuracySearchLabel,
+                        onClick: () => navigateToAdvancedMovFilter("accuracy", accuracyFilterData.operator, accuracyFilterData.value),
+                        children: fmt(m.precision)
+                      })}
+                    </td>
 
                     <td className="col-clase">
-                      <div className="clase-wrapper">
-                        <img src={getClaseIcon(m.categoria)} alt={getMoveClassLabelEs(m.categoria)} className="icono-clase" title={getMoveClassLabelEs(m.categoria)} />
+                      <div
+                        className={"clase-wrapper" + (canNavigateToMoveClass ? " clase-wrapper-clickable" : "")}
+                        onClick={canNavigateToMoveClass ? () => navigateToAdvancedMovFilter("damage_class", "eq", moveClassKey) : undefined}
+                        role={canNavigateToMoveClass ? "button" : undefined}
+                        tabIndex={canNavigateToMoveClass ? 0 : undefined}
+                        onKeyDown={canNavigateToMoveClass ? (event) => handleAdvancedSearchKeyDown(event, () => navigateToAdvancedMovFilter("damage_class", "eq", moveClassKey)) : undefined}
+                        aria-label={canNavigateToMoveClass ? moveClassSearchLabel : undefined}
+                        title={canNavigateToMoveClass ? moveClassSearchLabel : moveClassLabel}
+                      >
+                        <img src={getClaseIcon(m.categoria)} alt={moveClassLabel} className="icono-clase" title={canNavigateToMoveClass ? undefined : moveClassLabel} />
                       </div>
                     </td>
 
-                    <td className="col-pp">{fmt(m.pp)}</td>
+                    <td className="col-pp">
+                      {renderAdvancedValueAction({
+                        canNavigate: canNavigateToAdvancedSearch,
+                        label: ppSearchLabel,
+                        onClick: () => navigateToAdvancedMovFilter("pp", ppFilterData.operator, ppFilterData.value),
+                        children: fmt(m.pp)
+                      })}
+                    </td>
                   </tr>
                 );
 

@@ -242,6 +242,7 @@ export async function buildDexEntriesFromPokedexNumbers(pokedexNumbers, getPokem
     {
       const dex = returnEmptyDex();
       dex.title = metaEntry?.labelEs || toPokemonDisplayName(regionName) || regionName;
+      dex.path = String(metaEntry?.path || "").trim();
       dex.baseId = baseId;
 
       // Pokemon Anterior

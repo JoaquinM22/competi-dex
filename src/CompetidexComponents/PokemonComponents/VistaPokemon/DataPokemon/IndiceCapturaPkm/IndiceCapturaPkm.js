@@ -1,6 +1,8 @@
 //** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\IndiceCapturaPkm\IndiceCapturaPkm.js
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { advancedPokemonSearchRouteWithFilters } from "../../../../../utils/competidexRoutes";
 import "./IndiceCapturaPkm.css";
 
 // Clasificación por tramos
@@ -20,12 +22,32 @@ function getCaptureTier(rate)
   return { label: "Muy difícil", className: "tier-very-hard" };
 }
 
-export default function IndiceCaptura({ rate, size = "normal" })
+export default function IndiceCaptura({ rate, size = "normal", enableAdvancedSearchLink = false })
 {
+  const navigate = useNavigate();
   const value = (typeof rate === "number" && rate >= 0) ? rate : null;
   const { label, className } = getCaptureTier(value);
-
   const sizeClass = `captura-contenedor-${size}`;
+  const canNavigateToAdvancedSearch = !!enableAdvancedSearchLink && value !== null;
+
+  function handleAdvancedSearchClick()
+  {
+    if(!canNavigateToAdvancedSearch) return;
+
+    navigate(advancedPokemonSearchRouteWithFilters({
+      filters: [
+        {
+          field: "captureRate",
+          operator: "eq",
+          value
+        }
+      ],
+      sort: {
+        field: "id",
+        direction: "asc"
+      }
+    }));
+  }
 
   return (
     <div className={`captura-contenedor ${sizeClass}`}>
@@ -42,7 +64,24 @@ export default function IndiceCaptura({ rate, size = "normal" })
           </span>
         ) : (
           <div className="captura-right">
-            <span className="captura-valor-num">{value}</span>
+            <span
+              className={"captura-valor-num" + (canNavigateToAdvancedSearch ? " captura-valor-num-clickable" : "")}
+              onClick={canNavigateToAdvancedSearch ? handleAdvancedSearchClick : undefined}
+              role={canNavigateToAdvancedSearch ? "button" : undefined}
+              tabIndex={canNavigateToAdvancedSearch ? 0 : undefined}
+              onKeyDown={function(event)
+              {
+                if(!canNavigateToAdvancedSearch) return;
+                if(event.key !== "Enter" && event.key !== " ") return;
+
+                event.preventDefault();
+                handleAdvancedSearchClick();
+              }}
+              aria-label={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura ${value}` : undefined}
+              title={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura ${value}` : undefined}
+            >
+              {value}
+            </span>
             <span className={`captura-tag ${className}`}>
               {label}
             </span>

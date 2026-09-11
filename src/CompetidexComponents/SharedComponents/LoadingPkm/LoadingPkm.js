@@ -5,7 +5,7 @@ import { PIKACHU_RUNING_GIF } from "../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../utils/competidexImgCache";
 import "./LoadingPkm.css";
 
-export default function LoadingPkm({ inline = false, className = "" })
+export default function LoadingPkm({ inline = false, classNameLoadingConatainer = "", classNameLoadingText = "", classNameLoadingIcon = "", text="" })
 {
   useEffect(() =>
   {
@@ -28,12 +28,12 @@ export default function LoadingPkm({ inline = false, className = "" })
   }, []);
 
   return (
-    <div className={"loading-container" + (inline ? " inline" : "") + (className ? " " + className : "")}>
-      <p className="loading-text">Cargando...</p>
+    <div className={"loading-container" + (inline ? " inline" : "") + (classNameLoadingConatainer ? (" " + classNameLoadingConatainer) : "")}>
+      <p className={"loading-text" + (classNameLoadingText ? (" " + classNameLoadingText) : "")}>{(text === "") ? "Cargando..." : text}</p>
       <img
         src={PIKACHU_RUNING_GIF}
         alt="Pikachu corriendo"
-        className="pikachu-spinner"
+        className={"pikachu-spinner" + (classNameLoadingIcon ? (" " + classNameLoadingIcon) : "")}
       />
     </div>
   );

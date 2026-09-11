@@ -137,11 +137,13 @@ export default function DataItem({ item, loading, error })
                     <CategoriaItem
                       categoriaItem={categoriaItem}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                     <AtributosItem
                       atributos={atributosItem}
                       size="normal"
+                      enableAdvancedSearchLink={true}
                     />
 
                   </div>

@@ -1,6 +1,7 @@
 //** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\DataHabilidad\NombreHabilidad\NombreHabilidad.js
 
 import React, { useEffect, useState } from "react";
+import { formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import GeneracionPkm from "../../../../SharedComponents/GeneracionPkm/GeneracionPkm";
 import "./NombreHabilidad.css";
 
@@ -31,7 +32,7 @@ export default function NombreHabilidad({ id, nombre, gen })
       
       {/* ID de la Habilidad */}
       <div className="idHab">
-        <h3>#{(id !== null && id !== undefined) ? id : "-"}</h3>
+        <h3>#{(id !== null && id !== undefined) ? formatNumberWithDots(id) : "-"}</h3>
       </div>
 
       {/* Nombre Habilidad */}
@@ -45,6 +46,8 @@ export default function NombreHabilidad({ id, nombre, gen })
           generacion={genBase}
           size="normal"
           showLabel={showGenLabel}
+          enableAdvancedSearchLink={true}
+          advancedSearchTabKey="habilidades"
         />
       </div>
 

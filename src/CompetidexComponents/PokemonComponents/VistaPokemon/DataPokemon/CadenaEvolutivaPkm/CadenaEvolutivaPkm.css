@@ -52,15 +52,16 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 90px;
-  margin: 10px;
+  width: fit-content;
+  max-width: 200px;
+  /* background-color: #2c67b4; */
+  border-radius: 14px;
 }
 
 .flecha {
   font-size: 25px;
   font-weight: bold;
   color: white;
-  margin-bottom: 5px;
 }
 
 .metodo-evo {
@@ -68,6 +69,10 @@
   color: white;
   text-align: center;
   width: 100%;
+
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .pokemon {
@@ -75,13 +80,28 @@
   flex-direction: column;
   align-items: center;
   background-color: #2a2a2a;
+  border: 1px solid rgba(255, 215, 0, 0.26);
   padding: 10px;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  box-sizing: border-box;
   transition: transform 0.2s ease-in-out;
-  width: 120px;
-  height: 175px;
+  width: 150px;
+  height: 205px;
   margin: 10px 0;
+}
+
+.cadenaEvoComponent-ContainerImg {
+  background-color: #383b3f;
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.cadenaEvoComponent-ContainerImg:hover {
+  background-color: #636363;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .nombrePkmP {
@@ -113,12 +133,6 @@
 
 .gender.female {
   color: #e74c3c;
-}
-
-.pokemon:hover {
-  transform: scale(1.1);
-  background-color: #636363;
-  cursor: pointer;
 }
 
 .pokemon img {
@@ -263,8 +277,8 @@ body.modal-open {
 @media (max-width: 768px) {
 
   .pokemon {
-    width: 100px;
-    height: 150px;
+    width: 130px;
+    height: 180px;
   }
 
   .pokemon img {
@@ -397,14 +411,20 @@ body.modal-open {
 }
 
 .nombreEvoClickable {
+  margin-top: 10px;
   cursor: pointer;
-  color: #ffd35a;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .nombreEvoClickable:hover {
-  filter: brightness(1.15);
+  filter: brightness(1.08);
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
+  padding: 3px 5px;
 }
 
 .modal-overlayEvo {

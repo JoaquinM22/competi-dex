@@ -30,17 +30,13 @@ const ItemsContext = createContext(null);
     "master-ball": {
       "id": 1,
       "display": "Master Ball",
-      "category": "standard-balls"
-    },
-    "ultra-ball": {
-      "id": 2,
-      "display": "Ultra Ball",
-      "category": "standard-balls"
-    },
-    "great-ball": {
-      "id": 3,
-      "display": "Super Ball",
-      "category": "standard-balls"
+      "category": "standard-balls",
+      "attributes": [
+        "countable",
+        "consumable",
+        "usable-in-battle",
+        "holdable"
+      ]
     },
     ....
   }
@@ -104,6 +100,11 @@ function getItemCategoryFromMapEntry(entry)
   return String(entry.category || "").trim().toLowerCase();
 }
 
+function getItemDisplayFromMapEntry(apiKey, entry)
+{
+  return String(entry?.display || entry?.display_es || apiKey || "").trim();
+}
+
 function isAllowedItemEntry(entry)
 {
   const category = getItemCategoryFromMapEntry(entry);
@@ -128,13 +129,51 @@ function buildIndexFromItemMap(itemMapObj)
   });
 }
 
+function buildAdvancedItemsFromMap(itemMapObj)
+{
+  const keys = Object.keys(itemMapObj || {}).filter(function(apiName)
+  {
+    return isAllowedItemEntry(itemMapObj[apiName]);
+  });
+
+  keys.sort(function(a, b)
+  {
+    return a.localeCompare(b);
+  });
+
+  return keys.map(function(apiName)
+  {
+    const entry = itemMapObj[apiName] || {};
+
+    const rawId = Number(entry.id);
+    const id = Number.isFinite(rawId) ? rawId : null;
+    
+    const display = getItemDisplayFromMapEntry(apiName, entry);
+    const category = String(entry.category || "").trim();
+    const attributes = Array.isArray(entry.attributes)
+      ? entry.attributes.map(function(attribute) { return String(attribute || "").trim(); }).filter(Boolean)
+      : [];
+
+    const descItem = entry?.descES || "-";
+
+    return {
+      apiName: apiName,
+      id: id,
+      display: display,
+      category: category,
+      attributes: attributes,
+      descES: descItem
+    };
+  });
+}
+
 function summarizeItem(json, itemMapObj)
 {
   const mapEntry = (itemMapObj && json && json.name) ? itemMapObj[json.name] : null;
 
   const name_es =
     (json && Array.isArray(json.names) && json.names.find(function(n) { return n.language && n.language.name === "es"; })?.name) ||
-    (mapEntry && mapEntry.display) ||
+    getItemDisplayFromMapEntry(json?.name || "", mapEntry) ||
     (json && Array.isArray(json.names) && json.names.find(function(n) { return n.language && n.language.name === "en"; })?.name) ||
     (json && json.name) ||
     "";
@@ -297,7 +336,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
             continue;
           }
 
-          const display = entry.display || "";
+          const display = getItemDisplayFromMapEntry(apiKey, entry);
 
           if(display)
           {
@@ -411,7 +450,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
       const entry = (itemMapRef.current && itemMapRef.current[key]) ? itemMapRef.current[key] : null;
       if(entry)
       {
-        if (!cached.display_es && entry.display) cached.display_es = entry.display;
+        if (!cached.display_es) cached.display_es = getItemDisplayFromMapEntry(key, entry);
         if (cached.id == null && typeof entry.id === "number") cached.id = entry.id;
       }
 
@@ -545,6 +584,14 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
   }, [getMany]);
 
+  const advancedItemsItems = useMemo(function()
+  {
+    if(!itemMapReady) return [];
+
+    return buildAdvancedItemsFromMap(itemMapRef.current || {});
+
+  }, [itemMapReady, index]);
+
   const resolveItemInput = useCallback(function(input)
   {
     const raw = String(input || "").trim();
@@ -555,7 +602,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
     if(entryExact && isAllowedItemEntry(entryExact))
     {
-      const displayExact = (entryExact && entryExact.display) ? entryExact.display : apiKey;
+      const displayExact = getItemDisplayFromMapEntry(apiKey, entryExact);
 
       return {
         key: apiKey,
@@ -574,7 +621,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
       if (!isAllowedItemEntry(entry)) return null;
 
-      const display = (entry && entry.display) ? entry.display : k;
+      const display = getItemDisplayFromMapEntry(k, entry);
 
       return {
         key: k,
@@ -593,7 +640,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
       if (!isAllowedItemEntry(entry2)) return null;
 
-      const display2 = (entry2 && entry2.display) ? entry2.display : k2;
+      const display2 = getItemDisplayFromMapEntry(k2, entry2);
 
       return {
         key: k2,
@@ -608,7 +655,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
     if (!isAllowedItemEntry(entry3)) return null;
 
-    const display3 = (entry3 && entry3.display) ? entry3.display : apiKey;
+    const display3 = getItemDisplayFromMapEntry(apiKey, entry3);
 
     return {
       key: apiKey,
@@ -651,7 +698,8 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
         continue;
       }
 
-      const nEs = entry && entry.display ? normText(entry.display) : null;
+      const display = getItemDisplayFromMapEntry(key, entry);
+      const nEs = display ? normText(display) : null;
 
       const matched =
         (nKey.startsWith(q) || (nEs && nEs.startsWith(q))) ? "starts"
@@ -679,7 +727,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
 
       const display =
         (cached && cached.display_es) ||
-        (entry && entry.display) ||
+        getItemDisplayFromMapEntry(key, entry) ||
         key;
 
       out.push({
@@ -749,6 +797,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
       index,
       loadingIndex,
       itemMapReady,
+      advancedItemsItems,
 
       getItem,
       getItemRaw,
@@ -771,6 +820,7 @@ export function ItemsProvider({ children, preloadCount = 0, warmConcurrency = 5 
     index,
     loadingIndex,
     itemMapReady,
+    advancedItemsItems,
     getItem,
     getItemRaw,
     getMany,

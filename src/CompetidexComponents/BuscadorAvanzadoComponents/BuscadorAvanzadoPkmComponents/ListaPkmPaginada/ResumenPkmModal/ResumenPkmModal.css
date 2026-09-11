@@ -1,0 +1,392 @@
+/** src\CompetidexComponents\BuscadorAvanzadoComponents\BuscadorAvanzadoPkmComponents\ListaPkmPaginada\ResumenPkmModal\ResumenPkmModal.css */
+
+.pokemonResumenModalComponent {
+  display: grid;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.pokemonResumenModalComponent-hero {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.pokemonResumenModalComponent-mainRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #383b3f;
+}
+
+.pokemonResumenModalComponent-gigaForma {
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemonResumenComponent-spriteYGen{
+  flex: 0 1 380px;
+  min-width: 280px;
+  max-width: 420px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  box-sizing: border-box;
+}
+
+.pokemonResumenComponent-contGeneralItems {
+  width: 100%;
+  max-width: 350px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+.pokemonResumenComponent-contBooleano {
+  width: 100%;
+  max-width: 400px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+.pokemonResumenModalComponent-resumenDatos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 25%);
+  gap: 14px;
+  align-items: center;
+  background-color: #383b3f;
+  border-radius: 25px;
+  padding: 10px;
+
+}
+
+.pokemonResumenModalComponent-resumenColLeft,
+.pokemonResumenModalComponent-resumenColCenter,
+.pokemonResumenModalComponent-resumenColRight {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  justify-items: center;
+  box-sizing: border-box;
+}
+
+.pokemonResumenModalComponent-resumenColLeft > *,
+.pokemonResumenModalComponent-resumenColCenter > *,
+.pokemonResumenModalComponent-resumenColRight > * {
+  width: 100%;
+  margin: 0;
+  min-width: 0;
+}
+
+.pokemonResumenComponent-contGeneralItems,
+.pokemonResumenComponent-contBooleano {
+  width: 100%;
+  margin: 0;
+  max-width: 100%;
+}
+
+.pokemonResumenModalComponent-tableStatsWrapper {
+  display: block;
+  flex: 1 1 560px;
+  min-width: 0;
+  max-width: 100%;
+  color: white;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;
+  padding: 10px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.pokemonResumenModalComponent-tableStatsWrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.pokemonResumenModalComponent-tableStatsWrapper::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 8px;
+}
+
+.pokemonResumenModalComponent-tableStatsWrapper::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+.pokemonResumenModalComponent-tableStatsWrapper::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.pokemonResumenModalComponent-spriteWrap {
+  width: 100%;
+  border-radius: 18px;
+  background: #282c34;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+}
+
+.pokemonResumenModalComponent-sprite {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.pokemonResumenModalComponent-spriteFallback {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
+}
+
+.pokemonResumenModalComponent-meta {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pokemonResumenModalComponent-id {
+  color: #ffd700;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.pokemonResumenModalComponent-name {
+  color: #ffffff;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.pokemonResumenModalComponent-key {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.pokemonResumenModalComponent-types {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding-inline: 6px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b #2f2f2f;
+  margin: 5px;
+}
+
+.pokemonResumenModalComponent-types::-webkit-scrollbar {
+  height: 10px;
+}
+
+.pokemonResumenModalComponent-types::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 8px;
+}
+
+.pokemonResumenModalComponent-types::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 8px;
+  border: 2px solid #2f2f2f;
+}
+
+.pokemonResumenModalComponent-types::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.pokemonResumenModalComponent-tipoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: fit-content;
+  min-width: fit-content;
+  height: 56px;
+  border-radius: 16px;
+  line-height: 1;
+  box-sizing: border-box;
+  padding: 3px;
+}
+
+.pokemonResumenModalComponent-tipoWrap .tipo-boton {
+  pointer-events: none;
+  flex: 0 0 auto;
+}
+
+.pokemonResumenModalComponent-tipoWrap .tipo-boton.tipo-boton-mini,
+.pokemonResumenModalComponent-tipoWrap .tipo-boton.tipo-boton-medium,
+.pokemonResumenModalComponent-tipoWrap .tipo-boton.tipo-boton-normal {
+  white-space: nowrap;
+}
+
+.pokemonResumenModalComponent-placeholder {
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.pokemonResumenModalComponent-MegaCard {
+  align-items: center;
+}
+
+.pokemonResumenModalComponent-megaResumenDatos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-content: center;
+  justify-items: center;
+}
+
+.pokemonResumenModalComponent-megaResumenCol {
+  max-width: 420px;
+}
+
+@media (max-width: 1160px) {
+  
+  .pokemonResumenModalComponent-mainRow {
+    justify-content: center;
+  }
+
+  .pokemonResumenComponent-spriteYGen {
+    flex: 1 1 100%;
+    max-width: 450px;
+  }
+
+  .pokemonResumenModalComponent-tableStatsWrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .pokemonResumenModalComponent-resumenDatos {
+    grid-template-columns: minmax(0, 450px);
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .pokemonResumenModalComponent-resumenColLeft,
+  .pokemonResumenModalComponent-resumenColCenter,
+  .pokemonResumenModalComponent-resumenColRight {
+    width: 100%;
+    min-width: 0;
+    max-width: 450px;
+  }
+
+  .pokemonResumenModalComponent-megaResumenDatos {
+    grid-template-columns: repeat(2, minmax(0, 450px));
+  }
+
+}
+
+@media (max-width: 860px) {
+
+  .pokemonResumenModalComponent-megaResumenDatos {
+    grid-template-columns: minmax(0, 450px);
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .pokemonResumenModalComponent {
+    padding: 6px;
+    gap: 10px;
+  }
+
+  .pokemonResumenModalComponent-ContIdDisplay
+  {
+    max-width: 300px;
+  }
+
+  .pokemonResumenModalComponent-mainRow {
+    padding: 6px;
+    gap: 10px;
+    max-width: 300px;
+  }
+
+  .pokemonResumenComponent-spriteYGen {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .pokemonResumenModalComponent-spriteWrap {
+    width: min(100%, 280px);
+    max-width: 280px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+  }
+
+  .pokemonResumenModalComponent-sprite {
+    width: 110px;
+    height: 110px;
+  }
+
+  .pokemonResumenModalComponent-types {
+    gap: 6px;
+    padding-inline: 2px;
+    margin: 2px 0 0;
+  }
+
+  .pokemonResumenModalComponent-resumenDatos {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .pokemonResumenModalComponent-resumenColLeft,
+  .pokemonResumenModalComponent-resumenColCenter,
+  .pokemonResumenModalComponent-resumenColRight {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .pokemonResumenComponent-contGeneralItems {
+    max-width: 300px;
+    margin: 2px 0;
+  }
+
+  .pokemonResumenComponent-contBooleano {
+    max-width: 100%;
+    margin: 2px 0;
+  }
+
+  .pokemonResumenModalComponent-tableStatsWrapper {
+    padding: 8px;
+  }
+
+}
+
+@media (max-width: 375px) {
+
+  .pokemonResumenModalComponent-spriteWrap {
+    width: min(100%, 250px);
+    max-width: 250px;
+  }
+
+  .pokemonResumenModalComponent-sprite {
+    width: 96px;
+    height: 96px;
+  }
+  
+}

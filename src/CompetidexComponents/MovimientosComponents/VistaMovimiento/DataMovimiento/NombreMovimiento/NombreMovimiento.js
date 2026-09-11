@@ -1,7 +1,7 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\DataMovimiento\NombreMovimiento\NombreMovimiento.js
 
 import React from "react";
-import { getTypeMeta } from "../../../../../utils/competidexMeta";
+import { getTypeMeta, formatNumberWithDots } from "../../../../../utils/competidexMeta";
 import "./NombreMovimiento.css";
 
 export default function NombreMovimiento({ id, nombre, tipos, tipo })
@@ -27,7 +27,7 @@ export default function NombreMovimiento({ id, nombre, tipos, tipo })
 
       {/* ID Movimiento */}
       <div className="idMov">
-        <h3>#{(id !== null && id !== undefined) ? id : "—"}</h3>
+        <h3>#{(id !== null && id !== undefined) ? formatNumberWithDots(id) : "—"}</h3>
       </div>
 
       {/* Nombre Movimiento */}

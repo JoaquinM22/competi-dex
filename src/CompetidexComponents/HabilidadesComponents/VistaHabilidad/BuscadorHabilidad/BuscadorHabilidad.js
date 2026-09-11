@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useAbilities } from "../../AbilitiesProvider";
-import { getGenerationIcon, getGenerationLabelEs } from "../../../../utils/competidexMeta";
+import { getGenerationIcon, getGenerationLabelEs, formatNumberWithDots } from "../../../../utils/competidexMeta";
 import { preloadCachedImage } from "../../../../utils/competidexImgCache";
 import { showToastr } from "../../../../services/ToastrService";
 import "./BuscadorHabilidad.css";
@@ -219,7 +219,7 @@ export default function BuscadorHabilidad({ onSearch, titulo = "Habilidad" })
                 >
                   <div className="sug-hab-left">
                     {it.id !== undefined && it.id !== null && (
-                      <span className="sug-hab-id">#{it.id}</span>
+                      <span className="sug-hab-id">#{formatNumberWithDots(it.id)}</span>
                     )}
 
                     <div className="sug-hab-name-row">

@@ -565,6 +565,17 @@
   border: 1px solid rgba(255,215,92,0.25);
 }
 
+.calcStatsPkm-natureNoResults {
+  min-height: 38px;
+  padding: 8px;
+  color: #bbb;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
 .calcStatsPkm-natureOptMain {
   display: flex;
   flex-wrap: wrap;

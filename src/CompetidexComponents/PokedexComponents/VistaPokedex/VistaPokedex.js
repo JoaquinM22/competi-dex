@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { IoMdMale, IoMdFemale } from "react-icons/io";
 import { FaLocationArrow } from "react-icons/fa6";
 import { spriteUrl, spriteShinyUrl } from "../../../config/endpoints";
-import { getPokedexDataMetaByPath, getTypeMeta, TYPES_META } from "../../../utils/competidexMeta";
+import { getPokedexDataMetaByPath, getTypeMeta, TYPES_META, formatNumberWithDots } from "../../../utils/competidexMeta";
 import { pokemonRoute } from "../../../utils/competidexRoutes";
 import { POKEDEX_FORMS_PATCH } from "../utilsPokedex/pokemonFormOverrides";
 import { usePokedex } from "../PokedexProvider";
@@ -1093,7 +1093,7 @@ export default function VistaPokedex()
               {/* Boton arriba a la derecha para cache */}
               <div className="pokedexBottomActions pokedexTopActions">
                 <div className="pokedexTopTotal">
-                  Total: <span>{pokedexTotalCount}</span> Pokémon
+                  Total: <span>{formatNumberWithDots(pokedexTotalCount)}</span> Pokémon
                 </div>
 
                 {/* Boton Refrescar Pokédex */}
@@ -1347,7 +1347,7 @@ export default function VistaPokedex()
                               <div className="pokedexTypes">
                                 {t.length ? (
                                   t.map(function (tipo) {
-                                    return <Tipo key={tipo} tipo={tipo} size={pokedexTipoSize} />;
+                                    return <Tipo key={tipo} enableAdvancedSearchLink={true} advancedSearchTabKey="pokemon" tipo={tipo} size={pokedexTipoSize} />;
                                   })
                                 ) : (
                                   <span className="pokedexTypesEmpty">—</span>

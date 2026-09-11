@@ -1,10 +1,14 @@
 //** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\GruposHuevoPkm\GruposHuevoPkm.js
 
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { advancedPokemonSearchRouteWithFilters } from "../../../../../utils/competidexRoutes";
 import "./GruposHuevoPkm.css";
 
-export default function GruposHuevoPkm({ gruposHuevo = [], size = "normal" })
+export default function GruposHuevoPkm({ gruposHuevo = [], size = "normal", enableAdvancedSearchLink = false })
 {
+    const navigate = useNavigate();
+
     const items = useMemo(() =>
     {
         return (Array.isArray(gruposHuevo) ? gruposHuevo : [])
@@ -23,6 +27,53 @@ export default function GruposHuevoPkm({ gruposHuevo = [], size = "normal" })
     }, [gruposHuevo]);
 
     const sizeClass = `gruposHuevoPkmComponent-container-${size}`;
+
+    function handleAdvancedSearchClick(eggGroupKey)
+    {
+        const normalizedEggGroupKey = String(eggGroupKey || "").trim().toLowerCase();
+        if(!enableAdvancedSearchLink || !normalizedEggGroupKey) return;
+
+        navigate(advancedPokemonSearchRouteWithFilters({
+            filters: [
+                {
+                    field: "eggGroups",
+                    operator: "contains",
+                    value: normalizedEggGroupKey
+                }
+            ],
+            sort: {
+                field: "id",
+                direction: "asc"
+            }
+        }));
+    }
+
+    function renderEggGroupLabel(item)
+    {
+        const canNavigateToAdvancedSearch = !!enableAdvancedSearchLink && !!item.apiKey;
+        const labelClassName = "gruposHuevoPkmComponent-label" + (canNavigateToAdvancedSearch ? " gruposHuevoPkmComponent-label-clickable" : "");
+
+        return (
+            <span
+                className={labelClassName}
+                onClick={canNavigateToAdvancedSearch ? () => handleAdvancedSearchClick(item.apiKey) : undefined}
+                role={canNavigateToAdvancedSearch ? "button" : undefined}
+                tabIndex={canNavigateToAdvancedSearch ? 0 : undefined}
+                onKeyDown={function(event)
+                {
+                    if(!canNavigateToAdvancedSearch) return;
+                    if(event.key !== "Enter" && event.key !== " ") return;
+
+                    event.preventDefault();
+                    handleAdvancedSearchClick(item.apiKey);
+                }}
+                aria-label={canNavigateToAdvancedSearch ? `Buscar Pokémon del Grupo Huevo: ${item.labelES}` : undefined}
+                title={canNavigateToAdvancedSearch ? `Buscar Pokémon del Grupo Huevo: ${item.labelES}` : undefined}
+            >
+                {item.labelES}
+            </span>
+        );
+    }
 
     return (
         <div className={`gruposHuevoPkmComponent-container ${sizeClass}`}>
@@ -43,9 +94,7 @@ export default function GruposHuevoPkm({ gruposHuevo = [], size = "normal" })
                     {
                         return (
                             <div key={`${item.apiKey || item.labelES || i}`} className="gruposHuevoPkmComponent-item">
-                                <span className="gruposHuevoPkmComponent-label">
-                                    {item.labelES}
-                                </span>
+                                {renderEggGroupLabel(item)}
                             </div>
                         );
                     })

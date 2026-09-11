@@ -531,15 +531,16 @@
 }
 
 .pokedexTopTotal {
-  color: #ffd700;
-  font-weight: 900;
   letter-spacing: 0.2px;
   text-shadow: 0 0 10px rgba(255,215,0,0.10);
   white-space: nowrap;
+  color: #FFD700;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .pokedexTopTotal span {
-  color: #ffe58a;
+  color: #FFD700;
 }
 
 @media (max-width: 680px) {

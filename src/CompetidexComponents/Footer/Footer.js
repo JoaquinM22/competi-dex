@@ -12,7 +12,7 @@ export default function Footer()
   const detalle = 
   (", una página web orientada tanto a los fanáticos del competitivo Pokémon como a los " +
   "jugadores casuales de la saga. En esta web podrán consultar de forma rápida y precisa, gracias " +
-  "a sus buscadores dedicados, datos esenciales de Pokémon, como estadísticas de combate, debilidades " +
+  "a sus buscadores dedicados, datos esenciales de Pokémon, como características de combate, debilidades " +
   "y resistencias, formas, cadenas evolutivas, movimientos, habilidades, entre otros, así como también " +
   "información específica de movimientos, habilidades y objetos, entre otras cosas. Cualquier feedback es bienvenido si me escriben a mi ");
 

@@ -116,6 +116,29 @@
     text-underline-offset: 2px;
 }
 
+
+.color-pkm-valueAction {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 12px;
+    padding: 3px 5px;
+}
+
+.color-pkm-clickable {
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.color-pkm-clickable:hover,
+.color-pkm-clickable:focus-visible {
+    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+    outline: none;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     
