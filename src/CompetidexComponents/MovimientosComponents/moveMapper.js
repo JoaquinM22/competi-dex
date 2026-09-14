@@ -1,4 +1,4 @@
-﻿//** src\CompetidexComponents\MovimientosComponents\moveMapper.js
+//** src\CompetidexComponents\MovimientosComponents\moveMapper.js
 
 export function createMoveMapper()
 {
@@ -21,73 +21,73 @@ export function createMoveMapper()
     return ponerMayuscula((raw && raw.name) ? raw.name : "");
   }
 
-  function descEs(raw)
+  function limpiarTextoDesc(txt)
+  {
+    return String(txt || "").replace(/\s+/g, " ").trim();
+  }
+
+  function esTextoDescValido(txt)
+  {
+    const s = limpiarTextoDesc(txt);
+    return !!s && /[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s);
+  }
+
+  function esTextoDescartable(txt, lang)
+  {
+    const s = limpiarTextoDesc(txt).toLowerCase();
+    const l = String(lang || "").trim().toLowerCase();
+
+    if(!s) return true;
+
+    if(s === "dummy data") return true;
+
+    if(l.indexOf("es") === 0)
+    {
+      return s.indexOf("este movimiento no se puede usar") === 0;
+    }
+
+    if(l.indexOf("en") === 0)
+    {
+      return s.indexOf("this move can") === 0 && s.indexOf("forgotten") !== -1;
+    }
+
+    return false;
+  }
+
+  function buscarDescPorIdioma(raw, prefijoIdioma)
   {
     const arr = (raw && raw.flavor_text_entries) ? raw.flavor_text_entries : [];
     const arrRev = arr.slice().reverse();
+    const prefijo = String(prefijoIdioma || "").trim().toLowerCase();
 
-    function limpiarTexto(txt)
+    if(!prefijo) return "-";
+
+    for(let i = 0; i < arrRev.length; i++)
     {
-      return String(txt || "").replace(/\s+/g, " ").trim();
+      const f = arrRev[i];
+      if(!f || !f.language || !f.language.name) continue;
+
+      const lang = String(f.language.name).trim().toLowerCase();
+      if(lang.indexOf(prefijo) !== 0) continue;
+
+      const txt = limpiarTextoDesc(f.flavor_text || "");
+      if(!esTextoDescValido(txt)) continue;
+      if(esTextoDescartable(txt, lang)) continue;
+
+      return txt;
     }
-
-    function esTextoValido(txt)
-    {
-      const s = limpiarTexto(txt);
-      return !!s && /[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s);
-    }
-
-    function esTextoDescartable(txt, lang)
-    {
-      const s = limpiarTexto(txt).toLowerCase();
-      const l = String(lang || "").trim().toLowerCase();
-
-      if(!s) return true;
-
-      if(s === "dummy data") return true;
-
-      if(s.indexOf("este movimiento no se puede usar") !== -1) return true;
-
-      if(l.indexOf("es") === 0)
-      {
-        return s.indexOf("este movimiento no se puede usar") === 0;
-      }
-
-      if(l.indexOf("en") === 0)
-      {
-        return s.indexOf("this move can") === 0 && s.indexOf("forgotten") !== -1;
-      }
-
-      return false;
-    }
-
-    function buscarPorIdioma(prefijoIdioma)
-    {
-      for(let i = 0; i < arrRev.length; i++)
-      {
-        const f = arrRev[i];
-        if(!f || !f.language || !f.language.name) continue;
-
-        const lang = String(f.language.name).trim().toLowerCase();
-        if(lang.indexOf(prefijoIdioma) !== 0) continue;
-
-        const txt = limpiarTexto(f.flavor_text || "");
-        if(!esTextoValido(txt)) continue;
-        if(esTextoDescartable(txt, lang)) continue;
-
-        return txt;
-      }
-
-      return "";
-    }
-
-    const ultimaEs = buscarPorIdioma("es");
-    if(ultimaEs) return ultimaEs;
-
-    const ultimaEn = buscarPorIdioma("en");
-    if(ultimaEn) return ultimaEn;
 
     return "-";
+  }
+
+  function descEs(raw)
+  {
+    return buscarDescPorIdioma(raw, "es");
+  }
+
+  function descEn(raw)
+  {
+    return buscarDescPorIdioma(raw, "en");
   }
 
   function isNum(n)
@@ -717,16 +717,21 @@ export function createMoveMapper()
   }
 
   // ----------- Función Obtener Objeto Movimiento Final -----------
-  function obtenerMov(raw, nameOrId = "", getMoveFlagsByKey = null)
+  function obtenerMov(raw, nameOrId = "", getMoveFlagsByKey = null, getMoveCompleteDataByApiName = null)
   {
     const key = (typeof nameOrId === "string")
       ? nameOrId.trim().toLowerCase()
       : String(nameOrId);
     raw = raw || {};
 
+    const apiKey = (raw && raw.name) ? raw.name : key;
+    const dataMapa = (typeof getMoveCompleteDataByApiName === "function")
+      ? getMoveCompleteDataByApiName(apiKey)
+      : null;
+
     if(DEBUG_MOV && typeof console !== "undefined" && console.log)
     {
-      console.log("[moveMapper] RAW move:", key, raw);
+      console.log("[moveMapper] RAW move:", key, raw, dataMapa);
     }
 
     const blancoRaw = raw && raw.target ? raw.target.name : null;
@@ -742,36 +747,29 @@ export function createMoveMapper()
     let flags = Object.assign({}, EMPTY_MOVE_FLAGS);
     if(typeof getMoveFlagsByKey === "function")
     {
-      const flagsKey = (raw && raw.name) ? raw.name : key;
-      flags = normalizeMoveFlags(getMoveFlagsByKey(flagsKey));
+      flags = normalizeMoveFlags(getMoveFlagsByKey(apiKey));
     }
 
     const mov = {
-      key: (raw && raw.name) ? raw.name : key,
-      id: raw && raw.id !== undefined ? raw.id : null,
-
-      genMov: raw && raw.generation ? raw.generation.name : null,
-      nombreMov: nombreEs(raw),
-      nombreApi: (raw && raw.name) ? raw.name : key,
-
-      tipoMov: raw && raw.type ? raw.type.name : null,
-      claseMov: raw && raw.damage_class ? raw.damage_class.name : null,
-
+      key: apiKey,
+      id: raw && raw.id !== undefined ? raw.id : (dataMapa && dataMapa.id !== undefined ? dataMapa.id : null),
+      genMov: raw && raw.generation ? raw.generation.name : (dataMapa ? dataMapa.generation : null),
+      nombreMov: (dataMapa && dataMapa.display) ? dataMapa.display : nombreEs(raw),
+      nombreApi: apiKey,
+      tipoMov: dataMapa ? dataMapa.type : (raw && raw.type ? raw.type.name : null),
+      claseMov: dataMapa ? dataMapa.damage_class : (raw && raw.damage_class ? raw.damage_class.name : null),
       statsCambios: statsCambiosPack.map,
       statsCambiosList: statsCambiosPack.list,
-      tieneStatsCambios: !!statsCambiosPack.has,
-
-      indiceCritico: indiceCritico,
+      tieneStatsCambios: !!statsCambiosPack.has,   
+      indiceCritico: (dataMapa && dataMapa.indiceCritico !== undefined) ? dataMapa.indiceCritico : (indiceCritico !== null ? indiceCritico : null),
       flags: flags,
-
-      potenciaMov: (raw && raw.power !== undefined && raw.power !== null) ? raw.power : null,
-      precisionMov: (raw && raw.accuracy !== undefined && raw.accuracy !== null) ? raw.accuracy : null,
-      ppMov: (raw && raw.pp !== undefined && raw.pp !== null) ? raw.pp : null,
-      prioridadMov: (raw && raw.priority !== undefined && raw.priority !== null) ? raw.priority : null,
-
-      blancoMov: blancoRaw,
+      potenciaMov: (dataMapa && dataMapa.power !== undefined) ? dataMapa.power : ((raw && raw.power !== undefined && raw.power !== null) ? raw.power : null), 
+      precisionMov: (dataMapa && dataMapa.accuracy !== undefined) ? dataMapa.accuracy : ((raw && raw.accuracy !== undefined && raw.accuracy !== null) ? raw.accuracy : null),
+      ppMov: (dataMapa && dataMapa.pp !== undefined) ? dataMapa.pp : ((raw && raw.pp !== undefined && raw.pp !== null) ? raw.pp : null),
+      prioridadMov: (dataMapa && dataMapa.priorityLevel !== undefined) ? dataMapa.priorityLevel : ((raw && raw.priority !== undefined && raw.priority !== null) ? raw.priority : null),
+      blancoMov: dataMapa ? dataMapa.blancoMov : blancoRaw,
       descMov: descEs(raw),
-
+      descMovEN: descEn(raw),
       efectoSecundario: (tieneSec && resumenEfectos)
         ? { resumen: resumenEfectos, lista: efectosSec }
         : null,

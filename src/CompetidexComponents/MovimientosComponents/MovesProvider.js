@@ -73,6 +73,8 @@ const KEY_RAW = `moves:raw:${CACHE_VERSION}`;
       "indiceCritico": 0,
       "generation": "generation-i",
       "blancoMov": "selected-pokemon",
+      "descES": "Un puñetazo de gran potencia.",
+      "descEN": "The target is slugged by a punch thrown with muscle-packed power.",
       "machinesByGroup": {
         "red-blue": {
           "machine": "tm01",

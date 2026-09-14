@@ -158,6 +158,7 @@ export default function ResumenMovModal({ open, move, onClose })
     const blancoMovEs = getMoveTargetLabelEs(move?.blancoMov || "") || move?.blancoMov || "-";
 
     const descMov = move?.descES || "-";
+    const descMovEN = move?.descEN || "-";
 
     useEffect(() =>
     {
@@ -296,6 +297,7 @@ export default function ResumenMovModal({ open, move, onClose })
                         <div className="resumenMovModalComponent-dataItemFull resumenMovModalComponent-descMovWraper">
                            <DescMovimiento
                                 descMov={descMov}
+                                descMovEN={descMovEN}
                                 size="normal"
                             />
                         </div>

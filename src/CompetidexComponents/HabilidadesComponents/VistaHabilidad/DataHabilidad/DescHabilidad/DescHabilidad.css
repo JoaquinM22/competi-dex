@@ -5,10 +5,48 @@
   box-sizing: border-box;
 }
 
+
+.deschab-tabs-wrapper {
+  border-radius: 12px;
+  padding: 3px;
+  box-sizing: border-box;
+  background: var(--panel, #1f2227);
+}
+
+.deschab-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid #4c4c4c;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.deschab-tab {
+  background: transparent;
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  font-weight: bold;
+  color: #ffd900d7;
+  background: rgba(24, 28, 36, 0.304);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.deschab-tab:hover {
+  color: #ffd900d7;
+  background: rgba(56, 59, 63, 0.872);
+}
+
+.deschab-tab.active {
+  color: #FFD700;
+  border-bottom-color: #FFD700;
+  background: #282c34;
+}
 /* Contenedor con look "tarjetita" */
 .deschab-box{
   width: 100%;
-  background: var(--panel, #1f2227);
   border-radius: 14px;
   padding: 12px 14px;
   box-sizing: border-box;
@@ -31,7 +69,6 @@
 /* Texto */
 .deschab-text{
   font-size: 18px;
-  font-weight: 500;
   line-height: 1.35;
   text-align: center;
   margin:10px;
@@ -45,9 +82,20 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 
-  font-weight: bold !important;
-  color: #ffffff !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+.deschab-text-unavailable {
+  color: #bbbbbb;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.deschab-text-disponible {
+
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .marginArribaHab {

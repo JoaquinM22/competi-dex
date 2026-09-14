@@ -21511,6 +21511,9 @@ export function buildPkmFiltersMeta({ abilityOptions = [], categoryPkmOptions = 
   "indiceCritico": 0, // Puede ser 0, 1, etc o null
   "generation": "generation-i",
   "blancoMov": "selected-pokemon",
+
+  "descES": "Un puñetazo de gran potencia.",
+  "descEN": "The target is slugged by a punch thrown with muscle-packed power.",
   
   "machinesByGroup": {
     "red-blue": {
@@ -21934,7 +21937,9 @@ export function buildMovsFiltersMeta()
   "apiName": "stench"
   "id": 1,
   "generation": "generation-iii",
-  "display": "Hedor"
+  "display": "Hedor",
+  "descES": "Puede amedrentar al rival al atacarlo debido al mal olor que emana.",
+  "descEN": "By releasing a stench when attacking, the Pokémon may cause the target to flinch."
 }
 
 */

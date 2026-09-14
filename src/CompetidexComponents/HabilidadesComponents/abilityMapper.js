@@ -8,7 +8,7 @@ function norm(s)
     .trim();
 }
 
-function pickDesc(json)
+function pickDesc(json, lang)
 {
   const entries = (json && json.flavor_text_entries) ? json.flavor_text_entries : [];
 
@@ -18,14 +18,14 @@ function pickDesc(json)
     return !!s && /[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s);
   }
 
-  function findLastFlavor(lang)
+  function findLastFlavor(langKey)
   {
     let ultimo = "";
 
     for(let i = 0; i < entries.length; i++)
     {
       const it = entries[i];
-      if (!it || !it.language || it.language.name !== lang) continue;
+      if (!it || !it.language || it.language.name !== langKey) continue;
 
       const txt = norm(it.flavor_text || "");
       if (!esTextoValido(txt)) continue;
@@ -36,7 +36,7 @@ function pickDesc(json)
     return ultimo;
   }
 
-  function findLastEffect(lang)
+  function findLastEffect(langKey)
   {
     const effectEntries = (json && json.effect_entries) ? json.effect_entries : [];
     let ultimo = "";
@@ -44,7 +44,7 @@ function pickDesc(json)
     for(let i = 0; i < effectEntries.length; i++)
     {
       const e = effectEntries[i];
-      if (!e || !e.language || e.language.name !== lang) continue;
+      if (!e || !e.language || e.language.name !== langKey) continue;
 
       const txt = norm(e.effect || "");
       if (!esTextoValido(txt)) continue;
@@ -55,17 +55,15 @@ function pickDesc(json)
     return ultimo;
   }
 
-  const flavorEs = findLastFlavor("es");
-  if (flavorEs) return flavorEs;
+  const langKey = String(lang || "es").trim().toLowerCase();
 
-  const effectEs = findLastEffect("es");
-  if (effectEs) return effectEs;
+  const flavor = findLastFlavor(langKey);
+  if (flavor) return flavor;
 
-  const effectEn = findLastEffect("en");
-  if (effectEn) return effectEn;
+  const effect = findLastEffect(langKey);
+  if (effect) return effect;
 
-  const flavorEn = findLastFlavor("en");
-  return flavorEn || "";
+  return "-";
 }
 
 function pickNameEs(json)
@@ -130,7 +128,8 @@ export function createAbilityMapper(opts)
     apiName = apiName.trim().toLowerCase();
 
     const nameEs = pickNameEs(raw);
-    const desc = pickDesc(raw);
+    const desc = pickDesc(raw, "es");
+    const descEn = pickDesc(raw, "en");
     const genKey = pickGenKey(raw);
     const gen = genKey || "";
     const pokes = mapPokemonList(raw, 0);
@@ -142,6 +141,7 @@ export function createAbilityMapper(opts)
       nombreHab: nameEs || apiName,
       genHab: gen,
       descHab: desc,
+      descHabEN: descEn,
       pokesTienen: pokes
     };
   }

@@ -23,7 +23,13 @@ export default function VistaMovimiento()
 {
     const { nombreMovimiento: paramNombreMovimiento } = useParams();
     const navigate = useNavigate();
-    const { getMoveRaw, getMoveFlagsByKey, resolveMoveInput, esMapReady } = useMoves();
+    const {
+        getMoveRaw,
+        getMoveFlagsByKey,
+        getMoveCompleteDataByApiName,
+        resolveMoveInput,
+        esMapReady
+    } = useMoves();
 
     const [movABuscar, setMovABuscar] = useState("");
     const [unMovimiento, setUnMovimiento] = useState(null);
@@ -97,7 +103,12 @@ export default function VistaMovimiento()
                 setErrorMov(null);
 
                 const rawMov = await getMoveRaw(movABuscar);
-                const mov = moveMapper.obtenerMov(rawMov, movABuscar, getMoveFlagsByKey);
+                const mov = moveMapper.obtenerMov(
+                    rawMov,
+                    movABuscar,
+                    getMoveFlagsByKey,
+                    getMoveCompleteDataByApiName
+                );
                 if (!alive) return;
 
                 setUnMovimiento(mov);
@@ -120,7 +131,7 @@ export default function VistaMovimiento()
 
         return () => { alive = false; };
 
-    }, [movABuscar, getMoveFlagsByKey]);
+    }, [movABuscar, getMoveRaw, getMoveFlagsByKey, getMoveCompleteDataByApiName]);
 
     function handleSearch(resolved)
     {

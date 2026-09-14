@@ -42,6 +42,7 @@ export default function DataMovimiento({ movimiento, loading, error })
     flags, // Todas las banderas de efectos varios
     blancoMov, //Blanco: Elegido, ususario, pokemon adyacentes, etc
     descMov, // Descripcion en español
+    descMovEN, // Descripcion en ingles
     efectoSecundario, // Objeto con el texto de efecto si posee, y los datos con los que armo dicha oracion
     tieneEfectoSecundario, // Booleano para saber si posee efecto secundario o no
 
@@ -119,6 +120,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                 <div id="descMovId" className={mostrarDescMov ? "visible" : "oculto"}>
                   <DescMovimiento
                     descMov={descMov}
+                    descMovEN={descMovEN}
                     size="normal"
                   />
                 </div>

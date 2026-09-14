@@ -23,6 +23,7 @@ export default function DataHabilidad({ habilidad = null, loading, error })
     nombreHab,
     genHab,
     descHab,
+    descHabEN,
     pokesTienen
   } = data;
 
@@ -88,6 +89,7 @@ export default function DataHabilidad({ habilidad = null, loading, error })
                 <div id="descHabilidadId" className={mostrarDescHabilidad ? "visible" : "oculto"}>
                   <DescHabilidad
                     descHab={descHab}
+                    descHabEN={descHabEN}
                     size="normal"
                   />
                 </div>

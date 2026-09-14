@@ -24,19 +24,11 @@ const AbilitiesContext = createContext(null);
     "stench": {
       "id": 1,
       "gen": "generation-iii",
-      "display": "Hedor"
+      "display": "Hedor",
+      "descES": "Puede amedrentar al rival al atacarlo debido al mal olor que emana.",
+      "descEN": "By releasing a stench when attacking, the Pokémon may cause the target to flinch."
     },
-    "damp": {
-      "id": 6,
-      "gen": "generation-iii",
-      "display": "Humedad"
-    },
-    "speed-boost": {
-      "id": 3,
-      "gen": "generation-iii",
-      "display": "Impulso"
-    },
-    ....
+    ...
   }
 */
 
@@ -247,13 +239,15 @@ function buildAdvancedAbilitiesItemsFromMap(abilityMap)
     const display = getAbilityDisplayFromMapEntry(apiName, entry);
     const generation = String(entry.gen || "").trim();
     const desc = entry?.descES || "-";
+    const descEn = entry?.descEN || "-";
 
     return {
       id: id,
       apiName: apiName,
       display: display,
       generation: generation,
-      descES: desc
+      descES: desc,
+      descEN: descEn
     };
   });
 }

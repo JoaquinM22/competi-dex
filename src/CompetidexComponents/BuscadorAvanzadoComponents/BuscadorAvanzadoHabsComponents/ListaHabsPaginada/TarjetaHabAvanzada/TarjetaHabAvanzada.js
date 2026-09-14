@@ -26,6 +26,7 @@ export default function TarjetaHabAvanzada({ ability })
     const display = String(ability?.display || apiName || "Habilidad").trim();
     const generation = String(ability?.generation || "").trim();
     const descHab = ability?.descES || "-";
+    const descHabEN = ability?.descEN || "-";
 
     const cardClass = "tarjetaHabAvanzadaComponent" + (id ? "" : " tarjetaHabAvanzadaComponent--sin-id");
 
@@ -77,7 +78,11 @@ export default function TarjetaHabAvanzada({ ability })
 
                 {/* Desc de la Habilidad */}
                 <div className="tarjetaHabAvanzadaComponent-descContainer">
-                    {descHab}
+                    {
+                        (!descHab || descHab === "-")
+                            ? (descHabEN && descHabEN !== "-" ? descHabEN : "-")
+                            : descHab
+                    }
                 </div>
 
             </div>
