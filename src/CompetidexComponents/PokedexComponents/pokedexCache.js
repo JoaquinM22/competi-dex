@@ -63,7 +63,7 @@ function buildPokedexEntriesFromRaw(raw)
     const rawName = normalizePokedexKey(species?.name);
     const speciesUrl = String(species?.url || "").trim();
 
-    if(!entryNumber || !rawName || !speciesUrl)
+    if(!Number.isFinite(entryNumber) || !rawName || !speciesUrl)
     {
       continue;
     }
@@ -333,9 +333,15 @@ export function getPrevNext(apiKey, entryNumber)
 
   function findPrev(current)
   {
-    for(let i = current - 1; i >= 1; i--)
+    const keys = Object.keys(dex).map(Number).filter(Number.isFinite).sort(function(a, b)
     {
-      if(dex[i]) return dex[i];
+      return b - a;
+    });
+
+    for(let i = 0; i < keys.length; i++)
+    {
+      const key = keys[i];
+      if(key < current && dex[key]) return dex[key];
     }
 
     return null;
@@ -343,12 +349,15 @@ export function getPrevNext(apiKey, entryNumber)
 
   function findNext(current)
   {
-    const keys = Object.keys(dex).map(Number).filter(Number.isFinite);
-    const max = keys.length ? Math.max.apply(null, keys) : 0;
-
-    for(let i = current + 1; i <= max; i++)
+    const keys = Object.keys(dex).map(Number).filter(Number.isFinite).sort(function(a, b)
     {
-      if(dex[i]) return dex[i];
+      return a - b;
+    });
+
+    for(let i = 0; i < keys.length; i++)
+    {
+      const key = keys[i];
+      if(key > current && dex[key]) return dex[key];
     }
 
     return null;

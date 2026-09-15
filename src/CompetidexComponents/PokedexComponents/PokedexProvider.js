@@ -250,7 +250,7 @@ export async function buildDexEntriesFromPokedexNumbers(pokedexNumbers, getPokem
       {
         const prevKey = resolveKeyById ? String(resolveKeyById(prev.speciesId) || "").trim().toLowerCase() : "";
         dex.prev = {
-          entry: baseId - 1,
+          entry: prev.entry,
           nombreApi: prevKey || prev.name || "",
           nombre: prev.display || toPokemonDisplayName(prevKey) || toPokemonDisplayName(prev.name) || "",
           sprite: spriteUrl(prev.speciesId)
@@ -262,7 +262,7 @@ export async function buildDexEntriesFromPokedexNumbers(pokedexNumbers, getPokem
       {
         const nextKey = resolveKeyById ? String(resolveKeyById(next.speciesId) || "").trim().toLowerCase() : "";
         dex.next = {
-          entry: baseId + 1,
+          entry: next.entry,
           nombreApi: nextKey || next.name || "",
           nombre: next.display || toPokemonDisplayName(nextKey) || toPokemonDisplayName(next.name) || "",
           sprite: spriteUrl(next.speciesId)

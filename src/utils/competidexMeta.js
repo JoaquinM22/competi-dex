@@ -2124,7 +2124,7 @@ export const POKEDEX_DATA_META =
   {
     "apiKey": "updated-unova",
     "labelEs": "Pokédex Negro 2/Blanco 2",
-    "path": "/negro-blanco",
+    "path": "/negro-2-blanco-2",
     "icon": null,
     "gameVersions": ["black-2", "white-2"],
     "generation": "generation-v",
