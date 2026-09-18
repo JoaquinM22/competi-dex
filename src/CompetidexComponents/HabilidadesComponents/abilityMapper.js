@@ -115,6 +115,34 @@ function mapPokemonList(json, limit)
   return out;
 }
 
+function nombresPorIdiomaHabilidad(raw)
+{
+  const names = (raw && Array.isArray(raw.names))
+    ? raw.names
+    : [];
+
+  const out = [];
+
+  for(let i = 0; i < names.length; i++)
+  {
+    const n = names[i];
+
+    const label = n && n.name ? String(n.name).trim() : "";
+    const languageKey = n && n.language && n.language.name
+      ? String(n.language.name).trim()
+      : "";
+
+    if(!label || !languageKey) continue;
+
+    out.push({
+      label,
+      languageKey
+    });
+  }
+
+  return out;
+}
+
 export function createAbilityMapper(opts)
 {
   opts = opts || {};
@@ -133,6 +161,7 @@ export function createAbilityMapper(opts)
     const genKey = pickGenKey(raw);
     const gen = genKey || "";
     const pokes = mapPokemonList(raw, 0);
+    const names = nombresPorIdiomaHabilidad(raw);
 
     return {
       id: raw && raw.id,
@@ -142,7 +171,8 @@ export function createAbilityMapper(opts)
       genHab: gen,
       descHab: desc,
       descHabEN: descEn,
-      pokesTienen: pokes
+      pokesTienen: pokes,
+      namesHabilidad: names
     };
   }
 

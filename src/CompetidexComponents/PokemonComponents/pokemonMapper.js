@@ -413,6 +413,34 @@ function getPkmEggsGroups(arr)
 
   return out;
 }
+
+function nombresPorIdioma(speciesRaw)
+{
+  const names = (speciesRaw && Array.isArray(speciesRaw.names))
+    ? speciesRaw.names
+    : [];
+
+  const out = [];
+
+  for(let i = 0; i < names.length; i++)
+  {
+    const n = names[i];
+
+    const label = n && n.name ? String(n.name).trim() : "";
+    const languageKey = n && n.language && n.language.name
+      ? String(n.language.name).trim()
+      : "";
+
+    if(!label || !languageKey) continue;
+
+    out.push({
+      label,
+      languageKey
+    });
+  }
+
+  return out;
+}
 // ------------ Funciones Auxiliares - FIN ------------ 
 
 
@@ -597,7 +625,8 @@ function returnEmptyPkm()
     "hasGigaForm": false,
     "isMegaForm": false,
     "isGigaForm": false,
-    "gruposHuevo": [] //returnEmptyEggGroup()
+    "gruposHuevo": [], //returnEmptyEggGroup()
+    "namesPkm": []
   };
 
 }
@@ -1387,6 +1416,9 @@ export function createPokemonMapper(opts)
 
     // Es una forma Gigamax
     pokemon.isGigaForm = dataPkmMapa?.isGigaForm || false;
+
+    // Nombres del Pokemon en todos los idiomas
+    pokemon.namesPkm = nombresPorIdioma(speciesRaw);
 
     // Data Cruda de Movimientos que aprende el Pokémon
     const movesRawData = Array.isArray(raw?.moves) ? raw.moves : [];

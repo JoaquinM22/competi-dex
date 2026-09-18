@@ -1,6 +1,6 @@
 //** src\CompetidexComponents\ItemsComponents\VistaItem\DataItem\DescItem\DescItem.js
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./DescItem.css";
 
 function toDash(v)
@@ -10,15 +10,70 @@ function toDash(v)
   return s === "" ? "-" : s;
 }
 
-export default function DescItem({ descItem, size = "normal" })
+function getUnavailableText(langLabel)
 {
-  const desc = useMemo(() => toDash(descItem), [descItem]);
+  return "No se encuentra disponible la descripción en " + langLabel + " en este momento";
+}
+
+export default function DescItem({ descItem, descItemEN, size = "normal" })
+{
+  const descES = useMemo(() => toDash(descItem), [descItem]);
+  const descEN = useMemo(() => toDash(descItemEN), [descItemEN]);
+  const defaultTab = (descES === "-" && descEN !== "-") ? "en" : "es";
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  useEffect(function()
+  {
+    setActiveTab(defaultTab);
+
+  }, [defaultTab]);
   const sizeClass = `descitem-container-${size}`;
+  const tabs = useMemo(function()
+  {
+    return [
+      { key: "es", label: "Español", desc: descES },
+      { key: "en", label: "Inglés", desc: descEN }
+    ];
+
+  }, [descES, descEN]);
+
+  const activeTabData = tabs.find(function(tab)
+  {
+    return tab.key === activeTab;
+  }) || tabs[0];
+
+  const activeDesc = activeTabData.desc;
+  const isUnavailable = activeDesc === "-";
+  const displayDesc = isUnavailable
+    ? getUnavailableText(activeTabData.label)
+    : activeDesc;
 
   return (
     <div className={`descitem-container ${sizeClass}`}>
-      <div className="descitem-text">
-        {desc}
+      <div className="descitem-tabs-wrapper">
+        <div className="descitem-tabs">
+          {tabs.map(function(tab)
+          {
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                className={"descitem-tab" + (activeTab === tab.key ? " active" : "")}
+                title={`Ver descripción en ${tab.label}`}
+                onClick={function()
+                {
+                  setActiveTab(tab.key);
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={"descitem-text" + (isUnavailable ? " descitem-text-unavailable" : " descitem-text-disponible")}>
+          {displayDesc}
+        </div>
       </div>
     </div>
   );

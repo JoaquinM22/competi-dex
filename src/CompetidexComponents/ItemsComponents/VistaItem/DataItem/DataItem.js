@@ -5,6 +5,7 @@ import { FaLocationArrow } from "react-icons/fa6";
 
 import LoadingPkm from "../../../SharedComponents/LoadingPkm/LoadingPkm";
 import ErrorNotFoundPkm from "../../../SharedComponents/ErrorNotFoundPkm/ErrorNotFoundPkm";
+import NamesMultiLanguage from "../../../SharedComponents/NamesMultiLanguage/NamesMultiLanguage";
 
 import NombreItem from "./NombreItem/NombreItem";
 import DescItem from "./DescItem/DescItem";
@@ -26,7 +27,9 @@ export default function DataItem({ item, loading, error })
     preciosItem,
     categoriaItem,
     descItem,
-    atributosItem
+    descItemEN,
+    atributosItem,
+    namesItem
   } = item || {};
 
   const nombreItemNorm = nombreItem || "Objeto";
@@ -99,6 +102,7 @@ export default function DataItem({ item, loading, error })
                 <div id="descItemId" className={mostrarDescItem ? "visible" : "oculto"}>
                   <DescItem
                     descItem={descItem}
+                    descItemEN={descItemEN}
                     size="normal"
                   />
                 </div>
@@ -144,6 +148,12 @@ export default function DataItem({ item, loading, error })
                       atributos={atributosItem}
                       size="normal"
                       enableAdvancedSearchLink={true}
+                    />
+
+                    <NamesMultiLanguage
+                      title={"Nombres Objeto"}
+                      names={namesItem}
+                      size="normal"
                     />
 
                   </div>

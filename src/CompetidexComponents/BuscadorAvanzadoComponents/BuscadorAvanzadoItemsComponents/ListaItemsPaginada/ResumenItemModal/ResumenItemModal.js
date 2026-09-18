@@ -30,6 +30,7 @@ export default function ResumenItemModal({ open, item, onClose })
     const attributesRaw = Array.isArray(item?.attributes) ? item.attributes : [];
 
     const descItem = item?.descES || "-";
+    const descItemEN = item?.descEN || "-";
 
     return (
         <Modal
@@ -65,6 +66,7 @@ export default function ResumenItemModal({ open, item, onClose })
                 {/* Desc del Objeto */}
                 <DescItem
                     descItem={descItem}
+                    descItemEN={descItemEN}
                     size="normal"
                 />
 

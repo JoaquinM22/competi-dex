@@ -155,6 +155,7 @@ function buildAdvancedItemsFromMap(itemMapObj)
       : [];
 
     const descItem = entry?.descES || "-";
+    const descItemEN = entry?.descEN || "-";
 
     return {
       apiName: apiName,
@@ -162,7 +163,8 @@ function buildAdvancedItemsFromMap(itemMapObj)
       display: display,
       category: category,
       attributes: attributes,
-      descES: descItem
+      descES: descItem,
+      descEN: descItemEN
     };
   });
 }

@@ -64,6 +64,7 @@
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: auto;
+  max-height: 750px;
 }
 
 @media (max-width: 768px) {

@@ -5,6 +5,7 @@ import { FaLocationArrow } from "react-icons/fa6";
 
 import LoadingPkm from "../../../SharedComponents/LoadingPkm/LoadingPkm";
 import ErrorNotFoundPkm from "../../../SharedComponents/ErrorNotFoundPkm/ErrorNotFoundPkm";
+import NamesMultiLanguage from "../../../SharedComponents/NamesMultiLanguage/NamesMultiLanguage";
 
 import NombreHabilidad from "./NombreHabilidad/NombreHabilidad";
 import DescHabilidad from "./DescHabilidad/DescHabilidad";
@@ -15,6 +16,7 @@ export default function DataHabilidad({ habilidad = null, loading, error })
 {
   const [mostrarDescHabilidad, setMostrarDescHabilidad] = useState(true);
   const [mostrarPokesPoseenHabilidad, setMostrarPokesPoseenHabilidad] = useState(true);
+  const [mostrarNombresHabilidad, setMostrarNombresHabilidad] = useState(true);
 
   const data = habilidad || {};
 
@@ -24,7 +26,8 @@ export default function DataHabilidad({ habilidad = null, loading, error })
     genHab,
     descHab,
     descHabEN,
-    pokesTienen
+    pokesTienen,
+    namesHabilidad
   } = data;
 
   useEffect(() =>
@@ -33,6 +36,7 @@ export default function DataHabilidad({ habilidad = null, loading, error })
 
     setMostrarDescHabilidad(true);
     setMostrarPokesPoseenHabilidad(true);
+    setMostrarNombresHabilidad(true);
 
   }, [id, habilidad, loading, error]);
 
@@ -124,6 +128,35 @@ export default function DataHabilidad({ habilidad = null, loading, error })
                 </div>
 
               </>
+
+              {/* Nombres Habilidad*/}
+              <>
+
+                <div className="contenedorTituloSeccion-Habilidad">
+                  <h2 className="tituloSeccion-Habilidad">Nombres Habilidad</h2>
+                  <button
+                    className="toggleDesc-Habilidad"
+                    onClick={() => setMostrarNombresHabilidad(!mostrarNombresHabilidad)}
+                  >
+                    <span className={mostrarNombresHabilidad ? "iconoRotado-Habilidad" : "iconoNormal-Habilidad"}>
+                        <FaLocationArrow className="competidexArrowIcon" aria-hidden="true" />
+                    </span>
+                  </button>
+                </div>
+
+                <div id="nombresHabilidadId" className={mostrarNombresHabilidad ? "visible" : "oculto"}>
+                 
+                  <NamesMultiLanguage
+                    title={"Nombres Habilidad"}
+                    names={namesHabilidad}
+                    size="normal"
+                    hideHeader={true}
+                  />
+              
+                </div>
+                
+
+              </> 
 
             </div>
 

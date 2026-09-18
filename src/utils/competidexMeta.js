@@ -22075,3 +22075,144 @@ export function buildItemsFiltersMeta()
 }
 
 // ---------------- DATOS META FILTROS BUSCADOR AVANZADO ITEMS/OBJETOS - FIN ---------------- 
+
+
+// ---------------- DATOS META IDIOMAS POKEMON - INICIO ---------------- 
+//#region LANGUAGE PKM
+// https://pokeapi.co/api/v2/language?limit=9999
+
+export const LANGUAGE_META =
+{
+  "unknown": {
+    "order": 9999,
+    "apiKey": null,
+    "labelEs": "Idioma Desconocido",
+    "icon": null,
+    "reactFlagCode": []
+  },
+  "es": {
+    "order": 1,
+    "apiKey": "es",
+    "labelEs": "Español",
+    "icon": null,
+    "reactFlagCode": ["ES"]
+  },
+  "es-419": {
+    "order": 2,
+    "apiKey": "es-419",
+    "labelEs": "Español latinoamericano",
+    "icon": null,
+    "reactFlagCode": ["MX"]
+  },
+  "pt-br": {
+    "order": 3,
+    "apiKey": "pt-br",
+    "labelEs": "Portugués brasileño",
+    "icon": null,
+    "reactFlagCode": ["PT", "BR"]
+  },
+  "en": {
+    "order": 4,
+    "apiKey": "en",
+    "labelEs": "Inglés",
+    "icon": null,
+    "reactFlagCode": ["US"]
+  },
+  "cs": {
+    "order": 5,
+    "apiKey": "cs",
+    "labelEs": "Checo",
+    "icon": null,
+    "reactFlagCode": ["CZ"]
+  },
+  "fr": {
+    "order": 6,
+    "apiKey": "fr",
+    "labelEs": "Francés",
+    "icon": null,
+    "reactFlagCode": ["FR"]
+  },
+  "de": {
+    "order": 7,
+    "apiKey": "de",
+    "labelEs": "Alemán",
+    "icon": null,
+    "reactFlagCode": ["DE"]
+  },
+  "it": {
+    "order": 8,
+    "apiKey": "it",
+    "labelEs": "Italiano",
+    "icon": null,
+    "reactFlagCode": ["IT"]
+  },
+  "ja": {
+    "order": 9,
+    "apiKey": "ja",
+    "labelEs": "Japonés",
+    "icon": null,
+    "reactFlagCode": ["JP"]
+  },
+  "ja-hrkt": {
+    "order": 10,
+    "apiKey": "ja-hrkt",
+    "labelEs": "Japonés Hiragana y Katakana",
+    "icon": null,
+    "reactFlagCode": ["JP"]
+  },
+  "ja-roma": {
+    "order": 11,
+    "apiKey": "ja-roma",
+    "labelEs": "Japonés Romaji",
+    "icon": null,
+    "reactFlagCode": ["JP"]
+  },
+  "ko": {
+    "order": 12,
+    "apiKey": "ko",
+    "labelEs": "Coreano",
+    "icon": null,
+    "reactFlagCode": ["KR"]
+  },
+  "zh-hant": {
+    "order": 13,
+    "apiKey": "zh-hant",
+    "labelEs": "Chino tradicional",
+    "icon": null,
+    "reactFlagCode": ["CN"]
+  },
+  "zh-hans": {
+    "order": 14,
+    "apiKey": "zh-hans",
+    "labelEs": "Chino simplificado",
+    "icon": null,
+    "reactFlagCode": ["CN"]
+  }
+};
+
+export function normalizeLanguage(input)
+{
+  const raw = String(input || "").trim().toLowerCase();
+  if (!raw) return null;
+
+  return raw;
+}
+
+export function getLanguageMeta(input)
+{
+  const key = normalizeLanguage(input);
+  return (key && LANGUAGE_META[key])
+    ? LANGUAGE_META[key]
+    : LANGUAGE_META.unknown;
+}
+
+export function getLanguageLabelEs(input)
+{
+  return getLanguageMeta(input)?.labelEs || "Idioma Desconocido";
+}
+
+export function getLanguageReactFlagCode(input)
+{
+  return getLanguageMeta(input)?.reactFlagCode || [];
+}
+// ---------------- DATOS META IDIOMAS POKEMON - FIN ---------------- 

@@ -32,6 +32,7 @@ import CategoriaPkm from "./CategoriaPkm/CategoriaPkm";
 import GruposHuevoPkm from "./GruposHuevoPkm/GruposHuevoPkm";
 import AreaLocalizacion from "../../../AreaLocalizacionComponents/AreaLocalizacion/AreaLocalizacion";
 import BooleanoPkm from "../../../SharedComponents/BooleanoPkm/BooleanoPkm";
+import NamesMultiLanguage from "../../../SharedComponents/NamesMultiLanguage/NamesMultiLanguage";
 import "./DataPokemon.css";
 
 // Funcion Auxiliar para normalizar una habilidad para DYR
@@ -462,6 +463,7 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
         pokemonData.giga.idGiga != null
     );
     const gruposHuevoPkm = Array.isArray(pokemonData?.gruposHuevo) ? pokemonData.gruposHuevo : [];
+    const namesMultiLanguagePkm = Array.isArray(pokemonData?.namesPkm) ? pokemonData.namesPkm : [];
 
     // Arreglo de habilidades para DYR
     const habilidadesNombres = useMemo(() =>
@@ -721,6 +723,15 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                             categoriaPkm={pokemonData.categoriaPkm}
                                             size="normal"
                                             enableAdvancedSearchLink={true}
+                                        />
+                                    </div>
+
+                                    {/* Nombres del Pkm */}
+                                    <div className="contenedorGenerico contenedorNombresMultiIdiomaPkm margenAbajo">
+                                        <NamesMultiLanguage
+                                            title={"Nombres Especie Pokémon"}
+                                            names={namesMultiLanguagePkm}
+                                            size="normal"
                                         />
                                     </div>
 

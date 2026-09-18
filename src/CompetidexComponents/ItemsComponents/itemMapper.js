@@ -56,22 +56,21 @@ export function createItemMapper(opts)
     return ultimoEs || ultimoEn || nombreLindoFallback(raw && raw.name);
   }
 
+  function esTextoValido(txt)
+  {
+    const s = cleanText(txt);
+
+    if (!s) return false;
+    if(!/[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s)) return false;
+    if(/^[-—–ー.·•\s]+$/.test(s)) return false;
+
+    return true;
+  }
+
   function descEs(raw)
   {
     const flavors = (raw && raw.flavor_text_entries) ? raw.flavor_text_entries : [];
     let ultimaEs = null;
-    let ultimaEn = null;
-
-    function esTextoValido(txt)
-    {
-      const s = cleanText(txt);
-
-      if (!s) return false;
-      if(!/[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s)) return false;
-      if(/^[-—–ー.·•\s]+$/.test(s)) return false;
-
-      return true;
-    }
 
     for(let i = 0; i < flavors.length; i++)
     {
@@ -84,14 +83,53 @@ export function createItemMapper(opts)
       if(f.language.name === "es")
       {
         ultimaEs = txt;
-
-      }else if(f.language.name === "en")
-      {
-        ultimaEn = txt;
       }
     }
 
-    return ultimaEs || ultimaEn || "";
+    return ultimaEs || "-";
+  }
+
+  function descEN(raw)
+  {
+    const effects = (raw && raw.effect_entries) ? raw.effect_entries : [];
+    const flavors = (raw && raw.flavor_text_entries) ? raw.flavor_text_entries : [];
+    let ultimaEffectEn = null;
+    let ultimaFlavorEn = null;
+
+    for(let i = 0; i < effects.length; i++)
+    {
+      const e = effects[i];
+      if (!e || !e.language || !e.language.name) continue;
+
+      const txt = cleanText(e.effect || e.short_effect || "");
+      if (!esTextoValido(txt)) continue;
+
+      if(e.language.name === "en")
+      {
+        ultimaEffectEn = txt;
+      }
+    }
+
+    if(ultimaEffectEn)
+    {
+      return ultimaEffectEn;
+    }
+
+    for(let i = 0; i < flavors.length; i++)
+    {
+      const f = flavors[i];
+      if (!f || !f.language || !f.language.name) continue;
+
+      const txt = cleanText(f.text || f.flavor_text || "");
+      if (!esTextoValido(txt)) continue;
+
+      if(f.language.name === "en")
+      {
+        ultimaFlavorEn = txt;
+      }
+    }
+
+    return ultimaFlavorEn || "-";
   }
 
   function categoriaItem(raw)
@@ -161,6 +199,34 @@ export function createItemMapper(opts)
     return out;
   }
 
+  function nombresPorIdiomaItems(raw)
+  {
+    const names = (raw && Array.isArray(raw.names))
+      ? raw.names
+      : [];
+
+    const out = [];
+
+    for(let i = 0; i < names.length; i++)
+    {
+      const n = names[i];
+
+      const label = n && n.name ? String(n.name).trim() : "";
+      const languageKey = n && n.language && n.language.name
+        ? String(n.language.name).trim()
+        : "";
+
+      if(!label || !languageKey) continue;
+
+      out.push({
+        label,
+        languageKey
+      });
+    }
+
+    return out;
+  }
+
   async function obtenerItem(nameOrId)
   {
     const key = (typeof nameOrId === "string")
@@ -181,7 +247,9 @@ export function createItemMapper(opts)
       preciosItem: preciosItem(raw),
       categoriaItem: categoriaItem(raw),
       descItem: descEs(raw),
-      atributosItem: atributosItem(raw)
+      descItemEN: descEN(raw),
+      atributosItem: atributosItem(raw),
+      namesItem: nombresPorIdiomaItems(raw)
     };
 
     if(DEBUG_ITEM && typeof console !== "undefined" && console.log)

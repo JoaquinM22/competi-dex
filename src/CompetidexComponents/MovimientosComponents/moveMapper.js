@@ -95,6 +95,34 @@ export function createMoveMapper()
     return typeof n === "number" && isFinite(n);
   }
 
+  function nombresPorIdiomaMov(raw)
+  {
+    const names = (raw && Array.isArray(raw.names))
+      ? raw.names
+      : [];
+
+    const out = [];
+
+    for(let i = 0; i < names.length; i++)
+    {
+      const n = names[i];
+
+      const label = n && n.name ? String(n.name).trim() : "";
+      const languageKey = n && n.language && n.language.name
+        ? String(n.language.name).trim()
+        : "";
+
+      if(!label || !languageKey) continue;
+
+      out.push({
+        label,
+        languageKey
+      });
+    }
+
+    return out;
+  }
+
   // Regla: null/undefined => 100% (si el efecto existe)
   function normalizeChancePct(v)
   {
@@ -781,7 +809,8 @@ export function createMoveMapper()
         : [],
 
       isDamage: raw && raw.damage_class && (raw.damage_class.name === "physical" || raw.damage_class.name === "special"),
-      isStatus: raw && raw.damage_class && raw.damage_class.name === "status"
+      isStatus: raw && raw.damage_class && raw.damage_class.name === "status",
+      namesMov: nombresPorIdiomaMov(raw)
     };
 
     if(DEBUG_MOV && typeof console !== "undefined" && console.log)

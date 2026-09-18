@@ -7,6 +7,7 @@ import "./DataMovimiento.css";
 import LoadingPkm from "../../../SharedComponents/LoadingPkm/LoadingPkm";
 import ErrorNotFoundPkm from "../../../SharedComponents/ErrorNotFoundPkm/ErrorNotFoundPkm";
 import GeneracionPkm from "../../../SharedComponents/GeneracionPkm/GeneracionPkm";
+import NamesMultiLanguage from "../../../SharedComponents/NamesMultiLanguage/NamesMultiLanguage";
 
 import NombreMovimiento from "./NombreMovimiento/NombreMovimiento";
 import StatsMovimiento from "./StatsMovimiento/StatsMovimiento";
@@ -55,6 +56,7 @@ export default function DataMovimiento({ movimiento, loading, error })
     pokesAprenden, // Lista con los nombres de los pokemon que aprenden dicho mov
     isDamage, // booleano si es de daño (especial o fisico)
     isStatus, // booleano si es de estado
+    namesMov // Nombres del Mov en diferentes idiomas
   } = movimiento || {};
 
   const nombreMovnorm = nombreMov || "Movimiento";
@@ -199,6 +201,12 @@ export default function DataMovimiento({ movimiento, loading, error })
                       ppMov={ppMov}
                       size="normal"
                       enableAdvancedSearchLink={true}
+                    />
+
+                    <NamesMultiLanguage
+                      title={"Nombres Movimiento"}
+                      names={namesMov}
+                      size="normal"
                     />
 
                     <EfectosSecundariosMov
