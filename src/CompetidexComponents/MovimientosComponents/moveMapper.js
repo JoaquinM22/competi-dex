@@ -90,6 +90,30 @@ export function createMoveMapper()
     return buscarDescPorIdioma(raw, "en");
   }
 
+  function getEffectIngles(raw)
+  {
+    const effects = (raw && raw.effect_entries) ? raw.effect_entries : [];
+    let ultimaEffectEn = null;
+
+    for(let i = 0; i < effects.length; i++)
+    {
+      const e = effects[i];
+      if(!e || !e.language || !e.language.name) continue;
+
+      const lang = String(e.language.name).trim().toLowerCase();
+      if(lang !== "en") continue;
+
+      const txt = limpiarTextoDesc(e.effect || e.short_effect || "");
+      if(!esTextoDescValido(txt)) continue;
+      if(esTextoDescartable(txt, lang)) continue;
+
+      ultimaEffectEn = txt;
+    }
+    
+    return ultimaEffectEn || "-";
+  
+  }
+
   function isNum(n)
   {
     return typeof n === "number" && isFinite(n);
@@ -810,7 +834,8 @@ export function createMoveMapper()
 
       isDamage: raw && raw.damage_class && (raw.damage_class.name === "physical" || raw.damage_class.name === "special"),
       isStatus: raw && raw.damage_class && raw.damage_class.name === "status",
-      namesMov: nombresPorIdiomaMov(raw)
+      namesMov: nombresPorIdiomaMov(raw),
+      effectMoveEN: getEffectIngles(raw)
     };
 
     if(DEBUG_MOV && typeof console !== "undefined" && console.log)

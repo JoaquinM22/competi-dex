@@ -27,7 +27,8 @@ export default function DataHabilidad({ habilidad = null, loading, error })
     descHab,
     descHabEN,
     pokesTienen,
-    namesHabilidad
+    namesHabilidad,
+    efectoHabilidadEN
   } = data;
 
   useEffect(() =>
@@ -94,6 +95,7 @@ export default function DataHabilidad({ habilidad = null, loading, error })
                   <DescHabilidad
                     descHab={descHab}
                     descHabEN={descHabEN}
+                    efectoHabEN={efectoHabilidadEN}
                     size="normal"
                   />
                 </div>

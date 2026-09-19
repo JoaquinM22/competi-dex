@@ -12,13 +12,19 @@ function toDash(v)
 
 function getUnavailableText(langLabel)
 {
+  if(langLabel === "Efecto (EN)")
+  {
+    return "No se encuentra disponible el efecto del Objeto en este momento";
+  }
+
   return "No se encuentra disponible la descripción en " + langLabel + " en este momento";
 }
 
-export default function DescItem({ descItem, descItemEN, size = "normal" })
+export default function DescItem({ descItem, descItemEN, efectoItemEN, size = "normal" })
 {
   const descES = useMemo(() => toDash(descItem), [descItem]);
   const descEN = useMemo(() => toDash(descItemEN), [descItemEN]);
+  const efectoEN = useMemo(() => toDash(efectoItemEN), [efectoItemEN]);
   const defaultTab = (descES === "-" && descEN !== "-") ? "en" : "es";
   const [activeTab, setActiveTab] = useState(defaultTab);
 
@@ -32,10 +38,11 @@ export default function DescItem({ descItem, descItemEN, size = "normal" })
   {
     return [
       { key: "es", label: "Español", desc: descES },
-      { key: "en", label: "Inglés", desc: descEN }
+      { key: "en", label: "Inglés", desc: descEN },
+      { key: "effect-en", label: "Efecto (EN)", desc: efectoEN }
     ];
 
-  }, [descES, descEN]);
+  }, [descES, descEN, efectoEN]);
 
   const activeTabData = tabs.find(function(tab)
   {

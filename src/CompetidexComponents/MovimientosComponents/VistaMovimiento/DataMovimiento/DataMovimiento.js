@@ -56,7 +56,8 @@ export default function DataMovimiento({ movimiento, loading, error })
     pokesAprenden, // Lista con los nombres de los pokemon que aprenden dicho mov
     isDamage, // booleano si es de daño (especial o fisico)
     isStatus, // booleano si es de estado
-    namesMov // Nombres del Mov en diferentes idiomas
+    namesMov, // Nombres del Mov en diferentes idiomas
+    effectMoveEN // Efecto del Mov: Siempre es en ingles y suele ser mas detallado
   } = movimiento || {};
 
   const nombreMovnorm = nombreMov || "Movimiento";
@@ -123,6 +124,7 @@ export default function DataMovimiento({ movimiento, loading, error })
                   <DescMovimiento
                     descMov={descMov}
                     descMovEN={descMovEN}
+                    efectoMovEN={effectMoveEN}
                     size="normal"
                   />
                 </div>

@@ -28,6 +28,7 @@ export default function DataItem({ item, loading, error })
     categoriaItem,
     descItem,
     descItemEN,
+    efectoItemEN,
     atributosItem,
     namesItem
   } = item || {};
@@ -103,6 +104,7 @@ export default function DataItem({ item, loading, error })
                   <DescItem
                     descItem={descItem}
                     descItemEN={descItemEN}
+                    efectoItemEN={efectoItemEN}
                     size="normal"
                   />
                 </div>

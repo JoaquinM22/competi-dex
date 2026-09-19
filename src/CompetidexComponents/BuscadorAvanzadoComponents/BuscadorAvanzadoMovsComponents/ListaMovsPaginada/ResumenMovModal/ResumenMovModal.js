@@ -159,6 +159,7 @@ export default function ResumenMovModal({ open, move, onClose })
 
     const descMov = move?.descES || "-";
     const descMovEN = move?.descEN || "-";
+    const effectMoveEN= move?.efectoMovEN || "-";
 
     useEffect(() =>
     {
@@ -298,6 +299,7 @@ export default function ResumenMovModal({ open, move, onClose })
                            <DescMovimiento
                                 descMov={descMov}
                                 descMovEN={descMovEN}
+                                efectoMovEN={effectMoveEN}
                                 size="normal"
                             />
                         </div>

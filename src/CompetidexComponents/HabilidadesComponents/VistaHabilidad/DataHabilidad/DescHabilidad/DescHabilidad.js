@@ -12,13 +12,19 @@ function toDash(v)
 
 function getUnavailableText(langLabel)
 {
+  if(langLabel === "Efecto (EN)")
+  {
+    return "No se encuentra disponible el efecto de la Habilidad en este momento";
+  }
+
   return "No se encuentra disponible la descripción en " + langLabel + " en este momento";
 }
 
-export default function DescHabilidad({ descHab, descHabEN, size = "normal" })
+export default function DescHabilidad({ descHab, descHabEN, efectoHabEN, size = "normal" })
 {
   const descES = useMemo(() => toDash(descHab), [descHab]);
   const descEN = useMemo(() => toDash(descHabEN), [descHabEN]);
+  const efectoEN = useMemo(() => toDash(efectoHabEN), [efectoHabEN]);
   const defaultTab = (descES === "-" && descEN !== "-") ? "en" : "es";
   const [activeTab, setActiveTab] = useState(defaultTab);
 
@@ -33,10 +39,11 @@ export default function DescHabilidad({ descHab, descHabEN, size = "normal" })
   {
     return [
       { key: "es", label: "Español", desc: descES },
-      { key: "en", label: "Inglés", desc: descEN }
+      { key: "en", label: "Inglés", desc: descEN },
+      { key: "effect-en", label: "Efecto (EN)", desc: efectoEN }
     ];
 
-  }, [descES, descEN]);
+  }, [descES, descEN, efectoEN]);
 
   const activeTabData = tabs.find(function(tab)
   {

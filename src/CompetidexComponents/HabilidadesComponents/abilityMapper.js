@@ -46,7 +46,7 @@ function pickDesc(json, lang)
       const e = effectEntries[i];
       if (!e || !e.language || e.language.name !== langKey) continue;
 
-      const txt = norm(e.effect || "");
+      const txt = norm(e.effect || e.short_effect || "");
       if (!esTextoValido(txt)) continue;
 
       ultimo = txt;
@@ -58,12 +58,42 @@ function pickDesc(json, lang)
   const langKey = String(lang || "es").trim().toLowerCase();
 
   const flavor = findLastFlavor(langKey);
-  if (flavor) return flavor;
+  if(flavor) return flavor;
+
+  if(langKey === "en")
+  {
+    return "-";
+  }
 
   const effect = findLastEffect(langKey);
-  if (effect) return effect;
+  if(effect) return effect;
 
   return "-";
+}
+
+function getEfectoIngles(raw)
+{
+  const effectEntries = (raw && raw.effect_entries) ? raw.effect_entries : [];
+  let ultimo = "";
+
+  function esTextoValido(txt)
+  {
+    const s = norm(txt);
+    return !!s && /[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(s);
+  }
+
+  for(let i = 0; i < effectEntries.length; i++)
+  {
+    const e = effectEntries[i];
+    if (!e || !e.language || e.language.name !== "en") continue;
+
+    const txt = norm(e.effect || e.short_effect || "");
+    if (!esTextoValido(txt)) continue;
+
+    ultimo = txt;
+  }
+
+  return ultimo || "-";
 }
 
 function pickNameEs(json)
@@ -172,7 +202,8 @@ export function createAbilityMapper(opts)
       descHab: desc,
       descHabEN: descEn,
       pokesTienen: pokes,
-      namesHabilidad: names
+      namesHabilidad: names,
+      efectoHabilidadEN: getEfectoIngles(raw)
     };
   }
 

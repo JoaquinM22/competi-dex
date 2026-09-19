@@ -31,6 +31,7 @@ export default function ResumenItemModal({ open, item, onClose })
 
     const descItem = item?.descES || "-";
     const descItemEN = item?.descEN || "-";
+    const efectoItemEN = item?.efectoItemEN || "-";
 
     return (
         <Modal
@@ -67,6 +68,7 @@ export default function ResumenItemModal({ open, item, onClose })
                 <DescItem
                     descItem={descItem}
                     descItemEN={descItemEN}
+                    efectoItemEN={efectoItemEN}
                     size="normal"
                 />
 

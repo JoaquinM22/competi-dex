@@ -156,6 +156,7 @@ function buildAdvancedItemsFromMap(itemMapObj)
 
     const descItem = entry?.descES || "-";
     const descItemEN = entry?.descEN || "-";
+    const efectoEN = entry?.efectoItemEN || "-";
 
     return {
       apiName: apiName,
@@ -164,7 +165,8 @@ function buildAdvancedItemsFromMap(itemMapObj)
       category: category,
       attributes: attributes,
       descES: descItem,
-      descEN: descItemEN
+      descEN: descItemEN,
+      efectoItemEN: efectoEN
     };
   });
 }

@@ -91,29 +91,8 @@ export function createItemMapper(opts)
 
   function descEN(raw)
   {
-    const effects = (raw && raw.effect_entries) ? raw.effect_entries : [];
     const flavors = (raw && raw.flavor_text_entries) ? raw.flavor_text_entries : [];
-    let ultimaEffectEn = null;
     let ultimaFlavorEn = null;
-
-    for(let i = 0; i < effects.length; i++)
-    {
-      const e = effects[i];
-      if (!e || !e.language || !e.language.name) continue;
-
-      const txt = cleanText(e.effect || e.short_effect || "");
-      if (!esTextoValido(txt)) continue;
-
-      if(e.language.name === "en")
-      {
-        ultimaEffectEn = txt;
-      }
-    }
-
-    if(ultimaEffectEn)
-    {
-      return ultimaEffectEn;
-    }
 
     for(let i = 0; i < flavors.length; i++)
     {
@@ -130,6 +109,28 @@ export function createItemMapper(opts)
     }
 
     return ultimaFlavorEn || "-";
+  }
+
+  function getEfectoItemEN(raw)
+  {
+    const effects = (raw && raw.effect_entries) ? raw.effect_entries : [];
+    let ultimaEffectEn = null;
+
+    for(let i = 0; i < effects.length; i++)
+    {
+      const e = effects[i];
+      if (!e || !e.language || !e.language.name) continue;
+
+      const txt = cleanText(e.effect || e.short_effect || "");
+      if (!esTextoValido(txt)) continue;
+
+      if(e.language.name === "en")
+      {
+        ultimaEffectEn = txt;
+      }
+    }
+
+    return ultimaEffectEn || "-";
   }
 
   function categoriaItem(raw)
@@ -248,6 +249,7 @@ export function createItemMapper(opts)
       categoriaItem: categoriaItem(raw),
       descItem: descEs(raw),
       descItemEN: descEN(raw),
+      efectoItemEN: getEfectoItemEN(raw),
       atributosItem: atributosItem(raw),
       namesItem: nombresPorIdiomaItems(raw)
     };
