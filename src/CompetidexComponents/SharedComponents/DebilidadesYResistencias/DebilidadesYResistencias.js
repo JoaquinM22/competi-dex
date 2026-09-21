@@ -885,9 +885,9 @@ export default function DebilidadesYResistencias({
   const hideDiffForSingleAbility = useMemo(() =>
   {
     const changedGroups = grupos.filter((g) => !g.isBaseLike);
-    return (habilidades?.length === 1) && (changedGroups.length === 1);
+    return (grupos.length === 1) && (changedGroups.length === 1);
 
-  }, [grupos, habilidades]);
+  }, [grupos]);
 
   const Badge = ({ multKey }) =>
   {

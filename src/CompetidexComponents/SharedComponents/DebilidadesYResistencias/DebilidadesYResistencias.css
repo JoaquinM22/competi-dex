@@ -200,6 +200,7 @@
   margin-top: 16px;
   padding-top: 10px;
   border-top: 1px dashed #2a3340;
+  min-width: 0;
 }
 
 .dyr-diff h4 {
@@ -216,6 +217,7 @@
   gap: 10px;
   align-items: center;
   margin-bottom: 6px;
+  min-width: 0;
 }
 
 .dyr-diff-grupo {
@@ -228,6 +230,8 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Chips (+/-) */
@@ -235,10 +239,29 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 4px 6px;
   border-radius: 8px;
   font-weight: 600;
   border: 1px solid;
+}
+
+.dyr-diff .dyr-badge {
+  width: fit-content;
+}
+
+.dyr-diff .tipo-boton {
+  display: inline-flex !important;
+  width: auto !important;
+  max-width: 130px;
+  flex: 0 0 auto !important;
+}
+
+.dyr-diff .tipo-nombre {
+  flex: 0 1 auto;
 }
 
 .dyr-badge.add {
