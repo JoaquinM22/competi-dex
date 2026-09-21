@@ -3810,6 +3810,25 @@ export const ABILITIES_WITH_EFFECT_META =
     "superEffectiveModifierAtFullHP": true,
     "weaknessToHalfForTypes": [],
     "contactHalfDamage": false
+  },
+  "eelevate": {
+    "apiKey": "eelevate",
+    "labelEs": "Impulso Anguila",
+    "damageImmunities": ["ground"],
+    "healsOnHit": [],
+    "redirects": [],
+    "damageWeaknesses": [],
+    "damageResistances": [],
+    "statBoosts": [],
+    "moveBoosts": [],
+    "statusImmunities": [],
+    "statusEffectOverrides": [],
+    "superEffectiveModifier": null,
+    "onlySuperEffectiveDamage": false,
+    "damageToHalfAtFullHP": false,
+    "superEffectiveModifierAtFullHP": false,
+    "weaknessToHalfForTypes": [],
+    "contactHalfDamage": false
   }
 };
 

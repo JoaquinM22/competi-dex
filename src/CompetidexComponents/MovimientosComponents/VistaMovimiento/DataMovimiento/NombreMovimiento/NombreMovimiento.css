@@ -44,12 +44,9 @@
   white-space: normal;
   word-break: break-word;
   padding: 0 12px;
+  font-weight: bold;
   color: white;
-  text-shadow:
-    -1px -1px 2px #000,
-     1px -1px 2px #000,
-    -1px  1px 2px #000,
-     1px  1px 2px #000;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
 
 /* Responsive */
