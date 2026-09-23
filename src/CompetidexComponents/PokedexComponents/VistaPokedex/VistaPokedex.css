@@ -230,22 +230,32 @@
 /* Botón nombre */
 .nombre-pokedex-clickable {
   cursor: pointer;
-  color: #ffd75c;
-  text-shadow: 0 0 6px rgba(255, 215, 92, 0.55);
+  font-weight: 900;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
   background: transparent;
   border: 0;
-  padding: 0;
+  padding: 3px 5px;
   margin: 0 auto;
-  font-weight: 800;
   display: inline-block;
 
   font-size: 18px;
   line-height: 1.2;
+  border-radius: 12px;
+  transition: filter 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nombre-pokedex-clickable:hover {
-  color: #ffe58a;
+  filter: brightness(1.08);
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+}
+
+.nombre-pokedex-clickable:focus-visible {
+  outline: 2px solid rgba(255, 215, 0, 0.55);
+  outline-offset: 3px;
 }
 
 /* Tipos */
@@ -276,8 +286,6 @@
 
 .pokedexNameText {
   line-height: 1.2;
-  border-bottom: 2px solid currentColor;
-  padding-bottom: 2px;
 }
 
 /* Íconos género */

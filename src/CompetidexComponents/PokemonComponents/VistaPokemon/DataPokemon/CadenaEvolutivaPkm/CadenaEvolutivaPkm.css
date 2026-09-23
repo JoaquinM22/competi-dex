@@ -1,6 +1,7 @@
 /** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\CadenaEvolutivaPkm\CadenaEvolutivaPkm.css */
 
 .contenedorCadenaEvolutiva {
+  --evo-method-width: clamp(160px, 18vw, 200px);
   display: inline-flex;
   align-items: center;
   gap: 20px;
@@ -52,8 +53,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: fit-content;
-  max-width: 200px;
+  width: var(--evo-method-width);
+  min-width: var(--evo-method-width);
+  max-width: var(--evo-method-width);
+  padding: 8px 10px;
+  box-sizing: border-box;
   /* background-color: #2c67b4; */
   border-radius: 14px;
 }
@@ -69,6 +73,8 @@
   color: white;
   text-align: center;
   width: 100%;
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
 
   font-weight: bold;
   color: white;
@@ -276,6 +282,10 @@ body.modal-open {
 
 @media (max-width: 768px) {
 
+  .contenedorCadenaEvolutiva {
+    --evo-method-width: clamp(90px, 26vw, 130px);
+  }
+
   .pokemon {
     width: 130px;
     height: 180px;
@@ -288,7 +298,6 @@ body.modal-open {
 
   .contenedorFlechayTexto {
     font-size: 13px;
-    width: 70px;
   }
 
   .flecha {
