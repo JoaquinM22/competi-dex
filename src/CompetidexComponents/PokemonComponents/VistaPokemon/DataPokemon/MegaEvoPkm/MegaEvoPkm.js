@@ -273,6 +273,7 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
               const abilityMega = mega?.abilityMega || null;
               const abilityMegaNormalize = normalizeAbilityForDYR(abilityMega);
               const habOk = !!(abilityMegaNormalize?.display || abilityMegaNormalize?.apiName);
+              const habilidadesDYR = habOk ? [abilityMegaNormalize] : [];
               const statsMega = mega?.statsMega || null;
 
               const isOpen = !!openDYR[index];
@@ -389,7 +390,7 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
 
                   {/* Debilidades y Resistencias Mega Evo */}
                   <div className="mega-dyr-wrap">
-                    {tiposOk && habOk && (
+                    {tiposOk && (
                       <div>
                         <div className="contenedorTituloSeccionCMegaEvo">
                           <h2>Debilidades y Resistencias</h2>
@@ -417,7 +418,7 @@ export default function MegaEvoPkm({ megas, apiNameBasePkm = "" })
                           <div id={panelId} className={`mega-dyr panel-dyr ${isOpen ? "is-open" : ""}`}>
                             <DebilidadesYResistencias
                               tipos={tiposMega}
-                              habilidades={[abilityMegaNormalize]}
+                              habilidades={habilidadesDYR}
                               enPlenosPS={true}
                             />
                           </div>
