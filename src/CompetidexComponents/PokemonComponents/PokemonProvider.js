@@ -87,7 +87,8 @@ const MANIFEST_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 dias
       "isLegendaryPkm": false,
       "isMegaForm": false,
       "isGigaForm": false,
-      "specieName": "charizard"
+      "specieName": "charizard",
+      "baseHappiness": 70
     },
     ...
   }

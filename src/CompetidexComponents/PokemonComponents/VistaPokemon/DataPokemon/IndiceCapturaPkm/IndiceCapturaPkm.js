@@ -77,8 +77,8 @@ export default function IndiceCaptura({ rate, size = "normal", enableAdvancedSea
                 event.preventDefault();
                 handleAdvancedSearchClick();
               }}
-              aria-label={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura ${value}` : undefined}
-              title={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura ${value}` : undefined}
+              aria-label={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura = ${value}` : undefined}
+              title={canNavigateToAdvancedSearch ? `Buscar Pokémon con: Índice de Captura = ${value}` : undefined}
             >
               {value}
             </span>

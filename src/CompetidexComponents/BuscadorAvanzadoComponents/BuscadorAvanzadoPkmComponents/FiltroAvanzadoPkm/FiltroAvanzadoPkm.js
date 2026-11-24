@@ -4153,6 +4153,27 @@ export default function FiltroAvanzadoPkm({
     );
 
 
+    // Filtro de campo "Felicidad Base"
+    const renderBaseHappinessFilter = () => (
+        <div className="filtroAvanzadoPkmComponent-BaseHappinessFilterBlock">
+            <div className="filtroAvanzadoPkmComponent-BaseHappinessFilterRow filtroAvanzadoPkmComponent-BaseHappinessFilterRowOperator">
+                {renderNumberOperators()}
+            </div>
+
+            <div className="filtroAvanzadoPkmComponent-BaseHappinessFilterRow filtroAvanzadoPkmComponent-BaseHappinessFilterRowValue">
+                {renderNumberInput()}
+            </div>
+
+            <div className="filtroAvanzadoPkmComponent-BaseHappinessFilterRow filtroAvanzadoPkmComponent-BaseHappinessFilterActionsRow">
+                {renderAddFilterAction({
+                    applyDisabled: !selectedFieldData || String(numberInputValue || "").trim() === ""
+                })}
+            </div>
+
+        </div>
+    );
+
+
     // Funcion Reutilizable para Atributos Booleanos (Si/No)
     const renderBooleanPkmFilter = ({
         classPrefix,
@@ -4986,6 +5007,8 @@ export default function FiltroAvanzadoPkm({
                 return renderHeightFilter();
             case "captureRate":
                 return renderCaptureRateFilter();
+            case "baseHappiness":
+                return renderBaseHappinessFilter();
             case "malePercentage":
                 return renderMalePercentageFilter();
             case "femalePercentage":

@@ -617,6 +617,7 @@ function returnEmptyPkm()
     "femalePercentage": null,
     "sinSexo": false,
     "captureRate": null,
+    "baseHappiness": null,
     "categoriaPkm": "",
     "isBabyPkm": false,
     "isMythicalPkm": false,
@@ -1293,7 +1294,9 @@ export function createPokemonMapper(opts)
     const pokemon = returnEmptyPkm();
     pokemon.apiName = safeText(raw?.name); // Nombre API
 
-    const dataPkmMapa = await getPokemonCompleteDataByApiName(pokemon.apiName);
+    const dataPkmMapa = (typeof getPokemonCompleteDataByApiName === "function")
+      ? getPokemonCompleteDataByApiName(pokemon.apiName)
+      : null;
 
     if(DEBUG_POKEMON && typeof console !== "undefined" && console.log)
     {
@@ -1389,6 +1392,9 @@ export function createPokemonMapper(opts)
 
     // Ratio de Captura
     pokemon.captureRate = safeNumber(speciesRaw?.capture_rate);
+
+    // Felicidad Base
+    pokemon.baseHappiness = dataPkmMapa?.baseHappiness || safeNumber(speciesRaw?.base_happiness);
 
     // Categoria Pokemon
     pokemon.categoriaPkm = getCategoryPkm(speciesRaw?.genera);

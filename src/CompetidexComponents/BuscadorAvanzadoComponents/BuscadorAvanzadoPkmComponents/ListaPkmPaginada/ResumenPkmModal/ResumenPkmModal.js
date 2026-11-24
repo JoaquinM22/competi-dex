@@ -19,6 +19,7 @@ import GeneroPkm from "../../../../PokemonComponents/VistaPokemon/DataPokemon/Ge
 import ColorPkm from "../../../../PokemonComponents/VistaPokemon/DataPokemon/ColorPkm/ColorPkm";
 import CategoriaPkm from "../../../../PokemonComponents/VistaPokemon/DataPokemon/CategoriaPkm/CategoriaPkm";
 import GruposHuevoPkm from "../../../../PokemonComponents/VistaPokemon/DataPokemon/GruposHuevoPkm/GruposHuevoPkm";
+import FelicidadBasePkm from "../../../../PokemonComponents/VistaPokemon/DataPokemon/FelicidadBasePkm/FelicidadBasePkm";
 
 import "./ResumenPkmModal.css";
 
@@ -125,6 +126,7 @@ export default function ResumenPkmModal({ open, pokemon, onClose })
       generoSize: contentSize,
       pesoAlturaSize: contentSize,
       indiceCapturaSize: contentSize,
+      baseHappinessSize: contentSize,
       colorSize: contentSize,
       gruposHuevoSize: contentSize,
       booleanoSize: contentSize,
@@ -567,6 +569,14 @@ export default function ResumenPkmModal({ open, pokemon, onClose })
                       <IndiceCapturaPkm
                         rate={pokemon.captureRate}
                         size={pokemonResumenData.indiceCapturaSize}
+                      />
+                    </div>
+
+                    {/* Felicidad Base Pokémon */}
+                    <div className="pokemonResumenComponent-contGeneralItems">
+                      <FelicidadBasePkm
+                        felicidadBase={pokemon.baseHappiness}
+                        size={pokemonResumenData.baseHappinessSize}
                       />
                     </div>
 

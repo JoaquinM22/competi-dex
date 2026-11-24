@@ -1,0 +1,62 @@
+/** src\CompetidexComponents\PokemonComponents\VistaPokemon\DataPokemon\FelicidadBasePkm\FelicidadBasePkm.css */
+
+.felicidadBasePkmComponent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    font-weight: bold;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.felicidadBasePkmComponent-label-word {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+.felicidadBasePkmComponent-value {
+    display: inline-flex;
+    align-items: center;
+}
+
+.felicidadBasePkmComponent-value-clickable {
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 3px 5px;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.felicidadBasePkmComponent-value-clickable:hover,
+.felicidadBasePkmComponent-value-clickable:focus-visible {
+    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.22);
+    outline: none;
+}
+
+.felicidadBasePkmComponent-small {
+    font-size: 15px;
+    padding: 7px 14px;
+}
+
+.felicidadBasePkmComponent-medium {
+    font-size: 17px;
+    padding: 11px 20px;
+}
+
+.felicidadBasePkmComponent-normal {
+    font-size: 19px;
+    padding: 13px 24px;
+}
+
+.felicidadBasePkmComponent-large {
+    font-size: 23px;
+    padding: 19px 38px;
+}

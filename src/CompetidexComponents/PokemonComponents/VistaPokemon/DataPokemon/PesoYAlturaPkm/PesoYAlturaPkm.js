@@ -140,7 +140,7 @@ export default function PesoYAlturaPkm({ altura, peso, size = "normal", mostrarT
 
                     {renderMeasureAction({
                         canNavigate: canNavigateToHeight,
-                        label: `Buscar Pokémon con Altura: ${alturaDisplayLabel}`,
+                        label: `Buscar Pokémon con: Altura = ${alturaDisplayLabel}`,
                         onClick: handleHeightClick,
                         children: (
                             <>
@@ -166,7 +166,7 @@ export default function PesoYAlturaPkm({ altura, peso, size = "normal", mostrarT
 
                     {renderMeasureAction({
                         canNavigate: canNavigateToWeight,
-                        label: `Buscar Pokémon con Peso: ${pesoLabel}`,
+                        label: `Buscar Pokémon con: Peso = ${pesoLabel}`,
                         onClick: handleWeightClick,
                         children: (
                             <>

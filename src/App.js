@@ -39,6 +39,7 @@ import VistaBuscadorAvanzado from "./CompetidexComponents/BuscadorAvanzadoCompon
 import NavBarPkm from "./CompetidexComponents/NavBarPkm/NavBarPkm";
 import ScrollToTopButton from "./CompetidexComponents/ScrollToTopButton/ScrollToTopButton";
 import Footer from "./CompetidexComponents/Footer/Footer";
+import SeoRouteMetadata from "./Seo/SeoRouteMetadata";
 import "./App.css";
 
 const DEFAULT_POKEDEX_PATH = getDefaultPokedexDataMetaPath();
@@ -129,6 +130,9 @@ export default function App()
                 <MovesProvider preloadCount={0} warmConcurrency={5}>
                   <ItemsProvider preloadCount={0} warmConcurrency={5}>
                     <FiltroPkmProvider>
+                      
+                      {/* SEO Metadata */}
+                      <SeoRouteMetadata />
 
                       {/* Header */}
                       <div className="headerWrapper">

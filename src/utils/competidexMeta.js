@@ -21111,7 +21111,8 @@ export function getFlagsByGroupKey(groupKey)
   "isLegendaryPkm": false,
   "isMegaForm": false,
   "isGigaForm": false,
-  "specieName": "charizard"
+  "specieName": "charizard",
+  "baseHappiness": 70
 }
 
 */
@@ -21288,6 +21289,14 @@ export function buildPkmFiltersMeta({ abilityOptions = [], categoryPkmOptions = 
       "field": "captureRate",
       "path": "captureRate",
       "description": "Índice de captura",
+      "type": "number",
+      "groupKey": "secondaryData",
+      "options": []
+    },
+    {
+      "field": "baseHappiness",
+      "path": "baseHappiness",
+      "description": "Felicidad Base",
       "type": "number",
       "groupKey": "secondaryData",
       "options": []

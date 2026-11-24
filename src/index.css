@@ -23,3 +23,13 @@ code {
 * {
   box-sizing: border-box;
 }
+
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}

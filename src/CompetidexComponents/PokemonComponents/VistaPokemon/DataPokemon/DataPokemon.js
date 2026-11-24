@@ -33,6 +33,7 @@ import GruposHuevoPkm from "./GruposHuevoPkm/GruposHuevoPkm";
 import AreaLocalizacion from "../../../AreaLocalizacionComponents/AreaLocalizacion/AreaLocalizacion";
 import BooleanoPkm from "../../../SharedComponents/BooleanoPkm/BooleanoPkm";
 import NamesMultiLanguage from "../../../SharedComponents/NamesMultiLanguage/NamesMultiLanguage";
+import FelicidadBasePkm from "./FelicidadBasePkm/FelicidadBasePkm";
 import "./DataPokemon.css";
 
 // Funcion Auxiliar para normalizar una habilidad para DYR
@@ -712,6 +713,15 @@ export default function DataPokemon({ pokemon, movesRawData = [], loading, error
                                     <div className="contenedorGenerico contenedorIndiceCapturaPkm margenAbajo">
                                         <IndiceCapturaPkm
                                             rate={pokemonData.captureRate}
+                                            size="normal"
+                                            enableAdvancedSearchLink={true}
+                                        />
+                                    </div>
+
+                                    {/* Felicidad Base Pokémon */}
+                                    <div className="contenedorGenerico contenedorFelicidadBasePkm margenAbajo">
+                                        <FelicidadBasePkm
+                                            felicidadBase={pokemonData.baseHappiness}
                                             size="normal"
                                             enableAdvancedSearchLink={true}
                                         />
