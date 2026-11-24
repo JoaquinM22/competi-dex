@@ -1,11 +1,12 @@
 //** src\CompetidexComponents\HabilidadesComponents\VistaHabilidad\VistaHabilidad.js
 
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useAbilities } from "../AbilitiesProvider";
 import { CACHE_VERSION } from "../abilityCache";
 import { createAbilityMapper } from "../abilityMapper";
 import { abilityRoute } from "../../../utils/competidexRoutes";
+import { SITE_URL } from "../../../utils/competidexMeta";
 import BuscadorHabilidad from "./BuscadorHabilidad/BuscadorHabilidad";
 import DataHabilidad from "./DataHabilidad/DataHabilidad";
 import "./VistaHabilidad.css";
@@ -34,6 +35,7 @@ export default function VistaHabilidad()
 {
   const { nombreHabilidad: param } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { getAbilityRaw, resolveAbilityInput, getAbilitySlug, esMapReadyAbilities } = useAbilities();
 
@@ -172,6 +174,50 @@ export default function VistaHabilidad()
     try { sessionStorage.setItem(`abilities:lastSlug:${CACHE_VERSION}`, slug); } catch (e) {}
 
   }, [unaHabilidad]);
+
+  // SEO dinámico de la habilidad actualmente abierta
+  useEffect(() =>
+  {
+    const abilityName = String(unaHabilidad?.nombreHab || unaHabilidad?.nombreApi || "").trim();
+
+    if(!abilityName || typeof document === "undefined") return;
+
+    const normalizedPath = String(pathname || "/").replace(/\/+$/, "") || "/";
+    const canonicalUrl = new URL(normalizedPath, SITE_URL).toString();
+    const title = `${abilityName} | Competidex`;
+    const description = `Consulta información de la habilidad ${abilityName} y qué Pokémon pueden aprenderla.`;
+
+    document.title = title;
+
+    function updateMeta(selector, attributes)
+    {
+      let element = document.head.querySelector(selector);
+
+      if(!element)
+      {
+        element = document.createElement("meta");
+        document.head.appendChild(element);
+      }
+
+      Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+    }
+
+    updateMeta('meta[name="description"]', { name: "description", content: description });
+    updateMeta('meta[property="og:title"]', { property: "og:title", content: title });
+    updateMeta('meta[property="og:description"]', { property: "og:description", content: description });
+    updateMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
+
+    let canonicalLink = document.head.querySelector('link[rel="canonical"]');
+    if(!canonicalLink)
+    {
+      canonicalLink = document.createElement("link");
+      document.head.appendChild(canonicalLink);
+    }
+
+    canonicalLink.setAttribute("rel", "canonical");
+    canonicalLink.setAttribute("href", canonicalUrl);
+
+  }, [unaHabilidad, pathname]);
 
   function handleSearch(resolved)
   {

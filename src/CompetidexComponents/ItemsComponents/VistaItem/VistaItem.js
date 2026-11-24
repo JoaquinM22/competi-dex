@@ -1,11 +1,12 @@
 //** src\CompetidexComponents\ItemsComponents\VistaItem\VistaItem.js
 
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useItems } from "../ItemsProvider";
 import { createItemMapper } from "../itemMapper";
 import { CACHE_VERSION } from "../itemCache";
 import { itemRoute } from "../../../utils/competidexRoutes";
+import { SITE_URL } from "../../../utils/competidexMeta";
 import BuscadorItems from "./BuscadorItems/BuscadorItems";
 import DataItem from "./DataItem/DataItem";
 import "./VistaItem.css";
@@ -19,6 +20,7 @@ export default function VistaItem()
 {
   const { nombreItem: paramNombreItem } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { getItemRaw, resolveItemInput, itemMapReady } = useItems();
 
@@ -161,6 +163,50 @@ export default function VistaItem()
     return () => { alive = false; };
 
   }, [itemABuscar, obtenerItem, KEY_LAST_ITEM_KEY, KEY_LAST_ITEM_SLUG]);
+
+  // SEO dinámico del objeto actualmente abierto
+  useEffect(() =>
+  {
+    const itemName = String(unItem?.nombreItem || unItem?.nombreApi || "").trim();
+
+    if(!itemName || typeof document === "undefined") return;
+
+    const normalizedPath = String(pathname || "/").replace(/\/+$/, "") || "/";
+    const canonicalUrl = new URL(normalizedPath, SITE_URL).toString();
+    const title = `${itemName} | Competidex`;
+    const description = `Consulta información del objeto Pokémon ${itemName}.`;
+
+    document.title = title;
+
+    function updateMeta(selector, attributes)
+    {
+      let element = document.head.querySelector(selector);
+
+      if(!element)
+      {
+        element = document.createElement("meta");
+        document.head.appendChild(element);
+      }
+
+      Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+    }
+
+    updateMeta('meta[name="description"]', { name: "description", content: description });
+    updateMeta('meta[property="og:title"]', { property: "og:title", content: title });
+    updateMeta('meta[property="og:description"]', { property: "og:description", content: description });
+    updateMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
+
+    let canonicalLink = document.head.querySelector('link[rel="canonical"]');
+    if(!canonicalLink)
+    {
+      canonicalLink = document.createElement("link");
+      document.head.appendChild(canonicalLink);
+    }
+
+    canonicalLink.setAttribute("rel", "canonical");
+    canonicalLink.setAttribute("href", canonicalUrl);
+
+  }, [unItem, pathname]);
 
   function handleSearch(resolved)
   {

@@ -1,7 +1,7 @@
 //** src\CompetidexComponents\PokemonComponents\VistaPokemon\VistaPokemon.js
 
 import React, { useEffect, useMemo, useCallback, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { usePokemon } from "../PokemonProvider";
 import { usePokedex } from "../../PokedexComponents/PokedexProvider";
 import { useAbilities } from "../../HabilidadesComponents/AbilitiesProvider";
@@ -12,6 +12,9 @@ import { CACHE_VERSION } from "../pokemonCache";
 import { pokemonRoute } from "../../../utils/competidexRoutes";
 import BuscadorPokemon from "./BuscadorPokemon/BuscadorPokemon";
 import DataPokemon from "./DataPokemon/DataPokemon";
+
+import { SITE_URL } from "../../../utils/competidexMeta";
+
 import "./VistaPokemon.css";
 
 function toSlugApiKey(key = "")
@@ -26,6 +29,7 @@ export default function VistaPokemon()
 {
   const { nombre: paramNombre } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { getPokemon, getPokemonSpecies, getUrl, getPokemonIdByKey, getPokemonKeyById, resolvePokemonInput, getPokemonSlug, getPokemonCompleteDataByApiName, pokemonMapReady } = usePokemon();
   const { buildDexEntriesFromPokedexNumbers } = usePokedex();
   const { translatePokemonAbilities, translateAbilitiesByKeys } = useAbilities();
@@ -165,6 +169,51 @@ export default function VistaPokemon()
     return () => { alive = false; };
 
   }, [pokemonABuscar, obtenerPokemon]);
+
+  // SEO dinámico del Pokémon actualmente abierto
+  useEffect(() =>
+  {
+    const pokemonData = unPokemon?.pokemonData;
+    const displayName = String(pokemonData?.display || pokemonData?.apiName || "").trim();
+
+    if(!displayName || typeof document === "undefined") return;
+
+    const normalizedPath = String(pathname || "/").replace(/\/+$/, "") || "/";
+    const canonicalUrl = new URL(normalizedPath, SITE_URL).toString();
+    const title = `${displayName} | Competidex`;
+    const description = `Consulta información de ${displayName}, incluyendo sus tipos, habilidades, estadísticas y movimientos.`;
+
+    document.title = title;
+
+    function updateMeta(selector, attributes)
+    {
+      let element = document.head.querySelector(selector);
+
+      if(!element)
+      {
+        element = document.createElement("meta");
+        document.head.appendChild(element);
+      }
+
+      Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+    }
+
+    updateMeta('meta[name="description"]', { name: "description", content: description });
+    updateMeta('meta[property="og:title"]', { property: "og:title", content: title });
+    updateMeta('meta[property="og:description"]', { property: "og:description", content: description });
+    updateMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
+
+    let canonicalLink = document.head.querySelector('link[rel="canonical"]');
+    if(!canonicalLink)
+    {
+      canonicalLink = document.createElement("link");
+      document.head.appendChild(canonicalLink);
+    }
+
+    canonicalLink.setAttribute("rel", "canonical");
+    canonicalLink.setAttribute("href", canonicalUrl);
+
+  }, [unPokemon, pathname]);
 
   function handleSearch(nombre)
   {

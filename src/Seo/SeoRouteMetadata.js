@@ -70,6 +70,23 @@ function addPokedexRoutesSeo()
 
 addPokedexRoutesSeo();
 
+function getSeoForPath(normalizedPath)
+{
+  const exactSeo = ROUTE_SEO[normalizedPath];
+  if(exactSeo)
+  {
+    return exactSeo;
+  }
+
+  const advancedSearchPath = `/${ROUTES.ADVANCED_SEARCH}`;
+  if(normalizedPath.startsWith(`${advancedSearchPath}/`))
+  {
+    return ROUTE_SEO[advancedSearchPath] || DEFAULT_SEO;
+  }
+
+  return DEFAULT_SEO;
+}
+
 function upsertMeta(selector, attributes)
 {
   let element = document.head.querySelector(selector);
@@ -109,7 +126,7 @@ export default function SeoRouteMetadata()
   useEffect(() =>
   {
     const normalizedPath = pathname.replace(/\/+$/, "") || "/";
-    const seo = ROUTE_SEO[normalizedPath] || DEFAULT_SEO;
+    const seo = getSeoForPath(normalizedPath);
     const canonicalUrl = new URL(normalizedPath, `${SITE_URL}/`).toString();
 
     document.title = seo.title;

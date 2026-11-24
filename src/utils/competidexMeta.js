@@ -8,6 +8,11 @@ import {
 } from "../config/endpoints";
 
 
+// -------------- URL SITIO WEB - INICIO -------------- 
+export const SITE_URL = "https://competidex.pages.dev/";
+// -------------- URL SITIO WEB - FIN -------------- 
+
+
 // -------------- UBICACIONES DE FOTOS - INICIO -------------- 
 //#region IMG
 export const POKEBALL_BACKGROUND = "/assets/poke_ball_icon.webp";

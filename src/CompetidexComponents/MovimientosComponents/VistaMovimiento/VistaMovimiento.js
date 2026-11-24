@@ -1,11 +1,12 @@
 //** src\CompetidexComponents\MovimientosComponents\VistaMovimiento\VistaMovimiento.js
 
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useMoves } from "../MovesProvider";
 import { createMoveMapper } from "../moveMapper";
 import { CACHE_VERSION } from "../moveCache";
 import { moveRoute } from "../../../utils/competidexRoutes";
+import { SITE_URL } from "../../../utils/competidexMeta";
 import BuscadorMovimientos from "./BuscadorMovimientos/BuscadorMovimientos";
 import DataMovimiento from "./DataMovimiento/DataMovimiento";
 import "./VistaMovimiento.css";
@@ -23,6 +24,7 @@ export default function VistaMovimiento()
 {
     const { nombreMovimiento: paramNombreMovimiento } = useParams();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const {
         getMoveRaw,
         getMoveFlagsByKey,
@@ -132,6 +134,50 @@ export default function VistaMovimiento()
         return () => { alive = false; };
 
     }, [movABuscar, getMoveRaw, getMoveFlagsByKey, getMoveCompleteDataByApiName]);
+
+    // SEO dinámico del movimiento actualmente abierto
+    useEffect(() =>
+    {
+        const moveName = String(unMovimiento?.nombreMov || unMovimiento?.nombreApi || "").trim();
+
+        if(!moveName || typeof document === "undefined") return;
+
+        const normalizedPath = String(pathname || "/").replace(/\/+$/, "") || "/";
+        const canonicalUrl = new URL(normalizedPath, SITE_URL).toString();
+        const title = `${moveName} | Competidex`;
+        const description = `Consulta información del movimiento ${moveName}, incluyendo su tipo, potencia, precisión, efectos y Pokémon que pueden aprenderlo.`;
+
+        document.title = title;
+
+        function updateMeta(selector, attributes)
+        {
+            let element = document.head.querySelector(selector);
+
+            if(!element)
+            {
+                element = document.createElement("meta");
+                document.head.appendChild(element);
+            }
+
+            Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+        }
+
+        updateMeta('meta[name="description"]', { name: "description", content: description });
+        updateMeta('meta[property="og:title"]', { property: "og:title", content: title });
+        updateMeta('meta[property="og:description"]', { property: "og:description", content: description });
+        updateMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
+
+        let canonicalLink = document.head.querySelector('link[rel="canonical"]');
+        if(!canonicalLink)
+        {
+            canonicalLink = document.createElement("link");
+            document.head.appendChild(canonicalLink);
+        }
+
+        canonicalLink.setAttribute("rel", "canonical");
+        canonicalLink.setAttribute("href", canonicalUrl);
+
+    }, [unMovimiento, pathname]);
 
     function handleSearch(resolved)
     {
