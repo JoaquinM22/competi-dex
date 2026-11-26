@@ -3,9 +3,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../utils/competidexRoutes";
-import { getEnabledPokedexDataMetaEntries } from "../utils/competidexMeta";
-
-const SITE_URL = "https://competidex.pages.dev";
+import { getEnabledPokedexDataMetaEntries, SITE_URL } from "../utils/competidexMeta";
 
 const DEFAULT_SEO = {
   title: "Competidex | Información Pokémon en Español",
@@ -13,6 +11,10 @@ const DEFAULT_SEO = {
 };
 
 const ROUTE_SEO = {
+  [`/${ROUTES.INICIO}`]: {
+    title: "Competidex | Información Pokémon en Español",
+    description: "Consulta información de Pokémon, movimientos, habilidades, objetos, Pokédex y herramientas competitivas en español."
+  },
   [`/${ROUTES.ITEM}`]: {
     title: "Objetos | Competidex",
     description: "Busca objetos Pokémon y consulta la información detallada de cada uno en español."

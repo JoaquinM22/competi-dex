@@ -1,0 +1,113 @@
+/** src\CompetidexComponents\Inicio\Inicio.css */
+
+.inicioComponent-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 75vh;
+}
+
+.inicioComponent-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 75vh;
+    box-sizing: border-box;
+    padding: 48px 32px;
+    border-radius: 25px;
+    background-color: #282c34;
+    color: #ffffff;
+    text-align: center;
+}
+
+.inicioComponent-content,
+.inicioComponent-credits {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inicioComponent-content {
+    justify-content: flex-start;
+}
+
+.inicioComponent-credits {
+    justify-content: flex-end;
+}
+
+.inicioComponent-title {
+    margin: 0 0 18px;
+    color: #ffd700;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: bold;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.inicioComponent-title-description {
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.inicioComponent-description {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #ffffff;
+    font-size: clamp(17px, 2vw, 22px);
+    line-height: 1.6;
+}
+
+.inicioComponent-author {
+    margin: 28px 0 0;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.inicioComponent-authorLink {
+    color: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.inicioComponent-authorLink:hover,
+.inicioComponent-authorLink:focus-visible {
+    text-decoration: underline;
+}
+
+.inicioComponent-authorLink:visited {
+    color: inherit;
+}
+
+.inicioComponent-linkedInIcon {
+    color: #4db7ff;
+    font-size: 1.05em;
+    vertical-align: -0.12em;
+}
+
+@media (max-width: 600px) {
+
+    .inicioComponent-card {
+        margin: 15px;
+        padding: 36px 20px;
+        min-height: 75vh;
+    }
+
+    .inicioComponent-description {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .inicioComponent-author {
+        font-size: 13px;
+    }
+    
+}

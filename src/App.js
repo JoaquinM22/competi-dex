@@ -6,6 +6,7 @@ import { ADVANCED_SEARCH_SESSION_STORAGE_KEY, getDefaultPokedexDataMetaPath, POK
 import {
   ROUTES,
   
+  inicioRoute,
   pokemonRoute,
   moveRoute,
   abilityRoute,
@@ -31,6 +32,7 @@ import VistaItem from "./CompetidexComponents/ItemsComponents/VistaItem/VistaIte
 import VistaHabilidad from "./CompetidexComponents/HabilidadesComponents/VistaHabilidad/VistaHabilidad";
 import VistaMovimiento from "./CompetidexComponents/MovimientosComponents/VistaMovimiento/VistaMovimiento";
 import VistaPokemon from "./CompetidexComponents/PokemonComponents/VistaPokemon/VistaPokemon";
+import Inicio from "./CompetidexComponents/Inicio/Inicio";
 import VistaPokedex from "./CompetidexComponents/PokedexComponents/VistaPokedex/VistaPokedex";
 import CalculadoraDebilidades from "./CompetidexComponents/CalculadoraDebilidadesComponent/CalculadoraDebilidades";
 import VistaCalculadoraCaracteristicas from "./CompetidexComponents/CalculadoraDeCaracteristicasComponents/VistaCalculadoraCaracteristicas";
@@ -144,9 +146,12 @@ export default function App()
                         
                         <Routes>
 
-                          {/* Cualquier Ruta rara -> Cae en Pokemon por default */}
-                          <Route path="/" element={<Navigate to={pokemonRoute()} replace />} />
-                          <Route path="*" element={<Navigate to={pokemonRoute()} replace />} />
+                          {/* Cualquier Ruta rara -> Redirige al Inicio */}
+                          <Route path="/" element={<Navigate to={inicioRoute()} replace />} />
+                          <Route path="*" element={<Navigate to={inicioRoute()} replace />} />
+
+                          {/* Inicio */}
+                          <Route path={inicioRoute()} element={<Inicio />} />
 
                           {/* Item/Objeto */}
                           <Route path={itemRoute()} element={<VistaItem />} />

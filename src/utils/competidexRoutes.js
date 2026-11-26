@@ -8,6 +8,7 @@ import { buildAdvancedItemsSearchUrl } from "../CompetidexComponents/BuscadorAva
 // -------------- RUTAS - INICIO -------------- 
 
 export const ROUTES = {
+    INICIO: "inicio",
     ITEM: "objeto",
     ABILITY: "habilidad",
     MOVE: "movimiento",
@@ -17,6 +18,11 @@ export const ROUTES = {
     STATS_PKM_CALCULATOR: "calculadora-de-caracteristicas",
     ADVANCED_SEARCH: "buscador-avanzado"
 };
+
+export function inicioRoute(slug = "")
+{
+    return slug ? `/${ROUTES.INICIO}/${slug}` : `/${ROUTES.INICIO}`;
+}
 
 export function itemRoute(slug = "")
 {
